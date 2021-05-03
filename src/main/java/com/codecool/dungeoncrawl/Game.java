@@ -4,8 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Game extends Application {
+public class Game {
     GameMap tutorialMap = MapLoader.loadMap();
     Canvas canvas = new Canvas(
             tutorialMap.getWidth() * Tiles.TILE_WIDTH,
@@ -25,12 +25,7 @@ public class Game extends Application {
     Label healthLabel = new Label();
     Label mannaLabel = new Label();
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
+    public void play(Stage primaryStage) {
         GridPane ui = new GridPane();
         ui.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, new CornerRadii(0), Insets.EMPTY)));
         ui.setPrefWidth(200);
@@ -49,7 +44,12 @@ public class Game extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(canvas);
         borderPane.setTop(ui);
+
+        Scene scene = new Scene(borderPane);
+        scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
+        primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
     }
 
         private void onKeyPressed(KeyEvent keyEvent) {
