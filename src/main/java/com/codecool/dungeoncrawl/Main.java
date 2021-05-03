@@ -59,14 +59,12 @@ public class Main extends Application {
         scene.getStylesheets().add("Loader/button.css");
         stage.setScene(scene);
 
-//        scene.setOnKeyPressed(this::onKeyPressed);
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
+        loadGame.setOnMouseClicked(this::loadGame);
         stage.show();
         stage.setScene(scene);
     }
-
-
 
     private Button buttonFactory(String text) {
         Button button = new Button();
@@ -94,7 +92,7 @@ public class Main extends Application {
         stage.setScene(scene);
     }
     private void loadGame(MouseEvent mouseEvent) {
-        Game.main(null);
-        stage.close();
+        Game game = new Game();
+        game.play(stage);
     }
 }
