@@ -10,10 +10,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -22,31 +23,43 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
-
+    Label mannaLabel = new Label();
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+//        Parent page = FXMLLoader.<Parent>load(MainWindowController.class.getResource("resources/Loader/main.fxml").toExternalForm());
+
+        primaryStage.setFullScreen(true);
+        primaryStage.setResizable(false);
         GridPane ui = new GridPane();
+        ui.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, new CornerRadii(0), Insets.EMPTY)));
         ui.setPrefWidth(200);
-        ui.setPadding(new Insets(10));
-
-        ui.add(new Label("Health: "), 0, 0);
+        ui.setPadding(new Insets(20));
+        Label healthText = new Label("Health: ");
+        healthText.setFont(new Font("Chalkduster", 20));
+        ui.add(healthText, 0, 0);
+        healthLabel.setFont(new Font("Chalkduster", 20));
         ui.add(healthLabel, 1, 0);
-
+        Label mannaText = new Label("Manna: ");
+        mannaText.setFont(new Font("Chalkduster", 20));
+        ui.add(mannaText, 0, 1);
+        mannaLabel.setFont(new Font("Chalkduster", 20));
+        ui.add(mannaLabel, 1, 1);
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
+        borderPane.setTop(ui);
+//        borderPane.setBackground(new Background(new BackgroundImage(new Image("/tiles.png"),BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("ThunderCry 2");
         primaryStage.show();
     }
 
@@ -68,6 +81,9 @@ public class Main extends Application {
                 map.getPlayer().move(1,0);
                 refresh();
                 break;
+            case T:
+
+
         }
     }
 
@@ -84,6 +100,7 @@ public class Main extends Application {
                 }
             }
         }
+        healthLabel.setText("" + map.getPlayer().getHealth());
         healthLabel.setText("" + map.getPlayer().getHealth());
     }
 }
