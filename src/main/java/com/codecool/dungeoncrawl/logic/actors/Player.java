@@ -39,7 +39,18 @@ public class Player extends Actor {
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
-            // TODO check inventory for KEY, then OPEN the door and remove the key
+            for (Item item: inventory
+                 ) {
+                if (item instanceof Key) {
+                    nextCell.setType(CellType.OPEN_DOOR);
+                    cell.setActor(null);
+                    nextCell.setActor(this);
+                    cell = nextCell;
+                    inventory.remove(item);
+                    return;
+            }
+            }
+
         }
         if (nextCell.getType().equals(CellType.FLOOR)) {
             if (nextCell.getActor() == null) {
