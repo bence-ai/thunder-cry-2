@@ -18,7 +18,7 @@ public class Player extends Actor {
 
     public void pickUpItem(Item item) {
         inventory.add(item);
-        item.setCell(null);
+        item.getCell().setItem(null);
     }
 
 //    public String inventoryToString() {

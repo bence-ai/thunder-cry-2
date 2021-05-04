@@ -9,12 +9,13 @@ public abstract class Item implements Drawable {
     private ItemType type;
     private String itemName;
 
+    // TODO Need to implement Drawable for every item differently, return tileName for drawTile method
 
-    public Item(Cell cell, ItemType type, String name) {
+
+    public Item(Cell cell, ItemType type) {
         this.cell = cell;
         cell.setItem(this);
         this.type = type;
-        this.itemName = name;
     }
 
     public Cell getCell() {

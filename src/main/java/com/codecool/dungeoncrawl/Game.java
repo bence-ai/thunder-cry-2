@@ -71,7 +71,7 @@ public class Game {
                 tutorialMap.getPlayer().move(1,0);
                 refresh();
                 break;
-            case E:
+            case E: // Pick-up items
                 // checking if there is an item at the current position, if so then picking it up
                 if (!tutorialMap.getPlayer().getCell().getItem().equals(null)) {
                     // inventory.add(item) for example
@@ -80,6 +80,7 @@ public class Game {
                     tutorialMap.getPlayer().getCell().setItem(null);
                     refresh();
                 }
+                // if there is no item nothing happens
                 break;
 
         }
