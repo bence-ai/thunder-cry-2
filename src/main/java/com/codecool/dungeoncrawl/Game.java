@@ -78,6 +78,7 @@ public class Game {
                     tutorialMap.getPlayer().pickUpItem(tutorialMap.getPlayer().getCell().getItem());
                     // then remove the item from the cell
                     tutorialMap.getPlayer().getCell().setItem(null);
+                    System.out.println(tutorialMap.getPlayer().inventoryToString());
                     refresh();
                 }
                 // if there is no item nothing happens

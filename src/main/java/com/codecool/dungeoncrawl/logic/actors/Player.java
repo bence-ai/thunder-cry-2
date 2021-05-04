@@ -21,16 +21,16 @@ public class Player extends Actor {
         item.getCell().setItem(null);
     }
 
-//    public String inventoryToString() {
-//        String inventoryString = "";
-//        if (inventory.size() == 0) {
-//            inventoryString = "Empty";
-//        }
-//        else {
-//            for (Item item : inventory) {
-//                // in progress
-//            }
-//        }
-//
-//    }
+    public String inventoryToString() {
+        String inventoryString = "";
+        if (inventory.size() == 0) {
+            inventoryString = "Empty";
+        }
+        else {
+            for (Item item : inventory) {
+                inventoryString = inventoryString + item.getType();
+            }
+        }
+        return inventoryString;
+    }
 }

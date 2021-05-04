@@ -13,12 +13,15 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    //
+    // TODO this whole move method is specific for Player, need to migrate it to the Player class and make the basic movement abstract and implement it for different type of Actors
     public void move(int dx, int dy) {
         if (cell.getNeighbor(dx, dy) == null) {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
+        if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
+            // check inventory for KEY, then OPEN the door and remove the key
+        }
         if (nextCell.getType().equals(CellType.FLOOR)) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
