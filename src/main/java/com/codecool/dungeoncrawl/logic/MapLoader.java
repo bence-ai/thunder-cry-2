@@ -9,7 +9,11 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapLoader {
-    public static GameMap loadMap() {
+    public static GameMap loadMap(String level) {
+        switch(level) {
+            case "tutorial":
+                String source = "/tutorial_map.txt";
+        }
         InputStream is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();

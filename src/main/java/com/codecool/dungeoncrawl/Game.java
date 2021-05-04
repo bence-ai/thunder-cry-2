@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Game {
-    GameMap tutorialMap = MapLoader.loadMap();
+    GameMap tutorialMap = MapLoader.loadMap("tutorial");
     Canvas canvas = new Canvas(
             tutorialMap.getWidth() * Tiles.TILE_WIDTH,
             tutorialMap.getHeight() * Tiles.TILE_WIDTH);
