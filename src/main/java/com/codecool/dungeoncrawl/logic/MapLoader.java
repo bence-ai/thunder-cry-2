@@ -52,6 +52,9 @@ public class MapLoader {
                         case 'c':
                             cell.setType(CellType.CLOSED_DOOR);
                             break;
+                        case 'q':
+                            cell.setType(CellType.FLOOR.STAIRS);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }

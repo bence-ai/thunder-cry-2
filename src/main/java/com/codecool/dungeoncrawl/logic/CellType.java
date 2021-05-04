@@ -5,7 +5,8 @@ public enum CellType {
     FLOOR("floor"),
     WALL("wall"),
     OPEN_DOOR("open door"),
-    CLOSED_DOOR("closed door");
+    CLOSED_DOOR("closed door"),
+    STAIRS("stairs"); // There is a square type "stairs down". Entering this square moves the player to a different map.
 
     private final String tileName;
 

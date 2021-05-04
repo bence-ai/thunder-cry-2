@@ -52,7 +52,7 @@ public class Player extends Actor {
             }
 
         }
-        if (nextCell.getType().equals(CellType.FLOOR)) {
+        if (nextCell.getType().equals(CellType.FLOOR) || nextCell.getType().equals(CellType.OPEN_DOOR)) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
