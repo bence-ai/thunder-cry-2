@@ -72,9 +72,16 @@ public class Game {
                 refresh();
                 break;
             case E:
-                if (neighbourCell.getNeighbor(1,0).getType().equals(CellType.ITEM)) {
-
+                // checking if there is an item at the current position, if so then picking it up
+                if (!tutorialMap.getPlayer().getCell().getItem().equals(null)) {
+                    // inventory.add(item) for example
+                    tutorialMap.getPlayer().pickUpItem(tutorialMap.getPlayer().getCell().getItem());
+                    // then remove the item from the cell
+                    tutorialMap.getPlayer().getCell().setItem(null);
+                    refresh();
                 }
+                break;
+
         }
     }
 
@@ -86,7 +93,10 @@ public class Game {
                 Cell cell = tutorialMap.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
+                } else if (cell.getItem() != null) {
+                    Tiles.drawTile(context, cell.getItem(), x, y);
+                }
+                else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
