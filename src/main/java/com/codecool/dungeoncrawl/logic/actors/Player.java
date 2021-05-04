@@ -38,7 +38,12 @@ public class Player extends Actor {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
+        if (nextCell.getType().equals(CellType.STAIRS)) {
+            return;
+            // TODO here we have to signal loading next level to the Game object
+
+        }
+            if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
             for (Item item: inventory
                  ) {
                 if (item instanceof Key) {
@@ -79,5 +84,35 @@ public class Player extends Actor {
             }
         }
         return inventoryString;
+    }
+
+    public boolean isThereEnemy() {
+        if (cell.getNeighbor(1,0).getActor() != null)
+            return true;
+        else if (cell.getNeighbor(-1,0).getActor() != null){
+            return true;
+        }
+        else if(cell.getNeighbor(0,1).getActor() != null) {
+            return true;
+        }
+        else if (cell.getNeighbor(0,-1).getActor() != null) {
+            return true;
+        }
+        else return false;
+    }
+
+    public Actor getEnemy(){
+        if (cell.getNeighbor(1,0).getActor() != null)
+            return cell.getNeighbor(1,0).getActor();
+        else if (cell.getNeighbor(-1,0).getActor() != null){
+            return cell.getNeighbor(-1,0).getActor();
+        }
+        else if(cell.getNeighbor(0,1).getActor() != null) {
+            return cell.getNeighbor(0,1).getActor();
+        }
+        else if (cell.getNeighbor(0,-1).getActor() != null) {
+            return cell.getNeighbor(0,-1).getActor();
+        }
+        else return null;
     }
 }
