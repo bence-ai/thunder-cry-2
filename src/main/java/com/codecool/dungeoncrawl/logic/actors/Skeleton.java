@@ -66,5 +66,10 @@ public class Skeleton extends Actor {
 
     }
 
-    
+    @Override
+    public void onUpdate() {
+
+    }
+
+
 }

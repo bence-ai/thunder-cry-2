@@ -68,6 +68,11 @@ public class Player extends Actor {
         }
     }
 
+    @Override
+    public void onUpdate() {
+        return;
+    }
+
     public void playerAttackAction(Actor actor) {
         int physicalAttack = this.generateAttackDamage();
         actor.takeDamage(physicalAttack - actor.getDefense());
