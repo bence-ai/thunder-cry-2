@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.Magic;
 
 public enum Spells {
     FIRE (new Magic("Fire", 30, 120, SpellType.BLACK)),
+    SHADOW_BOLT (new Magic("Shadow bolt", 50, 120, SpellType.BLACK)),
     THUNDER (new Magic("Thunder", 55, 185, SpellType.BLACK)),
     BLIZZARD (new Magic("Blizzard", 85, 275, SpellType.BLACK)),
     METEOR (new Magic("Meteor", 165, 450, SpellType.BLACK)),

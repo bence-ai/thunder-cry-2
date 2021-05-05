@@ -1,26 +1,26 @@
 66 31
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwww╔═════════════════════════════════════════════
-wwwwwwwwwwwwww│ gggggggggggggggggggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│gggbgggggbgggggWgggg         gggggggggggggggg
-wwwwwwwwwwwwww│ggggggsgggggggggggggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│gggggggggg ggggggsggggg  gggggggggggggggggggg
-wwwwwwwwwwwwww│ggggegggggggggggpgggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│ggggggggggagggggggggbgggggggggggggggggggggggg
-wwwwwwwwwwwwww│ggggggggg     ggggggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│gggggggggggggggggggggggggggggg        ggggggg
-wwwwwwwwwwwwww│ggggggggg2ggggggggggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│ggggggggggggggggggggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│ggg1gggg@ggggg    ggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│gggggggg1gggggggggggggggggggggggggggggggggggg
-wwwwwwwwwwwwww│ggggggggggggggggg3gggggggggggggg2gggg2gg3gggg
-wwwwwwwwwwwwww│gggggggggggggggggggggggggggggggggggg3gggggggg
-wwwwwwwwwwwwww╚---------------------------------------------
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww╔════════
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww│   1
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww╔═══┘g     2
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww│
+wwwwwwwwwwwwww╔════════════════════════════════┘        g
+wwwwwwwwwwwwww│0ggg01gggg22ggggggg1ggggggggggggggggggggggggg
+wwwwwwwwwwwwww│ggg1g  g11ggggggggggg         gggsdddddddd  d
+wwwwwwwwwwwwww│g00gggg11g222gggggggggggggggggggggddddddddddd
+www╔══════════┘ggg1gg   gg ggg22ggggggggg  ggg  gddddgggdddd
+www│ 0     1     ggg11gggg22gg0gggggggggggggggggg  gdddddddd
+www│    e     ggg2ggggggggggggggsggggggdddddddddgddddgdddgdd
+www│ 1     0 gggggggggg     gggggggggggggggggggggggggggggddd
+www│  ggggg1gggggggggggg   ggggggggg   dd  gggggggddddddddd
+www│  00  ggggggggg2ggggggggggggggggggggggggggggggddggdddddd
+www╚----------┐ggggg1221gggggggggggggggggg    ggggdd  dddggg
+wwwwwwwwwwwwww│ggg1gggg@         gggggg   ddddd      dddd gg
+wwwwwwwwwwwwww│gggggggg1ggggggg       ggggggggggggsggggddddd
+wwwwwwwwwwwwww│ggggggggggggggggg3gggg       ggg2gggg2gg3gggg
+wwwwwwwwwwwwww╚-------------┐ggggggg11ggggggggggg0gg3gggggggg
+wwwwwwwwwwwwwwwwwwwwwwwwwwww╚-┐   1111    0ggg gg    ggg   gg
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww╚-----------------------------
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww

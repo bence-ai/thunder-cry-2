@@ -1,14 +1,31 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.Magic.Spells;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.util.Direction;
+
+import java.util.ArrayList;
 
 
 public class Skeleton extends Actor {
     private Direction direction = Direction.NORTH;
 
-    public Skeleton(Cell cell, String name, int health, int manaPoint, int defense, int attack) {
-        super(cell, name, health, manaPoint, defense, attack);
+    public Skeleton(Cell cell, String name) {
+        super(cell, name);
+        this.health = 400;
+        this.maxHealth = this.health;
+        this.manaPoint = 80;
+        this.maxManaPoint = this.manaPoint;
+        this.defense = 15;
+        this.maxDefense = this.defense;
+        this.attack = 75;
+        this.maxAttack = this.attack;
+        this.spellList = new ArrayList<Spells>();
+        this.spellList.add(Spells.FIRE);
+
+
     }
 
     @Override
@@ -16,8 +33,17 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
+
     @Override
-    public void move(int dx, int dy){
+    public void onUpdate() {
+
+        int[] moves = Direction.getRandomDirection(direction);
+        move(moves[0], moves[1]);
+    }
+
+    public int[] getNextDirection() {
+        int dx = 0;
+        int dy = 0;
         switch (this.direction) {
             case NORTH:
                 dx = 0;
@@ -40,28 +66,10 @@ public class Skeleton extends Actor {
                 this.direction = Direction.SOUTH;
                 break;
         }
+        int[] directionCoordinates = {dx, dy};
 
-        if (cell.getNeighbor(dx, dy) == null) {
-            return;
-        }
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().isStepable()) {
-            if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (nextCell.getActor().getTileName().equals("player") || nextCell.getActor().getTileName().equals("bandit")) {
-                return;
-            } else {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            }
-        }
+        return directionCoordinates;
     }
 
-    @Override
-    public void onUpdate() {
-        this.move(0,0);
-    }
+
 }

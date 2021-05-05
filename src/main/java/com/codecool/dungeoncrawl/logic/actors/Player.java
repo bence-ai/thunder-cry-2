@@ -11,8 +11,22 @@ public class Player extends Actor {
     private ArrayList<Item> inventory = new ArrayList();
 
 
-    public Player(Cell cell, String name, int health, int manaPoint, int defense, int attack) {
-        super(cell, name, health, manaPoint, defense, attack);
+    public Player(Cell cell, String name) {
+        super(cell, name);
+        this.health = 500;
+        this.maxHealth = this.health;
+        this.manaPoint = 180;
+        this.maxManaPoint = this.manaPoint;
+        this.defense = 25;
+        this.maxDefense = this.defense;
+        this.attack = 80;
+        this.maxAttack = this.attack;
+        this.spellList = new ArrayList<Spells>();
+        this.spellList.add(Spells.FIRE);
+        this.spellList.add(Spells.THUNDER);
+        this.spellList.add(Spells.SMALL_HEAL);
+        this.weapon = new Sword(cell, ItemType.WEAPON, 0);
+        this.weapon.getCell().setItem(null);
     }
 
     public String getTileName() {
@@ -51,7 +65,6 @@ public class Player extends Actor {
                     return;
                 }
             }
-
         }
         if (nextCell.getType().isStepable()) {
             cell.setActor(null);
@@ -62,7 +75,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void actorFightActions(int eventNumber, Actor actor) {
+    public void attack(int eventNumber, Actor actor) {
         if (eventNumber == 0) {
             playerAttackAction(actor);
         } else {
@@ -86,6 +99,7 @@ public class Player extends Actor {
         int magicCost = playerMagic.getMagick().getCost();
         if (this.getManaPoint() < magicCost) {
             System.out.println("not enough mana");
+            playerAttackAction(actor);
             return;
         }
         int magicDamage = playerMagic.getMagick().generateDamage();
@@ -93,12 +107,16 @@ public class Player extends Actor {
         switch (playerMagic.getMagick().getType()) {
             case BLACK:
                 actor.takeDamage(magicDamage);
+                System.out.println("enemy take magic dmg " + magicDamage);
                 break;
             case WHITE:
                 this.healHP(magicDamage);
+                System.out.println("you healed by" + magicDamage);
+                break;
             case ZOMBIE:
                 actor.takeDamage(magicDamage);
                 this.healHP(magicDamage);
+                break;
         }
     }
 

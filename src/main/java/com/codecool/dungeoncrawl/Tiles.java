@@ -45,6 +45,9 @@ public class Tiles {
         tileMap.put("right_land", new Tile(11, 5));
         tileMap.put("top_right_corner_land", new Tile(8, 4));
         tileMap.put("bottom_right_corner_land", new Tile(11, 4));
+        tileMap.put("bottom_right_corner_inverse", new Tile(14, 4));
+        tileMap.put("top_right_corner_inverse", new Tile(13, 4));
+
         tileMap.put("key", new Tile(0,1));
 
         tileMap.put("armour", new Tile(0,23));

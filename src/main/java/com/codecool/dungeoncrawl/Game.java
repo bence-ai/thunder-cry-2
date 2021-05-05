@@ -4,9 +4,7 @@ import com.codecool.dungeoncrawl.logic.Battle;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.CharacterAvatar;
-import com.codecool.dungeoncrawl.logic.items.ItemType;
+import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -22,8 +20,6 @@ import javafx.stage.Stage;
 
 import java.util.Random;
 
-import static com.codecool.dungeoncrawl.logic.items.ItemType.*;
-
 public class Game {
     Font defaultFont = new Font("Pixeled Regular", 12);
     Random random = new Random();
@@ -33,6 +29,8 @@ public class Game {
     GameMap map;
     GraphicsContext context;
     Canvas canvas;
+    Scene scene;
+    BorderPane toolbar;
 
     Label name = new Label();
     Label healthLabel = new Label();
@@ -47,34 +45,29 @@ public class Game {
     }
 
     public void play() {
-        BorderPane toolbar = setToolbar();
+        this.toolbar = setToolbar();
 
         canvas = tutorial();
-        context  = canvas.getGraphicsContext2D();
+        context = canvas.getGraphicsContext2D();
 
         borderPane = new BorderPane();
         borderPane.setCenter(canvas);
         borderPane.setTop(toolbar);
 
-
-
-        Scene scene = new Scene(borderPane);
+        this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
         stage.setScene(scene);
         stage.setFullScreen(true);
-
-        battle = new Battle(scene, toolbar);
-        battle.fight(map.getPlayer(), map.getPlayer());
     }
 
-        private void onKeyPressed(KeyEvent keyEvent) {
+
+    private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
-                if(map.getPlayer().isThereEnemy()) {
-                    System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
- //                   Battle battle = new Battle(scene, toolbar);
-//                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
+                if (map.getPlayer().isThereEnemy()) {
+                    Battle battle = new Battle(scene, toolbar, map);
+                    battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
                     refresh();
                 }
                 break;
@@ -94,7 +87,7 @@ public class Game {
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().move(1, 0);
                 update();
                 refresh();
                 break;
@@ -109,13 +102,13 @@ public class Game {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
                 case WEAPON:
-                map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
-                map.getPlayer().getCell().setItem(null);
-                System.out.println("player ATk: " + map.getPlayer().getAttack() +
-                        " player Sword Attack: " + map.getPlayer().getWeapon().getProperty()+
-                        " player whole damage: " + map.getPlayer().generateAttackDamage());
-                refresh();
-                break;
+                    map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
+                    map.getPlayer().getCell().setItem(null);
+                    System.out.println("player ATk: " + map.getPlayer().getAttack() +
+                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty() +
+                            " player whole damage: " + map.getPlayer().generateAttackDamage());
+                    refresh();
+                    break;
                 case ARMOUR:
                     map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);
@@ -149,7 +142,7 @@ public class Game {
         characterInfo.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
         characterInfo.setPadding(new Insets(10));
 
-        Image avatarImage = CharacterAvatar.BLUE_BOY.getCharacterAvatar();
+        Image avatarImage = PlayerAvatar.BLUE_BOY.getCharacterAvatar();
         BorderPane playerAvatar = new BorderPane();
         playerAvatar.setCenter(new ImageView(avatarImage));
         playerAvatar.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
@@ -189,8 +182,7 @@ public class Game {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {
                     Tiles.drawTile(context, cell.getItem(), x, y);
-                }
-                else {
+                } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }

@@ -1,12 +1,9 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Bandit;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GameMap {
     private int width;
@@ -14,8 +11,6 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-
-    private Random random = new Random();
 
     private ArrayList<Actor> enemyList = new ArrayList<>();
 
@@ -48,6 +43,10 @@ public class GameMap {
         this.enemyList.add(actor);
     }
 
+    public void removeActor(Actor actor) {
+        enemyList.remove(actor);
+    }
+
     public ArrayList<Actor> getEnemyList() {
         return enemyList;
     }
@@ -63,16 +62,10 @@ public class GameMap {
     /**
      * It will call onUpdate method on each Actor in the actorList(should rename)
      * We use this to update the enemy movement in the whole map turn by turn.
-     *     */
+     **/
     public void updateActor() {
-        int moveOrNot1 = random.nextInt(enemyList.size());
-        int moveOrNot2 = random.nextInt(enemyList.size());
-        int moveOrNot3 = random.nextInt(enemyList.size());
-        for (int i = 0; i < enemyList.size(); i++) {
-            if (moveOrNot1 == i || moveOrNot3 == i || moveOrNot2 == i) {
-                continue;
-            }
-            enemyList.get(i).onUpdate();
+        for (Actor enemy : enemyList) {
+            enemy.onUpdate();
         }
     }
 }
