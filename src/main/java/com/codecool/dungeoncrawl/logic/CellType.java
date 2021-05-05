@@ -11,11 +11,13 @@ public enum CellType {
     TREE3("tree3", false),
     TREE4("tree4", false),
     WATER("water", false),
-    BOTTOM_LAND("bottom_land", true),
-    TOP_LAND("top_land", true),
-    RIGHT_LAND("right_land", true),
-    TOP_CORNER_LAND("top_right_corner_land", true),
-    BOTTOM_CORNER_LAND("bottom_right_corner_land", true),
+    BOTTOM_LAND("bottom_land", false),
+    TOP_LAND("top_land", false),
+    RIGHT_LAND("right_land", false),
+    TOP_CORNER_LAND("top_right_corner_land", false),
+    BOTTOM_CORNER_LAND("bottom_right_corner_land", false),
+    BOTTOM_CORNER_INVERSE("bottom_right_corner_inverse", false),
+    TOP_CORNER_INVERSE("top_right_corner_inverse", false),
     OPEN_DOOR("open door", true),
     CLOSED_DOOR("closed door", false),
     STAIRS("stairs", true); // There is a square type "stairs down". Entering this square moves the player to a different map.
@@ -23,17 +25,17 @@ public enum CellType {
     private final String tileName;
 
     public boolean isStepable() {
-        return isStepable;
+        return stepable;
     }
 
     public void setStepable(boolean stepable) {
-        isStepable = stepable;
+        this.stepable = stepable;
     }
 
-    private boolean isStepable;
+    private boolean stepable;
 
     CellType(String tileName, boolean isStepable) {
-        this.isStepable = isStepable;
+        this.stepable = isStepable;
         this.tileName = tileName;
     }
 

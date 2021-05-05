@@ -1,14 +1,11 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.Magic.Spells;
 import com.codecool.dungeoncrawl.logic.actors.Bandit;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.*;
 
-
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MapLoader {
@@ -110,6 +107,12 @@ public class MapLoader {
                             break;
                         case '│':
                             cell.setType(CellType.RIGHT_LAND);
+                            break;
+                        case '┘':
+                            cell.setType(CellType.TOP_CORNER_INVERSE);
+                            break;
+                        case '┐':
+                            cell.setType(CellType.BOTTOM_CORNER_INVERSE);
                             break;
                         case 'g':
                             cell.setType(CellType.GRASS_FLOOR);
