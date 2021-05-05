@@ -11,7 +11,8 @@ import com.codecool.dungeoncrawl.logic.magic.Spell;
 import java.util.ArrayList;
 
 public class Player extends Actor {
-    private ArrayList<Item> inventory = new ArrayList();
+
+    private final ArrayList<Item> inventory = new ArrayList<>();
     int mapLevel = 0;
 
 
@@ -25,7 +26,7 @@ public class Player extends Actor {
         this.maxDefense = this.defense;
         this.attack = 80;
         this.maxAttack = this.attack;
-        this.spellList = new ArrayList<Spell>();
+        this.spellList = new ArrayList<>();
         this.spellList.add(Spell.FIRE);
         this.spellList.add(Spell.THUNDER);
         this.spellList.add(Spell.SMALL_HEAL);
@@ -49,11 +50,6 @@ public class Player extends Actor {
         }
 
         Cell nextCell = cell.getNeighbor(dx, dy);
-//        if (nextCell.getType().equals(CellType.STAIRS)) {
-//            movingToNextLevel = true;
-//            // TODO here we have to signal loading next level to the Game object
-//
-//        }
         if (nextCell.getActor() != null) {
             return;
         }
@@ -89,7 +85,6 @@ public class Player extends Actor {
 
     @Override
     public void onUpdate() {
-        return;
     }
 
     public void playerAttackAction(Actor actor) {
@@ -125,15 +120,15 @@ public class Player extends Actor {
     }
 
     public String inventoryToString() {
-        String inventoryString = "";
+        StringBuilder inventoryString = new StringBuilder();
         if (inventory.size() == 0) {
-            inventoryString = "Empty";
+            inventoryString = new StringBuilder("Empty");
         } else {
             for (Item item : inventory) {
-                inventoryString = inventoryString + item.getType();
+                inventoryString.append(item.getType());
             }
         }
-        return inventoryString;
+        return inventoryString.toString();
     }
 
     public boolean isThereEnemy() {
@@ -143,9 +138,7 @@ public class Player extends Actor {
             return true;
         } else if (cell.getNeighbor(0, 1).getActor() != null) {
             return true;
-        } else if (cell.getNeighbor(0, -1).getActor() != null) {
-            return true;
-        } else return false;
+        } else return cell.getNeighbor(0, -1).getActor() != null;
     }
 
     public Actor getEnemy() {

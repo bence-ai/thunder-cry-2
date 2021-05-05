@@ -45,7 +45,6 @@ public class Game {
     BorderPane weaponAvatar = new BorderPane();
 
 
-
     public Game(Stage stage, String name) {
         this.stage = stage;
         this.name.setText(name);
@@ -99,7 +98,6 @@ public class Game {
         }
         refresh();
     }
-
 
 
     /**
@@ -181,7 +179,7 @@ public class Game {
         for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
             BorderPane image = new BorderPane();
             image.setCenter(new ImageView(map.getPlayer().getSpellList().get(i).getAvatarImage()));
-            characterInfo.add(image, i+1, 4);
+            characterInfo.add(image, i + 1, 4);
         }
 
         enemyName.setFont(nameFont);
@@ -245,10 +243,12 @@ public class Game {
         }
     }
 
+    // TODO We can make this method "universal" to create canvas from any map
+    // and we can use this in checkForStairs in the switch case with different arguments
     private Canvas tutorial() {
         map = MapLoader.loadMap("tutorial");
-        for(Actor enemy: map.getEnemyList()) {
-            if(enemy instanceof Hunter) {
+        for (Actor enemy : map.getEnemyList()) {
+            if (enemy instanceof Hunter) {
                 ((Hunter) enemy).setMaxX(map.getWidth());
                 ((Hunter) enemy).setMaxY(map.getHeight());
             }
@@ -262,7 +262,14 @@ public class Game {
 
     private void checkForStairs() {
         if (map.getPlayer().getCell().getType().equals(CellType.STAIRS)) {
-            map = MapLoader.loadMap("level1.txt");
+            switch (map.getPlayer().getMapLevel() + 1) {
+                case 1:
+                    map = MapLoader.loadMap("level1.txt");
+                    break;
+                case 2:
+                    map = MapLoader.loadMap("level2.txt");
+                    break;
+            }
         }
     }
 

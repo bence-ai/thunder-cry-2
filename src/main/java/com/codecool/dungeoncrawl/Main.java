@@ -43,8 +43,8 @@ public class Main extends Application {
         Button loadGame = buttonFactory("Load Game");
         Button exit = buttonFactory("Exit");
         GridPane buttons = new GridPane();
-        buttons.add(newGame,0,0);
-        buttons.add(loadGame,0,1);
+        buttons.add(newGame, 0, 0);
+        buttons.add(loadGame, 0, 1);
         buttons.setAlignment(Pos.CENTER);
         exit.setFont(buttonFontNormal);
 
@@ -76,7 +76,7 @@ public class Main extends Application {
         button.setTextFill(Color.WHITE);
         button.setFont(buttonFontLarge);
         button.setAlignment(Pos.CENTER);
-        button.setPadding(new Insets(30,5,5,30));
+        button.setPadding(new Insets(30, 5, 5, 30));
         button.setEffect(new Reflection());
         button.setCursor(Cursor.HAND);
         return button;
@@ -92,6 +92,7 @@ public class Main extends Application {
         scene.setFill(Color.BLACK);
         stage.setScene(scene);
     }
+
     private void loadGame(MouseEvent mouseEvent) {
         Game game = new Game(stage, "Hubb");
         game.play();
