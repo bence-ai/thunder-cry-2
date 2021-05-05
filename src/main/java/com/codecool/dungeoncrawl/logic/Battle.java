@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.Game;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.event.EventHandler;
@@ -15,10 +16,12 @@ public class Battle {
     Player player;
     Actor enemy;
     EventHandler<? super KeyEvent> moveEvent;
+    GameMap map;
 
-    public Battle(Scene scene, BorderPane toolbar) {
+    public Battle(Scene scene, BorderPane toolbar, GameMap map) {
         this.scene = scene;
         this.toolbar = toolbar;
+        this.map = map;
     }
 
     private void setToolbar(Player player, Actor enemy) {
@@ -99,6 +102,7 @@ public class Battle {
             System.exit(0);
         }
         enemy.getCell().setActor(null);
+        map.removeActor(actor);
         scene.setOnKeyPressed(moveEvent);
     }
 }

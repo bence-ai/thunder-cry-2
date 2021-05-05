@@ -43,6 +43,10 @@ public class GameMap {
         this.enemyList.add(actor);
     }
 
+    public void removeActor(Actor actor) {
+        enemyList.remove(actor);
+    }
+
     public ArrayList<Actor> getEnemyList() {
         return enemyList;
     }

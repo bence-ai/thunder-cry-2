@@ -48,7 +48,7 @@ public class Game {
         this.toolbar = setToolbar();
 
         canvas = tutorial();
-        context  = canvas.getGraphicsContext2D();
+        context = canvas.getGraphicsContext2D();
 
         borderPane = new BorderPane();
         borderPane.setCenter(canvas);
@@ -63,11 +63,11 @@ public class Game {
 
 
     private void onKeyPressed(KeyEvent keyEvent) {
-      switch (keyEvent.getCode()) {
+        switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
-                if(map.getPlayer().isThereEnemy()) {
-                    Battle battle = new Battle(scene, toolbar);
-                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
+                if (map.getPlayer().isThereEnemy()) {
+                    Battle battle = new Battle(scene, toolbar, map);
+                    battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
                     refresh();
                 }
                 break;
@@ -87,7 +87,7 @@ public class Game {
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().move(1, 0);
                 update();
                 refresh();
                 break;
@@ -102,13 +102,13 @@ public class Game {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
                 case WEAPON:
-                map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
-                map.getPlayer().getCell().setItem(null);
-                System.out.println("player ATk: " + map.getPlayer().getAttack() +
-                        " player Sword Attack: " + map.getPlayer().getWeapon().getProperty()+
-                        " player whole damage: " + map.getPlayer().generateAttackDamage());
-                refresh();
-                break;
+                    map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
+                    map.getPlayer().getCell().setItem(null);
+                    System.out.println("player ATk: " + map.getPlayer().getAttack() +
+                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty() +
+                            " player whole damage: " + map.getPlayer().generateAttackDamage());
+                    refresh();
+                    break;
                 case ARMOUR:
                     map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);
@@ -182,8 +182,7 @@ public class Game {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {
                     Tiles.drawTile(context, cell.getItem(), x, y);
-                }
-                else {
+                } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }

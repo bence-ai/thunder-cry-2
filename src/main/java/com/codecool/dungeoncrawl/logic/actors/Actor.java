@@ -44,12 +44,8 @@ public abstract class Actor implements Drawable {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().isStepable()) {
+        if (nextCell.getType().isStepable() ) {
             if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (nextCell.getActor() != null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
