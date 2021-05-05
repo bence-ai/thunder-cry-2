@@ -42,7 +42,7 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            map.setSkeleton(new Skeleton(cell, "skeleton", 475, 170, 20, 75));
+                            map.setEnemyActor(new Skeleton(cell, "skeleton", 475, 170, 20, 75));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
@@ -70,9 +70,7 @@ public class MapLoader {
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
-                            Bandit bandit = new Bandit(cell, "Lajos Bandita", 375, 200, 17, 105);
-                            bandit.setWeapon(new Sword(cell, ItemType.WEAPON, 35));
-                            bandit.getCell().setItem(null);
+                            map.setEnemyActor(new Bandit(cell, "Bandita Lajos", 375, 135, 32, 135));
                             break;
                         case 'c':
                             cell.setType(CellType.CLOSED_DOOR);

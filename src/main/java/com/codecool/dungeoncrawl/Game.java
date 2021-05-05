@@ -63,6 +63,7 @@ public class Game {
         stage.setFullScreen(true);
     }
 
+
     private void onKeyPressed(KeyEvent keyEvent) {
         if (map.getSkeleton().size() != 0) {
             int moveOrNot = random.nextInt(map.getSkeleton().size());
@@ -75,10 +76,12 @@ public class Game {
                 }
             }
         }
-        switch (keyEvent.getCode()) {
-            case F:
+
+      switch (keyEvent.getCode()) {
+            case F: // Start a fight with nearby enemy
                 if(map.getPlayer().isThereEnemy()) {
                     System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
+
                     Battle battle = new Battle(scene, toolbar);
                     battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
                     refresh();
@@ -112,7 +115,6 @@ public class Game {
     }
 
     private void checkForItem() {
-
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
                 case WEAPON:
@@ -124,11 +126,11 @@ public class Game {
                 refresh();
                 break;
                 case ARMOUR:
-                map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
-                map.getPlayer().getCell().setItem(null);
-                System.out.println(map.getPlayer().getDefense());
-                refresh();
-                break;
+                    map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
+                    map.getPlayer().getCell().setItem(null);
+                    System.out.println(map.getPlayer().getDefense());
+                    refresh();
+                    break;
                 case POTION:
                     map.getPlayer().healHP(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);
@@ -140,11 +142,13 @@ public class Game {
                     map.getPlayer().getCell().setItem(null);
                     refresh();
                     break;
+                default:
+                    map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
+                    map.getPlayer().getCell().setItem(null);
+                    System.out.println(map.getPlayer().inventoryToString());  // test print
+                    refresh();
             }
-            map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
-            map.getPlayer().getCell().setItem(null);
-            System.out.println(map.getPlayer().inventoryToString());  // test print
-            refresh();
+
         }
     }
 
@@ -215,6 +219,5 @@ public class Game {
 
     private void update() {
         map.updateActor();
-
     }
 }
