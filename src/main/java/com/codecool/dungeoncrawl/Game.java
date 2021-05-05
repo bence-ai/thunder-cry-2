@@ -61,7 +61,7 @@ public class Game {
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
         stage.setScene(scene);
-        stage.setFullScreen(true);
+        stage.setFullScreen(false);
 
         battle = new Battle(scene, toolbar);
         battle.fight(map.getPlayer(), map.getPlayer());
