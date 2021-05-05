@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.Magic.Spells;
+import com.codecool.dungeoncrawl.logic.magic.Spell;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
@@ -84,9 +84,9 @@ public class Player extends Actor {
     }
 
     private void playerMagicAction(int eventNumber, Actor actor) {
-        Spells playerMagic = this.getSpellList().get(eventNumber - 1);
+        Spell playerMagic = this.getSpellList().get(eventNumber - 1);
         int magicCost = playerMagic.getMagick().getCost();
-        if (this.getManaPoint() < magicCost) {
+        if (this.getMana() < magicCost) {
             System.out.println("not enough mana");
             return;
         }

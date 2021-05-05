@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.Magic;
+package com.codecool.dungeoncrawl.logic.magic;
 
 import java.util.Random;
 

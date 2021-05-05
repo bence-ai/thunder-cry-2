@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.Magic.Spells;
+import com.codecool.dungeoncrawl.logic.magic.Spell;
 import com.codecool.dungeoncrawl.logic.items.Item;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public abstract class Actor implements Drawable {
     private int attack;
     private int maxDefense;
     private int defense;
-    private ArrayList<Spells> spellList;
+    private ArrayList<Spell> spellList;
 
     private final Random random = new Random();
 
@@ -36,7 +36,6 @@ public abstract class Actor implements Drawable {
         this.defense = defense;
         this.maxAttack = attack;
         this.attack = attack;
-
     }
 
     public  void move(int dx, int dy) {
@@ -69,8 +68,8 @@ public abstract class Actor implements Drawable {
                     break;
                 }
                 int randomMagic = random.nextInt(spellList.size());
-                Spells actorMagic = spellList.get(randomMagic);
-                if (this.getManaPoint() < actorMagic.getMagick().getCost()) {
+                Spell actorMagic = spellList.get(randomMagic);
+                if (this.getMana() < actorMagic.getMagick().getCost()) {
                     break;
                 }
                 this.reduceMP(actorMagic.getMagick().getCost());
@@ -141,11 +140,11 @@ public abstract class Actor implements Drawable {
         return health;
     }
 
-    public int getMaxManaPoint() {
+    public int getMaxMana() {
         return maxManaPoint;
     }
 
-    public int getManaPoint() {
+    public int getMana() {
         return manaPoint;
     }
 
@@ -165,12 +164,12 @@ public abstract class Actor implements Drawable {
         this.defense += defense;
     }
 
-    public void setSpellList(ArrayList<Spells> spellList) {
+    public void setSpellList(ArrayList<Spell> spellList) {
         this.spellList = spellList;
     }
 
 
-    public ArrayList<Spells> getSpellList() {
+    public ArrayList<Spell> getSpellList() {
         return spellList;
     }
 
