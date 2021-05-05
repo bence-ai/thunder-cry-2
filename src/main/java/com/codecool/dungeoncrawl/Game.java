@@ -80,10 +80,10 @@ public class Game {
             }
         }
         switch (keyEvent.getCode()) {
-            case F:
+            case F: // Start a fight with nearby enemy
                 if(map.getPlayer().isThereEnemy()) {
                     System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
-//                    Battle battle = new Battle(scene, toolbar);
+ //                   Battle battle = new Battle(scene, toolbar);
 //                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
                     refresh();
                 }
@@ -115,8 +115,12 @@ public class Game {
         }
     }
 
-    private void checkForItem() {
 
+    /**
+     * Checking if there is an item on the Player's current cell
+     * If there is, then handle it accordingly to its type with a switch-case
+     */
+    private void checkForItem() {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
                 case WEAPON:
@@ -219,6 +223,5 @@ public class Game {
 
     private void update() {
         map.updateActor();
-
     }
 }

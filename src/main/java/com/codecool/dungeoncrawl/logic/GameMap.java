@@ -39,7 +39,6 @@ public class GameMap {
 
     public void setSkeleton(Skeleton skeleton) {
         this.skeletonList.add(skeleton);
-//        this.skeletonList.add(skeleton);
     }
 
     public ArrayList<Actor> getSkeleton() {

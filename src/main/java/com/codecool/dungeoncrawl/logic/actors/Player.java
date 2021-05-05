@@ -64,7 +64,7 @@ public class Player extends Actor {
         if (eventNumber == 0) {
             playerAttackAction(actor);
         } else {
-            playerMagicAction(eventNumber,actor);
+            playerMagicAction(eventNumber, actor);
         }
     }
 
@@ -76,11 +76,11 @@ public class Player extends Actor {
     public void playerAttackAction(Actor actor) {
         int physicalAttack = this.generateAttackDamage();
         actor.takeDamage(physicalAttack - actor.getDefense());
-        System.out.println("Enemy take " + (physicalAttack-actor.getDefense()) + " dmg");
+        System.out.println("Enemy take " + (physicalAttack - actor.getDefense()) + " dmg");
     }
 
-    private void playerMagicAction(int eventNumber,Actor actor) {
-        Spells playerMagic = this.getSpellList().get(eventNumber-1);
+    private void playerMagicAction(int eventNumber, Actor actor) {
+        Spells playerMagic = this.getSpellList().get(eventNumber - 1);
         int magicCost = playerMagic.getMagick().getCost();
         if (this.getManaPoint() < magicCost) {
             System.out.println("not enough mana");
@@ -104,8 +104,7 @@ public class Player extends Actor {
         String inventoryString = "";
         if (inventory.size() == 0) {
             inventoryString = "Empty";
-        }
-        else {
+        } else {
             for (Item item : inventory) {
                 inventoryString = inventoryString + item.getType();
             }
@@ -114,32 +113,26 @@ public class Player extends Actor {
     }
 
     public boolean isThereEnemy() {
-        if (cell.getNeighbor(1,0).getActor() != null)
+        if (cell.getNeighbor(1, 0).getActor() != null)
             return true;
-        else if (cell.getNeighbor(-1,0).getActor() != null){
+        else if (cell.getNeighbor(-1, 0).getActor() != null) {
             return true;
-        }
-        else if(cell.getNeighbor(0,1).getActor() != null) {
+        } else if (cell.getNeighbor(0, 1).getActor() != null) {
             return true;
-        }
-        else if (cell.getNeighbor(0,-1).getActor() != null) {
+        } else if (cell.getNeighbor(0, -1).getActor() != null) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
-    public Actor getEnemy(){
-        if (cell.getNeighbor(1,0).getActor() != null)
-            return cell.getNeighbor(1,0).getActor();
-        else if (cell.getNeighbor(-1,0).getActor() != null){
-            return cell.getNeighbor(-1,0).getActor();
-        }
-        else if(cell.getNeighbor(0,1).getActor() != null) {
-            return cell.getNeighbor(0,1).getActor();
-        }
-        else if (cell.getNeighbor(0,-1).getActor() != null) {
-            return cell.getNeighbor(0,-1).getActor();
-        }
-        else return null;
+    public Actor getEnemy() {
+        if (cell.getNeighbor(1, 0).getActor() != null)
+            return cell.getNeighbor(1, 0).getActor();
+        else if (cell.getNeighbor(-1, 0).getActor() != null) {
+            return cell.getNeighbor(-1, 0).getActor();
+        } else if (cell.getNeighbor(0, 1).getActor() != null) {
+            return cell.getNeighbor(0, 1).getActor();
+        } else if (cell.getNeighbor(0, -1).getActor() != null) {
+            return cell.getNeighbor(0, -1).getActor();
+        } else return null;
     }
 }
