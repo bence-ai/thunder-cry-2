@@ -5,7 +5,6 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.CharacterAvatar;
-import com.codecool.dungeoncrawl.logic.items.ItemType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -21,8 +20,6 @@ import javafx.stage.Stage;
 
 import java.util.Random;
 
-import static com.codecool.dungeoncrawl.logic.items.ItemType.*;
-
 public class Game {
     Font defaultFont = new Font("Pixeled Regular", 12);
     Random random = new Random();
@@ -32,6 +29,8 @@ public class Game {
     GameMap map;
     GraphicsContext context;
     Canvas canvas;
+    Scene scene;
+    BorderPane toolbar;
 
     Label name = new Label();
     Label healthLabel = new Label();
@@ -46,7 +45,7 @@ public class Game {
     }
 
     public void play() {
-        BorderPane toolbar = setToolbar();
+        this.toolbar = setToolbar();
 
         canvas = tutorial();
         context  = canvas.getGraphicsContext2D();
@@ -57,17 +56,14 @@ public class Game {
 
 
 
-        Scene scene = new Scene(borderPane);
+        this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
         stage.setScene(scene);
         stage.setFullScreen(true);
-
-        battle = new Battle(scene, toolbar);
-        battle.fight(map.getPlayer(), map.getPlayer());
     }
 
-        private void onKeyPressed(KeyEvent keyEvent) {
+    private void onKeyPressed(KeyEvent keyEvent) {
         if (map.getSkeleton().size() != 0) {
             int moveOrNot = random.nextInt(map.getSkeleton().size());
 
@@ -83,8 +79,8 @@ public class Game {
             case F:
                 if(map.getPlayer().isThereEnemy()) {
                     System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
-//                    Battle battle = new Battle(scene, toolbar);
-//                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
+                    Battle battle = new Battle(scene, toolbar);
+                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
                     refresh();
                 }
                 break;
