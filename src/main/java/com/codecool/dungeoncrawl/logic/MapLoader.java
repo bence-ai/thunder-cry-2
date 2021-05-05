@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Bandit;
+import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.*;
@@ -120,6 +121,10 @@ public class MapLoader {
                             break;
                         case 'g':
                             cell.setType(CellType.GRASS_FLOOR);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.FLOOR);
+                            map.setEnemyActor(new Hunter(cell, "Blood Hunter"));
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

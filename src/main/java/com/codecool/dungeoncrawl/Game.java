@@ -1,9 +1,8 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.logic.Battle;
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.*;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -57,6 +56,7 @@ public class Game {
         this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
+
         stage.setScene(scene);
         stage.setFullScreen(true);
     }
@@ -68,36 +68,36 @@ public class Game {
                 if (map.getPlayer().isThereEnemy()) {
                     Battle battle = new Battle(scene, toolbar, map);
                     battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
-                    refresh();
                 }
                 break;
             case UP:
                 map.getPlayer().move(0, -1);
                 update();
-                refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
                 update();
-                refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
                 update();
-                refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
                 update();
-                refresh();
                 break;
             case E: // Pick-up items
-                // checking if there is an item at the current position, if so then picking it up
                 checkForItem();
                 break;
         }
+        refresh();
     }
 
+
+
+    /**
+     * checking if there is an item at the current position, if so then picking it up
+     */
     private void checkForItem() {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
@@ -193,6 +193,12 @@ public class Game {
 
     private Canvas tutorial() {
         map = MapLoader.loadMap("tutorial");
+        for(Actor enemy: map.getEnemyList()) {
+            if(enemy instanceof Hunter) {
+                ((Hunter) enemy).setMaxX(map.getWidth());
+                ((Hunter) enemy).setMaxY(map.getHeight());
+            }
+        }
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
@@ -200,7 +206,15 @@ public class Game {
         return canvas;
     }
 
+    private void checkForStairs() {
+        if (map.getPlayer().getCell().getType().equals(CellType.STAIRS)) {
+            map = MapLoader.loadMap("level1.txt");
+        }
+    }
+
+
     private void update() {
+        checkForStairs();
         map.updateActor();
     }
 }

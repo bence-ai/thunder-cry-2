@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Player extends Actor {
     private ArrayList<Item> inventory = new ArrayList();
+    int mapLevel = 0;
 
 
     public Player(Cell cell, String name) {
@@ -46,7 +47,7 @@ public class Player extends Actor {
 
         Cell nextCell = cell.getNeighbor(dx, dy);
 //        if (nextCell.getType().equals(CellType.STAIRS)) {
-//            return;
+//            movingToNextLevel = true;
 //            // TODO here we have to signal loading next level to the Game object
 //
 //        }
@@ -154,5 +155,9 @@ public class Player extends Actor {
         } else if (cell.getNeighbor(0, -1).getActor() != null) {
             return cell.getNeighbor(0, -1).getActor();
         } else return null;
+    }
+
+    public int getMapLevel() {
+        return mapLevel;
     }
 }
