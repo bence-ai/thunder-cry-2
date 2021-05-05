@@ -17,7 +17,10 @@ public enum CellType {
     TOP_LAND("top_land"),
     RIGHT_LAND("right_land"),
     TOP_CORNER_LAND("top_right_corner_land"),
-    BOTTOM_CORNER_LAND("bottom_right_corner_land");
+    BOTTOM_CORNER_LAND("bottom_right_corner_land"),
+    OPEN_DOOR("open door"),
+    CLOSED_DOOR("closed door"),
+    STAIRS("stairs"); // There is a square type "stairs down". Entering this square moves the player to a different map.
 
     private final String tileName;
 

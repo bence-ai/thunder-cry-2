@@ -45,7 +45,17 @@ public class Tiles {
         tileMap.put("right_land", new Tile(11, 5));
         tileMap.put("top_right_corner_land", new Tile(8, 4));
         tileMap.put("bottom_right_corner_land", new Tile(11, 4));
+        tileMap.put("key", new Tile(0,1));
 
+        tileMap.put("armour", new Tile(0,23));
+        tileMap.put("potion", new Tile(17,25));
+        tileMap.put("elixir", new Tile(16,25));
+        tileMap.put("sword", new Tile(0,30));
+        tileMap.put("bandit", new Tile(30,1));
+
+        tileMap.put("open door", new Tile(0,3));
+        tileMap.put("closed door", new Tile(1,3));
+        tileMap.put("stairs", new Tile(0,4));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

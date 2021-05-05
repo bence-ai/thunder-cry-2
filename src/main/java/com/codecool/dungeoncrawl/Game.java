@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.CharacterAvatar;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -18,9 +19,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class Game {
     Font defaultFont = new Font("Pixeled Regular", 12);
-
+    Random random = new Random();
     private Stage stage;
     private BorderPane borderPane;
     Battle battle;
@@ -63,7 +66,21 @@ public class Game {
     }
 
         private void onKeyPressed(KeyEvent keyEvent) {
+        int moveOrNot = random.nextInt(map.getSkeleton().size());
+        for (int i = 0; i < map.getSkeleton().size(); i++) {
+            if (i == moveOrNot) {
+                continue;
+            } else {map.getSkeleton().get(i).move(0,0);}
+        }
         switch (keyEvent.getCode()) {
+            case F:
+                if(map.getPlayer().isThereEnemy()) {
+                    System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
+//                    Battle battle = new Battle(scene, toolbar);
+//                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
+                    refresh();
+                }
+                break;
             case UP:
                 map.getPlayer().move(0, -1);
                 refresh();
@@ -80,7 +97,44 @@ public class Game {
                 map.getPlayer().move(1,0);
                 refresh();
                 break;
-            }
+            case E: // Pick-up items
+                // checking if there is an item at the current position, if so then picking it up
+                if (map.getPlayer().getCell().getItem() != null) {
+                    if(map.getPlayer().getCell().getItem().getType() == ItemType.WEAPON) {
+                        map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
+                        map.getPlayer().getCell().setItem(null);
+                        System.out.println("player ATk: " + map.getPlayer().getAttack() +
+                                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty()+
+                                            " player whole damage: " + map.getPlayer().generateAttackDamage());
+                        refresh();
+                        break;
+                    }
+                    if (map.getPlayer().getCell().getItem().getType() == ItemType.ARMOUR) {
+                        map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
+                        map.getPlayer().getCell().setItem(null);
+                        System.out.println(map.getPlayer().getDefense());
+                        refresh();
+                        break;
+                    }
+                    if (map.getPlayer().getCell().getItem().getType() == ItemType.POTION) {
+                        map.getPlayer().healHP(map.getPlayer().getCell().getItem().getProperty());
+                        map.getPlayer().getCell().setItem(null);
+                        refresh();
+                        break;
+                    }
+                    if (map.getPlayer().getCell().getItem().getType() == ItemType.ELIXIR) {
+                        map.getPlayer().restoreMP(map.getPlayer().getCell().getItem().getProperty());
+                        map.getPlayer().getCell().setItem(null);
+                        refresh();
+                        break;
+                    }
+                    map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
+                    map.getPlayer().getCell().setItem(null);
+                    System.out.println(map.getPlayer().inventoryToString());  // test print
+                    refresh();
+                }
+                break;
+        }
     }
 
     private BorderPane setToolbar() {
@@ -97,9 +151,9 @@ public class Game {
 
         Label nameText = new Label("Name: ");
         nameText.setFont(defaultFont);
-        characterInfo.add(nameText, 0,0);
+        characterInfo.add(nameText, 0, 0);
         name.setFont(defaultFont);
-        characterInfo.add(name, 1,0);
+        characterInfo.add(name, 1, 0);
         Label healthText = new Label("Health: ");
         healthText.setFont(defaultFont);
         characterInfo.add(healthText, 0, 1);
@@ -127,7 +181,10 @@ public class Game {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
+                } else if (cell.getItem() != null) {
+                    Tiles.drawTile(context, cell.getItem(), x, y);
+                }
+                else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
