@@ -40,6 +40,7 @@ public class GameMap {
         return player;
     }
 
+
     public void setEnemyActor(Actor actor) {
         this.enemyList.add(actor);
     }

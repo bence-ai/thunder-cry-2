@@ -69,10 +69,10 @@ public class Game {
 
         private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case F:
+            case F: // Start a fight with nearby enemy
                 if(map.getPlayer().isThereEnemy()) {
                     System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
-//                    Battle battle = new Battle(scene, toolbar);
+ //                   Battle battle = new Battle(scene, toolbar);
 //                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
                     refresh();
                 }
