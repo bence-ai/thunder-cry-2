@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Actor implements Drawable {
+
     protected Cell cell;
     private Item weapon;
     private String name;
