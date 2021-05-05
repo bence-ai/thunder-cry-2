@@ -40,7 +40,6 @@ public abstract class Actor implements Drawable {
     }
 
     public  void move(int dx, int dy) {
-
         if (cell.getNeighbor(dx, dy) == null) {
             return;
         }
@@ -50,14 +49,13 @@ public abstract class Actor implements Drawable {
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
-            } else if (!nextCell.getActor().getTileName().equals("player") || nextCell.getActor().getTileName().equals("bandit")) {
+            } else if (nextCell.getActor() != null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
             }
         }
-
-    };
+    }
 
     public void attack(int eventNumber, Actor actor){
         switch (eventNumber){
@@ -104,12 +102,10 @@ public abstract class Actor implements Drawable {
         }
         return random.nextInt(((this.attack+12 + this.weapon.getProperty())) - ((this.attack-12) + this.weapon.getProperty())) + (this.attack-12 + this.weapon.getProperty());
     }
-
     public void takeDamage(int damage) {
         this.health -= damage;
         this.health = Math.max(0, this.health);
     }
-
     public void healHP(int healing) {
         this.health += healing;
         if( this.health > this.maxHealth) {
@@ -211,8 +207,7 @@ public abstract class Actor implements Drawable {
                 dy = 0;
                 break;
         }
-        int[] directionCoordinates = {dx,dy};
-
-        return directionCoordinates;
+        return new int[]{dx,dy};
     }
+
 }

@@ -20,7 +20,9 @@ public class Bandit extends Actor{
 
     @Override
     public void onUpdate() {
-        int[] moves = getRandomDirection();
-        this.move(moves[0],moves[1]);
+        for (int i = 0; i < 1; i++) {
+            int[] moves = getRandomDirection();
+            this.move(moves[0],moves[1]);
+        }
     }
 }

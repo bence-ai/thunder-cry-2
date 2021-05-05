@@ -54,8 +54,6 @@ public class Game {
         borderPane.setCenter(canvas);
         borderPane.setTop(toolbar);
 
-
-
         this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
@@ -65,23 +63,9 @@ public class Game {
 
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        if (map.getEnemyList().size() != 0) {
-            int moveOrNot = random.nextInt(map.getEnemyList().size());
-
-            for (int i = 0; i < map.getEnemyList().size(); i++) {
-                if (i == moveOrNot) {
-                    continue;
-                } else {
-                    map.getEnemyList().get(i).move(0, 0);
-                }
-            }
-        }
-
       switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
                 if(map.getPlayer().isThereEnemy()) {
-                    System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
-
                     Battle battle = new Battle(scene, toolbar);
                     battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
                     refresh();

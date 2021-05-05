@@ -22,9 +22,8 @@ public class Skeleton extends Actor {
 
     @Override
     public void onUpdate() {
-        int[] moves = getNextDirection();
+        int[] moves = getRandomDirection();
         move(moves[0], moves[1]);
-
     }
 
     public int[] getNextDirection() {
@@ -52,7 +51,7 @@ public class Skeleton extends Actor {
                 this.direction = Direction.SOUTH;
                 break;
         }
-        int[] directionCoordinates = {dx,dy};
+        int[] directionCoordinates = {dx, dy};
 
         return directionCoordinates;
     }
