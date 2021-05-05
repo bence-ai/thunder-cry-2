@@ -53,8 +53,6 @@ public class Player extends Actor {
             }
 
         }
-        System.out.println(nextCell.getType().isStepable());
-        System.out.println(nextCell.getX() + " y:" + nextCell.getY());
         if (nextCell.getType().isStepable()) {
             cell.setActor(null);
             nextCell.setActor(this);

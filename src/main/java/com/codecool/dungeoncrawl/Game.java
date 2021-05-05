@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Battle;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.CharacterAvatar;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
 import javafx.geometry.Insets;
@@ -209,5 +210,6 @@ public class Game {
 
     private void update() {
         map.updateActor();
+        System.out.println();
     }
 }
