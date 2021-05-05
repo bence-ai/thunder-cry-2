@@ -6,8 +6,6 @@ import com.codecool.dungeoncrawl.logic.Magic.Spells;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.util.Direction;
 
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Skeleton extends Actor {
     private Direction direction = Direction.NORTH;
@@ -21,52 +19,15 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
-    @Override
-    public void move(int dx, int dy){
-        switch (this.direction) {
-            case NORTH:
-                dx = 0;
-                dy = -1;
-                this.direction = Direction.EAST;
-                break;
-            case SOUTH:
-                dx = 0;
-                dy = 1;
-                this.direction = Direction.WEST;
-                break;
-            case WEST:
-                dx = -1;
-                dy = 0;
-                this.direction = Direction.NORTH;
-                break;
-            case EAST:
-                dx = 1;
-                dy = 0;
-                this.direction = Direction.SOUTH;
-                break;
-        }
 
-        if (cell.getNeighbor(dx, dy) == null) {
-            return;
-        }
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().equals(CellType.FLOOR)) {
-            if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (nextCell.getActor().getTileName().equals("player") || nextCell.getActor().getTileName().equals("bandit")) {
-                return;
-            } else {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            }
-        }
+    @Override
+    public void onUpdate() {
+        int[] moves = getNextDirection();
+        move(moves[0], moves[1]);
 
     }
 
-    public void move2 () {
+    public int[] getNextDirection() {
         int dx = 0;
         int dy = 0;
         switch (this.direction) {
@@ -91,34 +52,9 @@ public class Skeleton extends Actor {
                 this.direction = Direction.SOUTH;
                 break;
         }
+        int[] directionCoordinates = {dx,dy};
 
-        if (cell.getNeighbor(dx, dy) == null) {
-            return;
-        }
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().isStepable()) {
-            System.out.println("lépni kéne itt!!!");
-            if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (nextCell.getActor().getTileName().equals("player") || nextCell.getActor().getTileName().equals("bandit")) {
-                return;
-            } else {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            }
-        }
-
-    }
-
-
-    @Override
-    public void onUpdate() {
-        System.out.println("Here we go");
-        move2();
-
+        return directionCoordinates;
     }
 
 
