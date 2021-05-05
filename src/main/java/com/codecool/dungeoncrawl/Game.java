@@ -1,9 +1,6 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.logic.Battle;
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -57,6 +54,7 @@ public class Game {
         this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
+
         stage.setScene(scene);
         stage.setFullScreen(true);
     }
@@ -92,6 +90,8 @@ public class Game {
         }
         refresh();
     }
+
+
 
     /**
      * checking if there is an item at the current position, if so then picking it up
@@ -198,7 +198,15 @@ public class Game {
         return canvas;
     }
 
+    private void checkForStairs() {
+        if (map.getPlayer().getCell().getType().equals(CellType.STAIRS)) {
+            map = MapLoader.loadMap("level1.txt");
+        }
+    }
+
+
     private void update() {
+        checkForStairs();
         map.updateActor();
     }
 }

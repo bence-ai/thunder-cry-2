@@ -11,7 +11,6 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-
     private ArrayList<Actor> enemyList = new ArrayList<>();
 
 
