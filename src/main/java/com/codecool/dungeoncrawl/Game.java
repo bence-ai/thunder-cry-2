@@ -68,36 +68,34 @@ public class Game {
                 if (map.getPlayer().isThereEnemy()) {
                     Battle battle = new Battle(scene, toolbar, map);
                     battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
-                    refresh();
                 }
                 break;
             case UP:
                 map.getPlayer().move(0, -1);
                 update();
-                refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
                 update();
-                refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
                 update();
-                refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
                 update();
-                refresh();
                 break;
             case E: // Pick-up items
-                // checking if there is an item at the current position, if so then picking it up
                 checkForItem();
                 break;
         }
+        refresh();
     }
 
+    /**
+     * checking if there is an item at the current position, if so then picking it up
+     */
     private void checkForItem() {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {

@@ -34,5 +34,15 @@ public enum Direction {
         }
         return new int[]{dx,dy};
     }
+
+    public static boolean isMovingThisTurn() {
+        Random random = new Random();
+        var alma = random.nextInt(11);
+        if(alma > 7) {
+            System.out.println(alma);
+            return true;
+        }
+        else return false;
+    }
 }
 
