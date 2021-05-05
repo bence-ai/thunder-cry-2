@@ -25,19 +25,23 @@ public class Player extends Actor {
     }
 
     @Override
-    public void move(int dx, int dy){
+    public void move(int dx, int dy) {
         if (cell.getNeighbor(dx, dy) == null) {
             return;
         }
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().equals(CellType.STAIRS)) {
-            return;
-            // TODO here we have to signal loading next level to the Game object
 
+        Cell nextCell = cell.getNeighbor(dx, dy);
+//        if (nextCell.getType().equals(CellType.STAIRS)) {
+//            return;
+//            // TODO here we have to signal loading next level to the Game object
+//
+//        }
+        if (nextCell.getActor() != null) {
+            return;
         }
-            if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
-            for (Item item: inventory
-                 ) {
+        if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
+            for (Item item : inventory
+            ) {
                 if (item instanceof Key) {
                     nextCell.setType(CellType.OPEN_DOOR);
                     cell.setActor(null);
@@ -45,22 +49,16 @@ public class Player extends Actor {
                     cell = nextCell;
                     inventory.remove(item);
                     return;
-            }
+                }
             }
 
         }
-        if (nextCell.getType().equals(CellType.FLOOR) || nextCell.getType().equals(CellType.OPEN_DOOR)) {
-            if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (nextCell.getActor().getTileName().equals("skeleton") || nextCell.getActor().getTileName().equals("bandit")) {
-                return;
-            } else {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            }
+        System.out.println(nextCell.getType().isStepable());
+        System.out.println(nextCell.getX() + " y:" + nextCell.getY());
+        if (nextCell.getType().isStepable()) {
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
         }
 
     }
@@ -72,6 +70,11 @@ public class Player extends Actor {
         } else {
             playerMagicAction(eventNumber,actor);
         }
+    }
+
+    @Override
+    public void onUpdate() {
+        return;
     }
 
     public void playerAttackAction(Actor actor) {

@@ -56,4 +56,9 @@ public class Bandit extends Actor{
             }
         }
     }
+
+    @Override
+    public void onUpdate() {
+        this.move(0,0);
+    }
 }

@@ -13,11 +13,11 @@ import java.util.Scanner;
 
 public class MapLoader {
     public static GameMap loadMap(String level) {
+        InputStream is = null;
         switch(level) {
             case "tutorial":
-                String source = "/tutorial_map.txt";
+                is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
         }
-        InputStream is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
@@ -40,9 +40,12 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
+                        case 'd':
+                            cell.setType(CellType.DIRTY_FLOOR);
+                            break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            map.setSkeletons(new Skeleton(cell, "skeleton", 475, 170, 20, 75));
+                            map.setEnemyActor(new Skeleton(cell, "skeleton", 475, 170, 20, 75));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
@@ -64,21 +67,52 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Elixir(cell, ItemType.ELIXIR, 75);
                             break;
-                        case 'w':
+                        case 'W':
                             cell.setType(CellType.FLOOR);
                             new Sword(cell, ItemType.WEAPON, 35);
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
-                            map.setBandits(new Bandit(cell, "Bandita Lajos", 375, 135, 30, 135));
-                            bandit.setWeapon(new Sword(cell, ItemType.WEAPON, 35));
-                            bandit.getCell().setItem(null);
+                            map.setEnemyActor(new Bandit(cell, "Bandita Lajos", 375, 135, 32, 135));
                             break;
                         case 'c':
                             cell.setType(CellType.CLOSED_DOOR);
                             break;
                         case 'q':
                             cell.setType(CellType.FLOOR.STAIRS);
+                            break;
+                        case 'w':
+                            cell.setType(CellType.WATER);
+                            break;
+                        case '0':
+                            cell.setType(CellType.TREE1);
+                            break;
+                        case '1':
+                            cell.setType(CellType.TREE2);
+                            break;
+                        case '2':
+                            cell.setType(CellType.TREE3);
+                            break;
+                        case '3':
+                            cell.setType(CellType.TREE4);
+                            break;
+                        case '╚':
+                            cell.setType(CellType.TOP_CORNER_LAND);
+                            break;
+                        case '╔':
+                            cell.setType(CellType.BOTTOM_CORNER_LAND);
+                            break;
+                        case '═':
+                            cell.setType(CellType.TOP_LAND);
+                            break;
+                        case '-':
+                            cell.setType(CellType.BOTTOM_LAND);
+                            break;
+                        case '│':
+                            cell.setType(CellType.RIGHT_LAND);
+                            break;
+                        case 'g':
+                            cell.setType(CellType.GRASS_FLOOR);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Bandit;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 
@@ -12,8 +13,9 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-    private ArrayList<Skeleton> skeletonList = new ArrayList<>();
-    private ArrayList<Bandit> banditList = new ArrayList<>();
+
+    private ArrayList<Actor> enemyList = new ArrayList<>();
+
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -38,20 +40,12 @@ public class GameMap {
         return player;
     }
 
-    public ArrayList<Bandit> getBandits() {
-        return banditList;
+    public void setEnemyActor(Actor actor) {
+        this.enemyList.add(actor);
     }
 
-    public void setBandits(Bandit bandit) {
-        this.banditList.add(bandit);
-    }
-
-    public void setSkeletons(Skeleton skeleton) {
-        this.skeletonList.add(skeleton);
-    }
-
-    public ArrayList<Skeleton> getSkeletons() {
-        return skeletonList;
+    public ArrayList<Actor> getEnemyList() {
+        return enemyList;
     }
 
     public int getWidth() {
@@ -60,5 +54,15 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * It will call onUpdate method on each Actor in the actorList(should rename)
+     * We use this to update the enemy movement in the whole map turn by turn.
+     *     */
+    public void updateActor() {
+        for (Actor enemy : enemyList) {
+            enemy.onUpdate();
+        }
     }
 }

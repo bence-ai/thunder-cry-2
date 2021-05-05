@@ -1,41 +1,33 @@
 66 31
-#############
-#...........#    #########...........#    ######## ######## ######## ######## ######## ######## ######## ########
-#...s...s...######......##...........#    ########
-#......a................##...........#    ########
-#...........######..w...##....b......#    ########
-#.....s.....#    #......##...........#    ########
-#..p........#    #......##...........#    ########
-#...........#    #.e....##...........#    ########
-#####..######    ###..####.....b.....#    ########
-    #..#           #..##...........#    ########
-    #..#           #..##..b........#    ########
-    #.k#          ##..###...........#    ########
-#....@..................##...........#    ########
-#...........######......##...........#    ########
-#.....s.....#    #......##..........q#    ########
-#...........#    #......##...........#    ########
-#...........#    #......##...........#    ########
-#####..######    ###..####...........#    ########
-    #..#           #..##...........#    ########
-    #..#           #..##...........#    ########
-    #ck#          ##..###...........#    ########
-  ###..####      #......##...........#    ########
-  #.......#      #......##...........#    ########
-  #..s....#      #......##...........#    ########
-  #.......#      #......##...........#    #########........#
-  #.......#      #......##...........#    ########
-  #.......#      #......##...........#    ########
-  #########       #######...........#    ########
-  #########       #######...........#    ########
-  #########       #######...........#    ######## ######## #
-  #########       #######...........#    ########
-  #########       #######...........#    ######## ######## #
-  #########       #######...........#    ########
-  #.......#      #......##...........#    ########
-  #.......#      #......##...........#    ########
-  #.......#      #......##...........#    ########
-  #.......#      #......##...........#    ########
-  #########       #######...........#    ########
-  #########       #######...........#    ########
-  #########       #######...........#    ########
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwww╔═════════════════════════════════════════════
+wwwwwwwwwwwwww│ gggggggggggggggggggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│gggbgggggbgggggWgggg         gggggggggggggggg
+wwwwwwwwwwwwww│ggggggsgggggggggggggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│gggggggggg ggggggsggggg  gggggggggggggggggggg
+wwwwwwwwwwwwww│ggggegggggggggggpgggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│ggggggggggagggggggggbgggggggggggggggggggggggg
+wwwwwwwwwwwwww│ggggggggg     ggggggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│gggggggggggggggggggggggggggggg        ggggggg
+wwwwwwwwwwwwww│ggggggggg2ggggggggggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│ggggggggggggggggggggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│ggg1gggg@ggggg    ggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│gggggggg1gggggggggggggggggggggggggggggggggggg
+wwwwwwwwwwwwww│ggggggggggggggggg3gggggggggggggg2gggg2gg3gggg
+wwwwwwwwwwwwww│gggggggggggggggggggggggggggggggggggg3gggggggg
+wwwwwwwwwwwwww╚---------------------------------------------
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
