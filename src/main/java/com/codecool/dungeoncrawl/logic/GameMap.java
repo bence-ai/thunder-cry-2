@@ -63,6 +63,7 @@ public class GameMap {
      *     */
     public void updateActor() {
         for (Actor enemy : enemyList) {
+            System.out.println(enemy.getName());
             enemy.onUpdate();
         }
     }
