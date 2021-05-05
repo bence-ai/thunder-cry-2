@@ -2,15 +2,16 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.items.Weapon;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
-import com.codecool.dungeoncrawl.logic.items.Item;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    protected Item weapon;
+    protected Weapon weapon;
     protected String name;
     protected int maxHealth;
     protected int health;
@@ -21,7 +22,7 @@ public abstract class Actor implements Drawable {
     protected int maxDefense;
     protected int defense;
     protected ArrayList<Spell> spellList;
-
+    protected Image avatar;
 
     private final Random random = new Random();
 
@@ -92,12 +93,12 @@ public abstract class Actor implements Drawable {
     }
 
 
-    public void setWeapon(Item weapon) {
+    public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
 
 
-    public Item getWeapon() {
+    public Weapon getWeapon() {
         return weapon;
     }
 
@@ -214,6 +215,10 @@ public abstract class Actor implements Drawable {
 
     public int getY() {
         return cell.getY();
+    }
+
+    public Image getAvatar() {
+        return avatar;
     }
 
     public abstract void onUpdate();

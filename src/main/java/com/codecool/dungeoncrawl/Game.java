@@ -3,14 +3,12 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Hunter;
-import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -21,8 +19,11 @@ import javafx.stage.Stage;
 import java.util.Random;
 
 public class Game {
-    Font defaultFont = new Font("Pixeled Regular", 12);
-    Font nameFont = new Font("Pixeled Regular", 15);
+    Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));
+    Font SMALL_FONT = new Font("Pixeled Regular", 12);
+    Font MEDIUM_FONT = new Font("Pixeled Regular", 15);
+    Font LARGE_FONT = new Font("Pixeled Regular", 25);
+
     Random random = new Random();
     private final Stage stage;
     private BorderPane borderPane;
@@ -43,6 +44,7 @@ public class Game {
     Label enemyDefenseLabel = new Label();
     Label infoLabel = new Label();
     BorderPane weaponAvatar = new BorderPane();
+    BorderPane enemyAvatar = new BorderPane();
 
 
 
@@ -73,7 +75,7 @@ public class Game {
         switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
                 if (map.getPlayer().isThereEnemy()) {
-                    Battle battle = new Battle(scene, toolbar, map);
+                    battle = new Battle(scene, infoLabel, map);
                     battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
                 }
                 break;
@@ -109,7 +111,7 @@ public class Game {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
                 case WEAPON:
-                    map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
+                    map.getPlayer().setWeapon(map.getPlayer().getCell().getWeapon());
                     map.getPlayer().getCell().setItem(null);
                     System.out.println("player ATk: " + map.getPlayer().getAttack() +
                             " player Sword Attack: " + map.getPlayer().getWeapon().getProperty() +
@@ -146,24 +148,23 @@ public class Game {
     private BorderPane setToolbar() {
         BorderPane toolbar = new BorderPane();
         GridPane characterInfo = new GridPane();
-        characterInfo.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
+        characterInfo.setBackground(TOOLBOX_FILL_COLOR);
         characterInfo.setPadding(new Insets(10));
         GridPane enemyInfo = new GridPane();
-        enemyInfo.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
+        enemyInfo.setBackground(TOOLBOX_FILL_COLOR);
         enemyInfo.setPadding(new Insets(10));
 
-        Image avatarImage = PlayerAvatar.BLUE_BOY.getCharacterAvatar();
         BorderPane playerAvatar = new BorderPane();
-        playerAvatar.setCenter(new ImageView(avatarImage));
-        playerAvatar.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
-        BorderPane enemyAvatar = new BorderPane();
+        playerAvatar.setCenter(new ImageView(map.getPlayer().getAvatar()));
+        playerAvatar.setBackground(TOOLBOX_FILL_COLOR);
 
-        infoLabel.setFont(nameFont);
-        name.setFont(nameFont);
+        infoLabel.setFont(LARGE_FONT);
+
+        name.setFont(MEDIUM_FONT);
         name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
-        healthLabel.setFont(defaultFont);
-        mannaLabel.setFont(defaultFont);
-        defenseLabel.setFont(defaultFont);
+        healthLabel.setFont(SMALL_FONT);
+        mannaLabel.setFont(SMALL_FONT);
+        defenseLabel.setFont(SMALL_FONT);
         name.setTextFill(Color.WHITE);
         healthLabel.setTextFill(Color.WHITE);
         mannaLabel.setTextFill(Color.WHITE);
@@ -173,21 +174,37 @@ public class Game {
         characterInfo.add(mannaLabel, 0, 2);
         characterInfo.add(defenseLabel, 0, 3);
 
+        BorderPane weaponImage = new BorderPane();
+        Label weaponKey = new Label("0");
+        weaponKey.setFont(SMALL_FONT);
+        BorderPane weapon = new BorderPane();
+        weapon.setLeft(weaponKey);
         if (map.getPlayer().getWeapon() == null) {
-            weaponAvatar.setCenter(new ImageView(WeaponType.HAND.getAvatarImage()));
-            characterInfo.add(weaponAvatar, 1, 0);
+            weaponImage.setCenter(new ImageView(WeaponType.HAND.getAvatarImage()));
+            weapon.setRight(weaponImage);
+            weaponAvatar.setCenter(weapon);
+            characterInfo.add(weaponAvatar, 2, 0);
+        } else {
+            weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
+            weapon.setRight(weaponImage);
+            weaponAvatar.setCenter(weapon);
         }
 
         for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
-            BorderPane image = new BorderPane();
-            image.setCenter(new ImageView(map.getPlayer().getSpellList().get(i).getAvatarImage()));
-            characterInfo.add(image, i+1, 4);
+            BorderPane spellImage = new BorderPane();
+            spellImage.setCenter(new ImageView(map.getPlayer().getSpellList().get(i).getAvatarImage()));
+            Label spellKey = new Label(" " + (i+1));
+            spellKey.setFont(SMALL_FONT);
+            BorderPane spell = new BorderPane();
+            spell.setLeft(spellKey);
+            spell.setRight(spellImage);
+            characterInfo.add(spell, i+2, 2);
         }
 
-        enemyName.setFont(nameFont);
-        enemyHealthLabel.setFont(defaultFont);
-        enemyMannaLabel.setFont(defaultFont);
-        enemyDefenseLabel.setFont(defaultFont);
+        enemyName.setFont(MEDIUM_FONT);
+        enemyHealthLabel.setFont(SMALL_FONT);
+        enemyMannaLabel.setFont(SMALL_FONT);
+        enemyDefenseLabel.setFont(SMALL_FONT);
         enemyName.setTextFill(Color.WHITE);
         enemyHealthLabel.setTextFill(Color.WHITE);
         enemyMannaLabel.setTextFill(Color.WHITE);
@@ -198,7 +215,7 @@ public class Game {
         enemyInfo.add(enemyDefenseLabel, 0, 3);
 
         BorderPane actorsStats = new BorderPane();
-        actorsStats.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
+        actorsStats.setBackground(TOOLBOX_FILL_COLOR);
         actorsStats.setLeft(characterInfo);
         actorsStats.setRight(enemyInfo);
         infoLabel.setTextFill(Color.WHITE);
@@ -207,6 +224,7 @@ public class Game {
         toolbar.setStyle("-fx-border-color : #ffffff; -fx-border-width : 5 0 ");
         toolbar.setLeft(playerAvatar);
         toolbar.setCenter(actorsStats);
+        enemyAvatar.setBackground(TOOLBOX_FILL_COLOR);
         toolbar.setRight(enemyAvatar);
         toolbar.setMaxWidth(1920);
         return toolbar;
@@ -227,21 +245,24 @@ public class Game {
                 }
             }
         }
-        infoLabel.setText("");
         name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
         if (map.getPlayer().isThereEnemy()) {
+            infoLabel.setText("PRESS [F] TO FIGHT!");
             enemyName.setText(map.getPlayer().getEnemy().getName() + "(" + map.getPlayer().getEnemy().getAttack() + ")");
             enemyHealthLabel.setText("Health:" + map.getPlayer().getEnemy().getHealth());
             enemyMannaLabel.setText("Manna:" + map.getPlayer().getEnemy().getMana());
             enemyDefenseLabel.setText("Defense:" + map.getPlayer().getEnemy().getDefense());
+            enemyAvatar.setCenter(new ImageView(map.getPlayer().getEnemy().getAvatar()));
         } else {
+            infoLabel.setText("");
             enemyName.setText("");
             enemyHealthLabel.setText("");
             enemyMannaLabel.setText("");
             enemyDefenseLabel.setText("");
+            enemyAvatar.setCenter(null);
         }
     }
 

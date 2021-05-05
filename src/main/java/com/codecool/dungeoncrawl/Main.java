@@ -63,6 +63,7 @@ public class Main extends Application {
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
         loadGame.setOnMouseClicked(this::loadGame);
+        loadGame.setDisable(true);
         stage.show();
         stage.setScene(scene);
     }
@@ -87,13 +88,10 @@ public class Main extends Application {
     }
 
     private void newGame(MouseEvent mouseEvent) {
-        BorderPane borderPane = new BorderPane();
-        Scene scene = new Scene(borderPane);
-        scene.setFill(Color.BLACK);
-        stage.setScene(scene);
-    }
-    private void loadGame(MouseEvent mouseEvent) {
         Game game = new Game(stage, "Hubb");
         game.play();
+    }
+    private void loadGame(MouseEvent mouseEvent) {
+
     }
 }

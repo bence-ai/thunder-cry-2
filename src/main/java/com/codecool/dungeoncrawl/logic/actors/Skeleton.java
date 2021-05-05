@@ -22,8 +22,7 @@ public class Skeleton extends Actor {
         this.maxAttack = this.attack;
         this.spellList = new ArrayList<Spell>();
         this.spellList.add(Spell.FIRE);
-
-
+        this.avatar = EnemyAvatar.SKELETON.getEnemyAvatar();
     }
 
     @Override

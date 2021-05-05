@@ -38,23 +38,24 @@ public enum Spell {
         Image avatarsImage = new Image("spells.png");
         PixelReader reader = avatarsImage.getPixelReader();
         WritableImage newImage = null;
+        int WIDTH = 24;
 
         if (number == 0) {
-            newImage = new WritableImage(reader, 0, 0, 16, 16);
+            newImage = new WritableImage(reader, 0, 0, WIDTH, WIDTH);
         } else if (number == 1) {
-            newImage = new WritableImage(reader, 16, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH, 0, WIDTH, WIDTH);
         } else if (number == 2) {
-            newImage = new WritableImage(reader, 32, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH*2, 0, WIDTH, WIDTH);
         } else if (number == 3) {
-            newImage = new WritableImage(reader, 48, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH*3, 0, WIDTH, WIDTH);
         }else if (number == 4) {
-            newImage = new WritableImage(reader, 64, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH*4, 0, WIDTH, WIDTH);
         } else if (number == 5) {
-            newImage = new WritableImage(reader, 80, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH*5, 0, WIDTH, WIDTH);
         } else if (number == 6) {
-            newImage = new WritableImage(reader, 96, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH*6, 0, WIDTH, WIDTH);
         } else if (number == 7) {
-            newImage = new WritableImage(reader, 102, 0, 16, 16);
+            newImage = new WritableImage(reader, WIDTH*7, 0, WIDTH, WIDTH);
         }
 
         avatarsImage = newImage;

@@ -11,6 +11,7 @@ public class Cell implements Drawable {
 
 
     private Item item;
+    private Weapon weapon;
 
     Cell(GameMap gameMap, int x, int y, CellType type) {
         this.gameMap = gameMap;
@@ -21,6 +22,10 @@ public class Cell implements Drawable {
 
     public Item getItem() {
         return item;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 
     public void setItem(Item item) {
