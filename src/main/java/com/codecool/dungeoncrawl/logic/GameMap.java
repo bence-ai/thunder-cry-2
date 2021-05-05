@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 
@@ -11,7 +12,7 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-    private ArrayList<Skeleton> skeletonList = new ArrayList<>();
+    private ArrayList<Actor> skeletonList = new ArrayList<>();
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -41,7 +42,7 @@ public class GameMap {
 //        this.skeletonList.add(skeleton);
     }
 
-    public ArrayList<Skeleton> getSkeleton() {
+    public ArrayList<Actor> getSkeleton() {
         return skeletonList;
     }
 
@@ -51,5 +52,15 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * It will call onUpdate method on each Actor in the actorList(should rename)
+     * We use this to update the enemy movement in the whole map turn by turn.
+     *     */
+    public void updateActor() {
+        for (Actor enemy : skeletonList) {
+            enemy.onUpdate();
+        }
     }
 }

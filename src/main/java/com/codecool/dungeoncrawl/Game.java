@@ -21,6 +21,8 @@ import javafx.stage.Stage;
 
 import java.util.Random;
 
+import static com.codecool.dungeoncrawl.logic.items.ItemType.*;
+
 public class Game {
     Font defaultFont = new Font("Pixeled Regular", 12);
     Random random = new Random();
@@ -66,11 +68,16 @@ public class Game {
     }
 
         private void onKeyPressed(KeyEvent keyEvent) {
-        int moveOrNot = random.nextInt(map.getSkeleton().size());
-        for (int i = 0; i < map.getSkeleton().size(); i++) {
-            if (i == moveOrNot) {
-                continue;
-            } else {map.getSkeleton().get(i).move(0,0);}
+        if (map.getSkeleton().size() != 0) {
+            int moveOrNot = random.nextInt(map.getSkeleton().size());
+
+            for (int i = 0; i < map.getSkeleton().size(); i++) {
+                if (i == moveOrNot) {
+                    continue;
+                } else {
+                    map.getSkeleton().get(i).move(0, 0);
+                }
+            }
         }
         switch (keyEvent.getCode()) {
             case F:
@@ -83,57 +90,65 @@ public class Game {
                 break;
             case UP:
                 map.getPlayer().move(0, -1);
+                update();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
+                update();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
+                update();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
+                update();
                 refresh();
                 break;
             case E: // Pick-up items
                 // checking if there is an item at the current position, if so then picking it up
-                if (map.getPlayer().getCell().getItem() != null) {
-                    if(map.getPlayer().getCell().getItem().getType() == ItemType.WEAPON) {
-                        map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
-                        map.getPlayer().getCell().setItem(null);
-                        System.out.println("player ATk: " + map.getPlayer().getAttack() +
-                                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty()+
-                                            " player whole damage: " + map.getPlayer().generateAttackDamage());
-                        refresh();
-                        break;
-                    }
-                    if (map.getPlayer().getCell().getItem().getType() == ItemType.ARMOUR) {
-                        map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
-                        map.getPlayer().getCell().setItem(null);
-                        System.out.println(map.getPlayer().getDefense());
-                        refresh();
-                        break;
-                    }
-                    if (map.getPlayer().getCell().getItem().getType() == ItemType.POTION) {
-                        map.getPlayer().healHP(map.getPlayer().getCell().getItem().getProperty());
-                        map.getPlayer().getCell().setItem(null);
-                        refresh();
-                        break;
-                    }
-                    if (map.getPlayer().getCell().getItem().getType() == ItemType.ELIXIR) {
-                        map.getPlayer().restoreMP(map.getPlayer().getCell().getItem().getProperty());
-                        map.getPlayer().getCell().setItem(null);
-                        refresh();
-                        break;
-                    }
-                    map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
-                    map.getPlayer().getCell().setItem(null);
-                    System.out.println(map.getPlayer().inventoryToString());  // test print
-                    refresh();
-                }
+                checkForItem();
                 break;
+        }
+    }
+
+    private void checkForItem() {
+
+        if (map.getPlayer().getCell().getItem() != null) {
+            switch (map.getPlayer().getCell().getItem().getType()) {
+                case WEAPON:
+                map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
+                map.getPlayer().getCell().setItem(null);
+                System.out.println("player ATk: " + map.getPlayer().getAttack() +
+                        " player Sword Attack: " + map.getPlayer().getWeapon().getProperty()+
+                        " player whole damage: " + map.getPlayer().generateAttackDamage());
+                refresh();
+                break;
+                case ARMOUR:
+                map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
+                map.getPlayer().getCell().setItem(null);
+                System.out.println(map.getPlayer().getDefense());
+                refresh();
+                break;
+                case POTION:
+                    map.getPlayer().healHP(map.getPlayer().getCell().getItem().getProperty());
+                    map.getPlayer().getCell().setItem(null);
+                    refresh();
+                    break;
+
+                case ELIXIR:
+                    map.getPlayer().restoreMP(map.getPlayer().getCell().getItem().getProperty());
+                    map.getPlayer().getCell().setItem(null);
+                    refresh();
+                    break;
+            }
+            map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
+            map.getPlayer().getCell().setItem(null);
+            System.out.println(map.getPlayer().inventoryToString());  // test print
+            refresh();
         }
     }
 
@@ -200,5 +215,10 @@ public class Game {
                 map.getHeight() * Tiles.TILE_WIDTH);
 
         return canvas;
+    }
+
+    private void update() {
+        map.updateActor();
+
     }
 }
