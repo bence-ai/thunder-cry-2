@@ -59,11 +59,11 @@ public class Game {
 
         private void onKeyPressed(KeyEvent keyEvent) {
         Cell neighbourCell = tutorialMap.getPlayer().getCell();
-        int moveOrNot = random.nextInt(tutorialMap.getSkeleton().size());
-        for (int i = 0; i < tutorialMap.getSkeleton().size(); i++) {
+        int moveOrNot = random.nextInt(tutorialMap.getSkeletons().size());
+        for (int i = 0; i < tutorialMap.getSkeletons().size(); i++) {
             if (i == moveOrNot) {
                 continue;
-            } else {tutorialMap.getSkeleton().get(i).move(0,0);}
+            } else {tutorialMap.getSkeletons().get(i).move(0,0);}
         }
         switch (keyEvent.getCode()) {
             case F:

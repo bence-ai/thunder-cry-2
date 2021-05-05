@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Bandit;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 
@@ -12,6 +13,7 @@ public class GameMap {
 
     private Player player;
     private ArrayList<Skeleton> skeletonList = new ArrayList<>();
+    private ArrayList<Bandit> banditList = new ArrayList<>();
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -36,12 +38,19 @@ public class GameMap {
         return player;
     }
 
-    public void setSkeleton(Skeleton skeleton) {
-        this.skeletonList.add(skeleton);
-//        this.skeletonList.add(skeleton);
+    public ArrayList<Bandit> getBandits() {
+        return banditList;
     }
 
-    public ArrayList<Skeleton> getSkeleton() {
+    public void setBandits(Bandit bandit) {
+        this.banditList.add(bandit);
+    }
+
+    public void setSkeletons(Skeleton skeleton) {
+        this.skeletonList.add(skeleton);
+    }
+
+    public ArrayList<Skeleton> getSkeletons() {
         return skeletonList;
     }
 
