@@ -4,6 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -15,8 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class Game {
-    GameMap tutorialMap = MapLoader.loadMap();
+    Random random = new Random();
+    GameMap tutorialMap = MapLoader.loadMap("tutorial");
     Canvas canvas = new Canvas(
             tutorialMap.getWidth() * Tiles.TILE_WIDTH,
             tutorialMap.getHeight() * Tiles.TILE_WIDTH);
@@ -54,7 +59,21 @@ public class Game {
 
         private void onKeyPressed(KeyEvent keyEvent) {
         Cell neighbourCell = tutorialMap.getPlayer().getCell();
+        int moveOrNot = random.nextInt(tutorialMap.getSkeleton().size());
+        for (int i = 0; i < tutorialMap.getSkeleton().size(); i++) {
+            if (i == moveOrNot) {
+                continue;
+            } else {tutorialMap.getSkeleton().get(i).move(0,0);}
+        }
         switch (keyEvent.getCode()) {
+            case F:
+                if(tutorialMap.getPlayer().isThereEnemy()) {
+                    System.out.println(tutorialMap.getPlayer().getEnemy().getClass().getSimpleName());
+                    //Battle battle = new Battle(scene, toolbar);
+                    //battle.fight(tutorialMap.getPlayer(),tutorialMap.getPlayer().getEnemy());
+                    refresh();
+                }
+                break;
             case UP:
                 tutorialMap.getPlayer().move(0, -1);
                 refresh();
@@ -71,10 +90,46 @@ public class Game {
                 tutorialMap.getPlayer().move(1,0);
                 refresh();
                 break;
-            case E:
-                if (neighbourCell.getNeighbor(1,0).getType().equals(CellType.ITEM)) {
-
+            case E: // Pick-up items
+                // checking if there is an item at the current position, if so then picking it up
+                if (!tutorialMap.getPlayer().getCell().getItem().equals(null)) {
+                    if(tutorialMap.getPlayer().getCell().getItem().getType() == ItemType.WEAPON) {
+                        tutorialMap.getPlayer().setWeapon(tutorialMap.getPlayer().getCell().getItem());
+                        tutorialMap.getPlayer().getCell().setItem(null);
+                        System.out.println("player ATk: " + tutorialMap.getPlayer().getAttack() +
+                                            " player Sword Attack: " + tutorialMap.getPlayer().getWeapon().getProperty()+
+                                            " player whole damage: " + tutorialMap.getPlayer().generateAttackDamage());
+                        refresh();
+                        break;
+                    }
+                    if (tutorialMap.getPlayer().getCell().getItem().getType() == ItemType.ARMOUR) {
+                        tutorialMap.getPlayer().setDefense(tutorialMap.getPlayer().getCell().getItem().getProperty());
+                        tutorialMap.getPlayer().getCell().setItem(null);
+                        System.out.println(tutorialMap.getPlayer().getDefense());
+                        refresh();
+                        break;
+                    }
+                    if (tutorialMap.getPlayer().getCell().getItem().getType() == ItemType.POTION) {
+                        tutorialMap.getPlayer().healHP(tutorialMap.getPlayer().getCell().getItem().getProperty());
+                        tutorialMap.getPlayer().getCell().setItem(null);
+                        refresh();
+                        break;
+                    }
+                    if (tutorialMap.getPlayer().getCell().getItem().getType() == ItemType.ELIXIR) {
+                        tutorialMap.getPlayer().restoreMP(tutorialMap.getPlayer().getCell().getItem().getProperty());
+                        tutorialMap.getPlayer().getCell().setItem(null);
+                        refresh();
+                        break;
+                    }
+                    // inventory.add(item) for example
+                    tutorialMap.getPlayer().pickUpItem(tutorialMap.getPlayer().getCell().getItem());
+                    // then remove the item from the cell
+                    tutorialMap.getPlayer().getCell().setItem(null);
+                    System.out.println(tutorialMap.getPlayer().inventoryToString());  // test print
+                    refresh();
                 }
+                // if there is no item nothing happens
+                break;
         }
     }
 
@@ -86,7 +141,10 @@ public class Game {
                 Cell cell = tutorialMap.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
+                } else if (cell.getItem() != null) {
+                    Tiles.drawTile(context, cell.getItem(), x, y);
+                }
+                else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
