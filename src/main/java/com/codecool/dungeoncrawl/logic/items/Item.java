@@ -8,14 +8,20 @@ public abstract class Item implements Drawable {
     private Cell cell;
     private ItemType type;
     private String itemName;
+    private int property;
 
     // TODO Need to implement Drawable for every item differently, return tileName for drawTile method
 
 
-    public Item(Cell cell, ItemType type) {
+    public Item(Cell cell, ItemType type, int property) {
         this.cell = cell;
         cell.setItem(this);
         this.type = type;
+        this.property = property;
+    }
+
+    public int getProperty() {
+        return property;
     }
 
     public Cell getCell() {

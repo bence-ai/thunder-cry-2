@@ -4,8 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Key extends Item{
 
-    public Key(Cell cell, ItemType type) {
-        super(cell, type);
+    public Key(Cell cell, ItemType type, int property) {
+        super(cell, type, property);
     }
 
     @Override

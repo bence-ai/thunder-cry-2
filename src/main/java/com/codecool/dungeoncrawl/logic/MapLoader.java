@@ -1,11 +1,14 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.Magic.Spells;
+import com.codecool.dungeoncrawl.logic.actors.Bandit;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MapLoader {
@@ -39,15 +42,37 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            map.setSkeleton(new Skeleton(cell, "skeleton", 475, 170, 20, 75));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            map.setPlayer(new Player(cell, "Jocó", 500, 230, 23, 85));
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
-                            new Key(cell, ItemType.KEY);
+                            new Key(cell, ItemType.KEY, 1);
+                            break;
+                        case 'a':
+                            cell.setType(CellType.FLOOR);
+                            new Armour(cell, ItemType.ARMOUR, 7);
+                            break;
+                        case 'p':
+                            cell.setType(CellType.FLOOR);
+                            new Potion(cell, ItemType.POTION, 135);
+                            break;
+                        case 'e':
+                            cell.setType(CellType.FLOOR);
+                            new Elixir(cell, ItemType.ELIXIR, 75);
+                            break;
+                        case 'w':
+                            cell.setType(CellType.FLOOR);
+                            new Sword(cell, ItemType.WEAPON, 35);
+                            break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            Bandit bandit = new Bandit(cell, "Lajos Bandita", 375, 200, 17, 105);
+                            bandit.setWeapon(new Sword(cell, ItemType.WEAPON, 35));
+                            bandit.getCell().setItem(null);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
