@@ -42,7 +42,7 @@ public class Bandit extends Actor{
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().equals(CellType.FLOOR)) {
+        if (nextCell.getType().isStepable()) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
                 nextCell.setActor(this);

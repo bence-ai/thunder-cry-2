@@ -210,6 +210,5 @@ public class Game {
 
     private void update() {
         map.updateActor();
-        System.out.println();
     }
 }

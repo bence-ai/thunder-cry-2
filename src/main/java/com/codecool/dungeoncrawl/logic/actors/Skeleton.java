@@ -1,13 +1,8 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.Magic.Spells;
-import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.util.Direction;
 
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Skeleton extends Actor {
     private Direction direction = Direction.NORTH;
@@ -50,7 +45,7 @@ public class Skeleton extends Actor {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().equals(CellType.FLOOR)) {
+        if (nextCell.getType().isStepable()) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
@@ -63,12 +58,10 @@ public class Skeleton extends Actor {
                 cell = nextCell;
             }
         }
-
     }
 
     @Override
     public void onUpdate() {
         this.move(0,0);
-
     }
 }
