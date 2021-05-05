@@ -74,6 +74,12 @@ public class MapLoader {
                             bandit.setWeapon(new Sword(cell, ItemType.WEAPON, 35));
                             bandit.getCell().setItem(null);
                             break;
+                        case 'c':
+                            cell.setType(CellType.CLOSED_DOOR);
+                            break;
+                        case 'q':
+                            cell.setType(CellType.FLOOR.STAIRS);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }

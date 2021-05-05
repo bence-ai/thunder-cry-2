@@ -72,9 +72,11 @@ public abstract class Actor implements Drawable {
         }
     }
 
+
     public void setWeapon(Item weapon) {
         this.weapon = weapon;
     }
+
 
     public Item getWeapon() {
         return weapon;

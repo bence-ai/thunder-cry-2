@@ -30,10 +30,26 @@ public class Player extends Actor {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
-            // TODO check inventory for KEY, then OPEN the door and remove the key
+        if (nextCell.getType().equals(CellType.STAIRS)) {
+            return;
+            // TODO here we have to signal loading next level to the Game object
+
         }
-        if (nextCell.getType().equals(CellType.FLOOR)) {
+            if (nextCell.getType().equals(CellType.CLOSED_DOOR)) {
+            for (Item item: inventory
+                 ) {
+                if (item instanceof Key) {
+                    nextCell.setType(CellType.OPEN_DOOR);
+                    cell.setActor(null);
+                    nextCell.setActor(this);
+                    cell = nextCell;
+                    inventory.remove(item);
+                    return;
+            }
+            }
+
+        }
+        if (nextCell.getType().equals(CellType.FLOOR) || nextCell.getType().equals(CellType.OPEN_DOOR)) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
@@ -96,5 +112,35 @@ public class Player extends Actor {
             }
         }
         return inventoryString;
+    }
+
+    public boolean isThereEnemy() {
+        if (cell.getNeighbor(1,0).getActor() != null)
+            return true;
+        else if (cell.getNeighbor(-1,0).getActor() != null){
+            return true;
+        }
+        else if(cell.getNeighbor(0,1).getActor() != null) {
+            return true;
+        }
+        else if (cell.getNeighbor(0,-1).getActor() != null) {
+            return true;
+        }
+        else return false;
+    }
+
+    public Actor getEnemy(){
+        if (cell.getNeighbor(1,0).getActor() != null)
+            return cell.getNeighbor(1,0).getActor();
+        else if (cell.getNeighbor(-1,0).getActor() != null){
+            return cell.getNeighbor(-1,0).getActor();
+        }
+        else if(cell.getNeighbor(0,1).getActor() != null) {
+            return cell.getNeighbor(0,1).getActor();
+        }
+        else if (cell.getNeighbor(0,-1).getActor() != null) {
+            return cell.getNeighbor(0,-1).getActor();
+        }
+        else return null;
     }
 }

@@ -66,6 +66,14 @@ public class Game {
             } else {tutorialMap.getSkeleton().get(i).move(0,0);}
         }
         switch (keyEvent.getCode()) {
+            case F:
+                if(tutorialMap.getPlayer().isThereEnemy()) {
+                    System.out.println(tutorialMap.getPlayer().getEnemy().getClass().getSimpleName());
+                    //Battle battle = new Battle(scene, toolbar);
+                    //battle.fight(tutorialMap.getPlayer(),tutorialMap.getPlayer().getEnemy());
+                    refresh();
+                }
+                break;
             case UP:
                 tutorialMap.getPlayer().move(0, -1);
                 refresh();
@@ -117,12 +125,11 @@ public class Game {
                     tutorialMap.getPlayer().pickUpItem(tutorialMap.getPlayer().getCell().getItem());
                     // then remove the item from the cell
                     tutorialMap.getPlayer().getCell().setItem(null);
-                    System.out.println(tutorialMap.getPlayer().inventoryToString());
+                    System.out.println(tutorialMap.getPlayer().inventoryToString());  // test print
                     refresh();
                 }
                 // if there is no item nothing happens
                 break;
-
         }
     }
 
