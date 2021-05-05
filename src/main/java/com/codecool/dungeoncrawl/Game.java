@@ -65,14 +65,14 @@ public class Game {
 
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        if (map.getSkeleton().size() != 0) {
-            int moveOrNot = random.nextInt(map.getSkeleton().size());
+        if (map.getEnemyList().size() != 0) {
+            int moveOrNot = random.nextInt(map.getEnemyList().size());
 
-            for (int i = 0; i < map.getSkeleton().size(); i++) {
+            for (int i = 0; i < map.getEnemyList().size(); i++) {
                 if (i == moveOrNot) {
                     continue;
                 } else {
-                    map.getSkeleton().get(i).move(0, 0);
+                    map.getEnemyList().get(i).move(0, 0);
                 }
             }
         }
