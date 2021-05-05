@@ -19,8 +19,17 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
+
     @Override
-    public void move(int dx, int dy) {
+    public void onUpdate() {
+        int[] moves = getNextDirection();
+        move(moves[0], moves[1]);
+
+    }
+
+    public int[] getNextDirection() {
+        int dx = 0;
+        int dy = 0;
         switch (this.direction) {
             case NORTH:
                 dx = 0;
@@ -43,31 +52,9 @@ public class Skeleton extends Actor {
                 this.direction = Direction.SOUTH;
                 break;
         }
+        int[] directionCoordinates = {dx,dy};
 
-        if (cell.getNeighbor(dx, dy) == null) {
-            return;
-        }
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().isStepable()) {
-            if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (!nextCell.getActor().getTileName().equals("player") || nextCell.getActor().getTileName().equals("bandit")) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            }
-        }
-
-    }
-
-
-    @Override
-    public void onUpdate() {
-        System.out.println("Here we go");
-        move(0, 0);
-
+        return directionCoordinates;
     }
 
 
