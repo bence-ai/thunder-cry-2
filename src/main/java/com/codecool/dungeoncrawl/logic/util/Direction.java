@@ -7,7 +7,7 @@ public enum Direction {
 
 
 
-    public static int[] getRandomDirection (Direction direction) {
+    public static int[] getRandomDirection () {
         Random random = new Random();
         int dx = 0;
         int dy = 0;
