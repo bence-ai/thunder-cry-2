@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
-public enum CharacterAvatar {
+public enum PlayerAvatar {
     BLUE_BOY(createAvatar(2)),
     BROWN_BOY(createAvatar(4)),
     GREEN_BOY(createAvatar(6)),
@@ -16,7 +16,7 @@ public enum CharacterAvatar {
 
     private final Image avatarImage;
 
-    CharacterAvatar(Image avatarImage) {
+    PlayerAvatar(Image avatarImage) {
         this.avatarImage = avatarImage;
     }
 

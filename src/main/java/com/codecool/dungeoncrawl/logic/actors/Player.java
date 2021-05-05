@@ -64,7 +64,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void actorFightActions(int eventNumber, Actor actor) {
+    public void attack(int eventNumber, Actor actor) {
         if (eventNumber == 0) {
             playerAttackAction(actor);
         } else {

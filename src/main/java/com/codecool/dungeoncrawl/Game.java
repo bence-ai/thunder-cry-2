@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.Battle;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.CharacterAvatar;
+import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -158,7 +158,7 @@ public class Game {
         characterInfo.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
         characterInfo.setPadding(new Insets(10));
 
-        Image avatarImage = CharacterAvatar.BLUE_BOY.getCharacterAvatar();
+        Image avatarImage = PlayerAvatar.BLUE_BOY.getCharacterAvatar();
         BorderPane playerAvatar = new BorderPane();
         playerAvatar.setCenter(new ImageView(avatarImage));
         playerAvatar.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));

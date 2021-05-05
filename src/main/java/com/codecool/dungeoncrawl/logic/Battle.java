@@ -73,17 +73,19 @@ public class Battle {
         }
 
         System.out.println("key: " + playerAction);
-        player.actorFightActions(playerAction, enemy);
+        player.attack(playerAction, enemy);
 
 
         if (isAlive(enemy)) {
             System.out.println("health enemy: " + enemy.getHealth());
             int enemySelect = new Random().nextInt(2);
-            enemy.actorFightActions(enemySelect, player);
+            enemy.attack(enemySelect, player);
             if(!isAlive(player)) {
                 gameOver(player);
             }
             System.out.println("health playa: " + player.getHealth());
+        } else {
+            gameOver(enemy);
         }
     }
 

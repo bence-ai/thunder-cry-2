@@ -21,7 +21,7 @@
       </Text>
    </top>
    <center>
-      <VBox onMouseClicked="#newGame" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="new" contentDisplay="CENTER" defaultButton="true" style="-fx-background-color: transparent;" stylesheets="@button.css" text="NEW GAME" textFill="WHITE">
                <padding>
