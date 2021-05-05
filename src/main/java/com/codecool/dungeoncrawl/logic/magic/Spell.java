@@ -14,6 +14,7 @@ public enum Spell {
     BIG_HEAL (new Magic("Greater Heal", 55, 400, SpellType.WHITE), createImage(5)),
 
     ZOMBIE_BITE (new Magic("Zombie Kiss", 50, 150, SpellType.ZOMBIE), createImage(0)),
+    SHADOW_BOLT (new Magic("Shadow bolt", 50, 120, SpellType.BLACK), createImage(0)),
 
     CURSE (new Magic("Curse of Weakness", 60, 1, SpellType.CURSE), createImage(0));
 

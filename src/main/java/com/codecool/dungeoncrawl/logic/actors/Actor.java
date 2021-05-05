@@ -10,75 +10,79 @@ import java.util.Random;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    private Item weapon;
-    private String name;
-    private int maxHealth;
-    private int health;
-    private int maxManaPoint;
-    private int manaPoint;
-    private int maxAttack;
-    private int attack;
-    private int maxDefense;
-    private int defense;
-    private ArrayList<Spell> spellList;
+    protected Item weapon;
+    protected String name;
+    protected int maxHealth;
+    protected int health;
+    protected int maxManaPoint;
+    protected int manaPoint;
+    protected int maxAttack;
+    protected int attack;
+    protected int maxDefense;
+    protected int defense;
+    protected ArrayList<Spell> spellList;
+
 
     private final Random random = new Random();
 
-    public Actor(Cell cell, String name, int health, int manaPoint, int defense, int attack) {
+    public Actor(Cell cell, String name) {
         this.cell = cell;
         this.cell.setActor(this);
         this.name = name;
+        this.health = 500;
         this.maxHealth = health;
-        this.health = health;
+        this.manaPoint = 200;
         this.maxManaPoint = manaPoint;
-        this.manaPoint = manaPoint;
+        this.defense = 25;
         this.maxDefense = defense;
-        this.defense = defense;
+        this.attack = 75;
         this.maxAttack = attack;
-        this.attack = attack;
     }
 
     public  void move(int dx, int dy) {
-
         if (cell.getNeighbor(dx, dy) == null) {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().isStepable()) {
+        if (nextCell.getType().isStepable() ) {
             if (nextCell.getActor() == null) {
-                cell.setActor(null);
-                nextCell.setActor(this);
-                cell = nextCell;
-            } else if (!nextCell.getActor().getTileName().equals("player") || nextCell.getActor().getTileName().equals("bandit")) {
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
             }
         }
-
-    };
+    }
 
     public void attack(int eventNumber, Actor actor){
         switch (eventNumber){
             case 0:
                 actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
+                System.out.println("Player taken dmg " + (this.generateAttackDamage() - actor.getDefense()));
+                break;
             case 1:
                 if (spellList == null){
                     actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
+                    System.out.println("Player taken dmg " + (this.generateAttackDamage() - actor.getDefense()));
                     break;
                 }
                 int randomMagic = random.nextInt(spellList.size());
+
                 Spell actorMagic = spellList.get(randomMagic);
                 if (this.getMana() < actorMagic.getMagick().getCost()) {
+                    actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
+                    System.out.println("Player taken dmg " + (this.generateAttackDamage() - actor.getDefense()));
                     break;
                 }
                 this.reduceMP(actorMagic.getMagick().getCost());
                 switch (actorMagic.getMagick().getType()) {
                     case BLACK:
                         actor.takeDamage(actorMagic.getMagick().generateDamage());
+                        System.out.println("Player magic dmg " + (actorMagic.getMagick().generateDamage()));
                         break;
                     case WHITE:
                         this.healHP(actorMagic.getMagick().generateDamage());
+                        System.out.println("Enemy heal dmg " + (actorMagic.getMagick().generateDamage()));
+                        break;
                     case ZOMBIE:
                         actor.takeDamage(actorMagic.getMagick().generateDamage());
                         this.healHP(actorMagic.getMagick().generateDamage());
@@ -103,12 +107,10 @@ public abstract class Actor implements Drawable {
         }
         return random.nextInt(((this.attack+12 + this.weapon.getProperty())) - ((this.attack-12) + this.weapon.getProperty())) + (this.attack-12 + this.weapon.getProperty());
     }
-
     public void takeDamage(int damage) {
         this.health -= damage;
         this.health = Math.max(0, this.health);
     }
-
     public void healHP(int healing) {
         this.health += healing;
         if( this.health > this.maxHealth) {
@@ -164,6 +166,34 @@ public abstract class Actor implements Drawable {
         this.defense += defense;
     }
 
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMaxManaPoint(int maxManaPoint) {
+        this.maxManaPoint = maxManaPoint;
+    }
+
+    public void setManaPoint(int manaPoint) {
+        this.manaPoint = manaPoint;
+    }
+
+    public void setMaxAttack(int maxAttack) {
+        this.maxAttack = maxAttack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public void setMaxDefense(int maxDefense) {
+        this.maxDefense = maxDefense;
+    }
+
     public void setSpellList(ArrayList<Spell> spellList) {
         this.spellList = spellList;
     }
@@ -188,30 +218,4 @@ public abstract class Actor implements Drawable {
 
     public abstract void onUpdate();
 
-    public int[] getRandomDirection() {
-        int dx = 0;
-        int dy = 0;
-        int randMove = random.nextInt(4);
-        switch (randMove) {
-            case 0:
-                dx = 0;
-                dy = -1;
-                break;
-            case 1:
-                dx = 0;
-                dy = 1;
-                break;
-            case 2:
-                dx = -1;
-                dy = 0;
-                break;
-            case 3:
-                dx = 1;
-                dy = 0;
-                break;
-        }
-        int[] directionCoordinates = {dx,dy};
-
-        return directionCoordinates;
-    }
 }

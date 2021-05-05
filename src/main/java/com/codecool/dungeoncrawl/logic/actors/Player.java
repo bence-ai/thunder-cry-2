@@ -2,17 +2,35 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.Sword;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
-import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
 
 public class Player extends Actor {
     private ArrayList<Item> inventory = new ArrayList();
+    int mapLevel = 0;
 
 
-    public Player(Cell cell, String name, int health, int manaPoint, int defense, int attack) {
-        super(cell, name, health, manaPoint, defense, attack);
+    public Player(Cell cell, String name) {
+        super(cell, name);
+        this.health = 500;
+        this.maxHealth = this.health;
+        this.manaPoint = 180;
+        this.maxManaPoint = this.manaPoint;
+        this.defense = 25;
+        this.maxDefense = this.defense;
+        this.attack = 80;
+        this.maxAttack = this.attack;
+        this.spellList = new ArrayList<Spell>();
+        this.spellList.add(Spell.FIRE);
+        this.spellList.add(Spell.THUNDER);
+        this.spellList.add(Spell.SMALL_HEAL);
+        this.weapon = new Sword(cell, ItemType.WEAPON, 0);
+        this.weapon.getCell().setItem(null);
     }
 
     public String getTileName() {
@@ -32,7 +50,7 @@ public class Player extends Actor {
 
         Cell nextCell = cell.getNeighbor(dx, dy);
 //        if (nextCell.getType().equals(CellType.STAIRS)) {
-//            return;
+//            movingToNextLevel = true;
 //            // TODO here we have to signal loading next level to the Game object
 //
 //        }
@@ -51,10 +69,7 @@ public class Player extends Actor {
                     return;
                 }
             }
-
         }
-        System.out.println(nextCell.getType().isStepable());
-        System.out.println(nextCell.getX() + " y:" + nextCell.getY());
         if (nextCell.getType().isStepable()) {
             cell.setActor(null);
             nextCell.setActor(this);
@@ -88,6 +103,7 @@ public class Player extends Actor {
         int magicCost = playerMagic.getMagick().getCost();
         if (this.getMana() < magicCost) {
             System.out.println("not enough mana");
+            playerAttackAction(actor);
             return;
         }
         int magicDamage = playerMagic.getMagick().generateDamage();
@@ -95,12 +111,16 @@ public class Player extends Actor {
         switch (playerMagic.getMagick().getType()) {
             case BLACK:
                 actor.takeDamage(magicDamage);
+                System.out.println("enemy take magic dmg " + magicDamage);
                 break;
             case WHITE:
                 this.healHP(magicDamage);
+                System.out.println("you healed by" + magicDamage);
+                break;
             case ZOMBIE:
                 actor.takeDamage(magicDamage);
                 this.healHP(magicDamage);
+                break;
         }
     }
 
@@ -138,5 +158,9 @@ public class Player extends Actor {
         } else if (cell.getNeighbor(0, -1).getActor() != null) {
             return cell.getNeighbor(0, -1).getActor();
         } else return null;
+    }
+
+    public int getMapLevel() {
+        return mapLevel;
     }
 }

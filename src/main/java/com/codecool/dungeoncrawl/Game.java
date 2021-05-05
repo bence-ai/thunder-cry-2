@@ -1,9 +1,8 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.logic.Battle;
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.*;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import javafx.geometry.Insets;
@@ -54,7 +53,7 @@ public class Game {
 
     public void play() {
         canvas = tutorial();
-        context  = canvas.getGraphicsContext2D();
+        context = canvas.getGraphicsContext2D();
 
         this.toolbar = setToolbar();
         borderPane = new BorderPane();
@@ -64,6 +63,7 @@ public class Game {
         this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
+
         stage.setScene(scene);
         stage.setFullScreen(true);
     }
@@ -72,52 +72,50 @@ public class Game {
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
-                if(map.getPlayer().isThereEnemy()) {
-                    System.out.println(map.getPlayer().getEnemy().getClass().getSimpleName());
-
-                    Battle battle = new Battle(scene, toolbar);
-                    battle.fight(map.getPlayer(),map.getPlayer().getEnemy());
-                    refresh();
+                if (map.getPlayer().isThereEnemy()) {
+                    Battle battle = new Battle(scene, toolbar, map);
+                    battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
                 }
                 break;
             case UP:
                 map.getPlayer().move(0, -1);
                 update();
-                refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
                 update();
-                refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
                 update();
-                refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().move(1, 0);
                 update();
-                refresh();
                 break;
             case E: // Pick-up items
-                // checking if there is an item at the current position, if so then picking it up
                 checkForItem();
                 break;
         }
+        refresh();
     }
 
+
+
+    /**
+     * checking if there is an item at the current position, if so then picking it up
+     */
     private void checkForItem() {
         if (map.getPlayer().getCell().getItem() != null) {
             switch (map.getPlayer().getCell().getItem().getType()) {
                 case WEAPON:
-                map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
-                map.getPlayer().getCell().setItem(null);
-                System.out.println("player ATk: " + map.getPlayer().getAttack() +
-                        " player Sword Attack: " + map.getPlayer().getWeapon().getProperty()+
-                        " player whole damage: " + map.getPlayer().generateAttackDamage());
-                refresh();
-                break;
+                    map.getPlayer().setWeapon(map.getPlayer().getCell().getItem());
+                    map.getPlayer().getCell().setItem(null);
+                    System.out.println("player ATk: " + map.getPlayer().getAttack() +
+                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty() +
+                            " player whole damage: " + map.getPlayer().generateAttackDamage());
+                    refresh();
+                    break;
                 case ARMOUR:
                     map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);
@@ -160,6 +158,7 @@ public class Game {
         playerAvatar.setBackground(new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY)));
         BorderPane enemyAvatar = new BorderPane();
 
+        infoLabel.setFont(nameFont);
         name.setFont(nameFont);
         name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
         healthLabel.setFont(defaultFont);
@@ -179,11 +178,11 @@ public class Game {
             characterInfo.add(weaponAvatar, 1, 0);
         }
 
-//        for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
-//            BorderPane image = new BorderPane();
-//            image.setCenter(new ImageView(map.getPlayer().getSpellList().get(i).getAvatarImage()));
-//            characterInfo.add(image, i+1, 4);
-//        }
+        for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
+            BorderPane image = new BorderPane();
+            image.setCenter(new ImageView(map.getPlayer().getSpellList().get(i).getAvatarImage()));
+            characterInfo.add(image, i+1, 4);
+        }
 
         enemyName.setFont(nameFont);
         enemyHealthLabel.setFont(defaultFont);
@@ -223,12 +222,13 @@ public class Game {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {
                     Tiles.drawTile(context, cell.getItem(), x, y);
-                }
-                else {
+                } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
         }
+        infoLabel.setText("");
+        name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
@@ -247,6 +247,12 @@ public class Game {
 
     private Canvas tutorial() {
         map = MapLoader.loadMap("tutorial");
+        for(Actor enemy: map.getEnemyList()) {
+            if(enemy instanceof Hunter) {
+                ((Hunter) enemy).setMaxX(map.getWidth());
+                ((Hunter) enemy).setMaxY(map.getHeight());
+            }
+        }
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
@@ -254,7 +260,15 @@ public class Game {
         return canvas;
     }
 
+    private void checkForStairs() {
+        if (map.getPlayer().getCell().getType().equals(CellType.STAIRS)) {
+            map = MapLoader.loadMap("level1.txt");
+        }
+    }
+
+
     private void update() {
+        checkForStairs();
         map.updateActor();
     }
 }

@@ -59,6 +59,7 @@ public class Tiles {
         tileMap.put("open door", new Tile(0,3));
         tileMap.put("closed door", new Tile(1,3));
         tileMap.put("stairs", new Tile(0,4));
+        tileMap.put("hunter", new Tile(8,22));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Bandit;
+import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.*;
@@ -14,6 +15,10 @@ public class MapLoader {
         switch(level) {
             case "tutorial":
                 is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
+                break;
+            case "level1":
+                is = MapLoader.class.getResourceAsStream("level1.txt");
+                break;
         }
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
@@ -42,11 +47,11 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            map.setEnemyActor(new Skeleton(cell, "skeleton", 475, 170, 20, 75));
+                            map.setEnemyActor(new Skeleton(cell, "skeleton"));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell, "Jocó", 500, 230, 23, 85));
+                            map.setPlayer(new Player(cell, "Hero"));
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
@@ -70,7 +75,7 @@ public class MapLoader {
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
-                            map.setEnemyActor(new Bandit(cell, "Bandita Lajos", 375, 135, 32, 135));
+                            map.setEnemyActor(new Bandit(cell, "Bandit"));
                             break;
                         case 'c':
                             cell.setType(CellType.CLOSED_DOOR);
@@ -116,6 +121,10 @@ public class MapLoader {
                             break;
                         case 'g':
                             cell.setType(CellType.GRASS_FLOOR);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.FLOOR);
+                            map.setEnemyActor(new Hunter(cell, "Blood Hunter"));
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

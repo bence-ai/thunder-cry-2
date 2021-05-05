@@ -11,8 +11,8 @@ wwwwwwwwwwwwww│g00gggg11g222gggggggggggggggggggggddddddddddd
 www╔══════════┘ggg1gg   gg ggg22ggggggggg  ggg  gddddgggdddd
 www│ 0     1     ggg11gggg22gg0gggggggggggggggggg  gdddddddd
 www│    e     ggg2ggggggggggggggsggggggdddddddddgddddgdddgdd
-www│ 1     0 gggggggggg     gggggggggggggggggggggggggggggddd
-www│  ggggg1gggggggggggg   ggggggggg   dd  gggggggddddddddd
+www│ 1     0 ggggghgggg     gggggggggggggggggggggggggggggddd
+www│  ggggg1ggggggggghg   ggggggggg   dd  gggggggddddddddd
 www│  00  ggggggggg2ggggggggggggggggggggggggggggggddggdddddd
 www╚----------┐ggggg1221gggggggggggggggggg    ggggdd  dddggg
 wwwwwwwwwwwwww│ggg1gggg@         gggggg   ddddd      dddd gg

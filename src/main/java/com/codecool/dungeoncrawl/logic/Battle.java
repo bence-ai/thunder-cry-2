@@ -15,10 +15,12 @@ public class Battle {
     Player player;
     Actor enemy;
     EventHandler<? super KeyEvent> moveEvent;
+    GameMap map;
 
-    public Battle(Scene scene, BorderPane toolbar) {
+    public Battle(Scene scene, BorderPane toolbar, GameMap map) {
         this.scene = scene;
         this.toolbar = toolbar;
+        this.map = map;
     }
 
     private void setToolbar(Player player, Actor enemy) {
@@ -99,6 +101,7 @@ public class Battle {
             System.exit(0);
         }
         enemy.getCell().setActor(null);
+        map.removeActor(actor);
         scene.setOnKeyPressed(moveEvent);
     }
 }

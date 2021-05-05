@@ -11,7 +11,6 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-
     private ArrayList<Actor> enemyList = new ArrayList<>();
 
 
@@ -41,6 +40,10 @@ public class GameMap {
 
     public void setEnemyActor(Actor actor) {
         this.enemyList.add(actor);
+    }
+
+    public void removeActor(Actor actor) {
+        enemyList.remove(actor);
     }
 
     public ArrayList<Actor> getEnemyList() {
