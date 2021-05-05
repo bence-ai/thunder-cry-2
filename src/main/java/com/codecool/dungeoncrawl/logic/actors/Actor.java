@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Actor implements Drawable {
-
     protected Cell cell;
     private Item weapon;
     private String name;
@@ -60,12 +59,12 @@ public abstract class Actor implements Drawable {
 
     };
 
-    public void actorFightActions(int eventNumber, Actor actor){
+    public void attack(int eventNumber, Actor actor){
         switch (eventNumber){
             case 0:
                 actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
             case 1:
-                if (spellList.size() == 0){
+                if (spellList == null){
                     actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
                     break;
                 }
@@ -100,8 +99,10 @@ public abstract class Actor implements Drawable {
     }
 
     public int generateAttackDamage() {
-            return random.nextInt(((this.attack+12 + this.weapon.getProperty())) - ((this.attack-12) + this.weapon.getProperty())) + (this.attack-12 +
-        this.weapon.getProperty());
+        if (this.weapon == null) {
+            return random.nextInt(((this.attack+12)) - ((this.attack-12))) + (this.attack-12);
+        }
+        return random.nextInt(((this.attack+12 + this.weapon.getProperty())) - ((this.attack-12) + this.weapon.getProperty())) + (this.attack-12 + this.weapon.getProperty());
     }
 
     public void takeDamage(int damage) {

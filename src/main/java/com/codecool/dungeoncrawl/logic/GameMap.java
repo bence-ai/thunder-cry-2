@@ -1,9 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Bandit;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 
 import java.util.ArrayList;
 
@@ -60,10 +58,9 @@ public class GameMap {
     /**
      * It will call onUpdate method on each Actor in the actorList(should rename)
      * We use this to update the enemy movement in the whole map turn by turn.
-     *     */
+     **/
     public void updateActor() {
         for (Actor enemy : enemyList) {
-            System.out.println(enemy.getName());
             enemy.onUpdate();
         }
     }
