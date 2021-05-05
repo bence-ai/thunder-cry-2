@@ -66,11 +66,16 @@ public class Game {
     }
 
         private void onKeyPressed(KeyEvent keyEvent) {
-        int moveOrNot = random.nextInt(map.getSkeleton().size());
-        for (int i = 0; i < map.getSkeleton().size(); i++) {
-            if (i == moveOrNot) {
-                continue;
-            } else {map.getSkeleton().get(i).move(0,0);}
+        if (map.getSkeleton().size() != 0) {
+            int moveOrNot = random.nextInt(map.getSkeleton().size());
+
+            for (int i = 0; i < map.getSkeleton().size(); i++) {
+                if (i == moveOrNot) {
+                    continue;
+                } else {
+                    map.getSkeleton().get(i).move(0, 0);
+                }
+            }
         }
         switch (keyEvent.getCode()) {
             case F:
