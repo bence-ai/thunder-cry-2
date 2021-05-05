@@ -4,33 +4,28 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 
 import java.util.Random;
 
 public class Battle {
     Scene scene;
-    BorderPane toolbar;
+    Label infoLabel;
     Player player;
     Actor enemy;
     EventHandler<? super KeyEvent> moveEvent;
     GameMap map;
 
-    public Battle(Scene scene, BorderPane toolbar, GameMap map) {
+    public Battle(Scene scene, Label infoLabel, GameMap map) {
         this.scene = scene;
-        this.toolbar = toolbar;
+        this.infoLabel = infoLabel;
         this.map = map;
-    }
-
-    private void setToolbar(Player player, Actor enemy) {
-
     }
 
     public void fight(Player player, Actor enemy) {
         this.player = player;
         this.enemy = enemy;
-        setToolbar(player, enemy);
         moveEvent = scene.getOnKeyPressed();
         scene.setOnKeyPressed(this::attack);
     }
