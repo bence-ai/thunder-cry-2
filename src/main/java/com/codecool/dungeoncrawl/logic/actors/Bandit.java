@@ -4,10 +4,9 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.util.Direction;
 
-import java.util.Random;
 
 public class Bandit extends Actor{
-    Random random = new Random();
+    Direction direction = Direction.SOUTH;
     public Bandit(Cell cell, String name, int health, int manaPoint, int defense, int attack) {
         super(cell, name, health, manaPoint, defense, attack);
     }
@@ -21,7 +20,7 @@ public class Bandit extends Actor{
     @Override
     public void onUpdate() {
         for (int i = 0; i < 1; i++) {
-            int[] moves = getRandomDirection();
+            int[] moves = Direction.getRandomDirection(direction);
             this.move(moves[0],moves[1]);
         }
     }

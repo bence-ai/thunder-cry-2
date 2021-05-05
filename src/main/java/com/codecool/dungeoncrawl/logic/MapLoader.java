@@ -14,6 +14,10 @@ public class MapLoader {
         switch(level) {
             case "tutorial":
                 is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
+                break;
+            case "level1":
+                is = MapLoader.class.getResourceAsStream("level1.txt");
+                break;
         }
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();

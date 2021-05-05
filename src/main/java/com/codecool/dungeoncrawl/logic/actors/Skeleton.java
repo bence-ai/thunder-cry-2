@@ -23,7 +23,7 @@ public class Skeleton extends Actor {
     @Override
     public void onUpdate() {
 
-        int[] moves = getRandomDirection();
+        int[] moves = Direction.getRandomDirection(direction);
         move(moves[0], moves[1]);
     }
 

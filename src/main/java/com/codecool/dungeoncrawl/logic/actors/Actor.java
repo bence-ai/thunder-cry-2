@@ -12,8 +12,8 @@ public abstract class Actor implements Drawable {
     protected Cell cell;
     private Item weapon;
     private String name;
-    private int maxHealth;
-    private int health;
+    protected int maxHealth;
+    protected int health;
     private int maxManaPoint;
     private int manaPoint;
     private int maxAttack;
@@ -181,29 +181,6 @@ public abstract class Actor implements Drawable {
 
     public abstract void onUpdate();
 
-    public int[] getRandomDirection() {
-        int dx = 0;
-        int dy = 0;
-        int randMove = random.nextInt(4);
-        switch (randMove) {
-            case 0:
-                dx = 0;
-                dy = -1;
-                break;
-            case 1:
-                dx = 0;
-                dy = 1;
-                break;
-            case 2:
-                dx = -1;
-                dy = 0;
-                break;
-            case 3:
-                dx = 1;
-                dy = 0;
-                break;
-        }
-        return new int[]{dx,dy};
-    }
+
 
 }
