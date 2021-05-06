@@ -77,7 +77,7 @@ public class Battle {
             System.out.println("health enemy: " + enemy.getHealth());
             int enemySelect = new Random().nextInt(2);
             enemy.attack(enemySelect, player);
-            if(!isAlive(player)) {
+            if (!isAlive(player)) {
                 gameOver(player);
             }
             System.out.println("health playa: " + player.getHealth());
