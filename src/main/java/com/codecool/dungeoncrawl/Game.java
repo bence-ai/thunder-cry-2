@@ -249,6 +249,10 @@ public class Game {
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
+        if (map.getPlayer().standingOnItem()) {
+            // standing on ITEM, print [F] key here, and probably print the item
+            // String itemOnCellName = map.getPlayer().getCell().getItem().getItemName();
+        }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");
             enemyName.setText(map.getPlayer().getEnemy().getName() + "(" + map.getPlayer().getEnemy().getAttack() + ")");
