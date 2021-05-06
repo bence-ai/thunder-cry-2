@@ -311,8 +311,8 @@ public class Game {
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
         if (map.getPlayer().standingOnItem()) {
-            // standing on ITEM, print [F] key here, and probably print the item
-            // String itemOnCellName = map.getPlayer().getCell().getItem().getItemName();
+            String itemOnCellName = map.getPlayer().getCell().getItem().getTileName();
+            infoLabel.setText("Press [E] to pick up: " + itemOnCellName);
         }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");

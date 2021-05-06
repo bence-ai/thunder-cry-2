@@ -7,16 +7,11 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 public abstract class Item implements Drawable {
     private Cell cell;
     private ItemType type;
-
-    public String getItemName() {
-        return itemName;
-    }
-
     private String itemName;
+
     private int property;
 
     // TODO Need to implement Drawable for every item differently, return tileName for drawTile method
-
 
     public Item(Cell cell, ItemType type, int property) {
         this.cell = cell;
@@ -27,6 +22,10 @@ public abstract class Item implements Drawable {
 
     public int getProperty() {
         return property;
+    }
+
+    public String getItemName() {
+        return itemName;
     }
 
     public Cell getCell() {
