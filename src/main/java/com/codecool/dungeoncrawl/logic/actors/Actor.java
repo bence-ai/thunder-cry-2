@@ -205,6 +205,10 @@ public abstract class Actor implements Drawable {
         this.maxDefense = maxDefense;
     }
 
+    public void addSpell(Spell spell) {
+        this.spellList.add(spell);
+    }
+
     public void setSpellList(ArrayList<Spell> spellList) {
         this.spellList = spellList;
     }
