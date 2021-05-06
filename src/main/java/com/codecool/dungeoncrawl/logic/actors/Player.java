@@ -160,4 +160,15 @@ public class Player extends Actor {
     public int getMapLevel() {
         return mapLevel;
     }
+
+    public void restoreAfterBattle() {
+        this.health += health%5;
+        this.manaPoint += manaPoint%5;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+        if (manaPoint > maxManaPoint) {
+            manaPoint = maxManaPoint;
+        }
+    }
 }

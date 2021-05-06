@@ -72,7 +72,6 @@ public class Battle {
         System.out.println("key: " + playerAction);
         player.attack(playerAction, enemy);
 
-
         if (isAlive(enemy)) {
             System.out.println("health enemy: " + enemy.getHealth());
             int enemySelect = new Random().nextInt(2);
@@ -95,6 +94,7 @@ public class Battle {
             //TODO: this :D
             System.exit(0);
         }
+        player.restoreAfterBattle();
         enemy.getCell().setActor(null);
         map.removeActor(actor);
         scene.setOnKeyPressed(moveEvent);
