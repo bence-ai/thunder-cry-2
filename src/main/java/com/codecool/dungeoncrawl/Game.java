@@ -68,6 +68,7 @@ public class Game {
 
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setResizable(true);
     }
 
 
@@ -75,31 +76,36 @@ public class Game {
         switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
                 if (map.getPlayer().isThereEnemy()) {
-                    battle = new Battle(scene, infoLabel, map);
+                    infoLabel.setText("Prepare for the battle and choose an action!");
+                    battle = new Battle(scene, infoLabel, healthLabel, mannaLabel, enemyHealthLabel, enemyMannaLabel, map);
                     battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
                 }
                 break;
             case UP:
                 map.getPlayer().move(0, -1);
                 update();
+                refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
                 update();
+                refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
                 update();
+                refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
                 update();
+                refresh();
                 break;
             case E: // Pick-up items
                 checkForItem();
+                refresh();
                 break;
         }
-        refresh();
     }
 
 

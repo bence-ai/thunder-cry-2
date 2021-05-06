@@ -12,25 +12,36 @@ import java.util.Random;
 public class Battle {
     Scene scene;
     Label infoLabel;
+    Label healthLabel;
+    Label manaLabel;
+    Label enemyHealthLabel;
+    Label enemyManaLabel;
     Player player;
     Actor enemy;
     EventHandler<? super KeyEvent> moveEvent;
     GameMap map;
 
-    public Battle(Scene scene, Label infoLabel, GameMap map) {
+    public Battle(Scene scene, Label infoLabel, Label healthLabel, Label manaLabel, Label enemyHealthLabel, Label enemyManaLabel, GameMap map) {
         this.scene = scene;
         this.infoLabel = infoLabel;
+        this.healthLabel = healthLabel;
+        this.manaLabel = manaLabel;
+        this.enemyHealthLabel = enemyHealthLabel;
+        this.enemyManaLabel = enemyManaLabel;
         this.map = map;
     }
 
     public void fight(Player player, Actor enemy) {
+
         this.player = player;
         this.enemy = enemy;
         moveEvent = scene.getOnKeyPressed();
+
         scene.setOnKeyPressed(this::attack);
     }
 
     private void attack(KeyEvent keyEvent) {
+
         int playerAction = 0;
         if (keyEvent.getCode().isDigitKey()) {
             switch (keyEvent.getCode()) {
@@ -70,18 +81,22 @@ public class Battle {
         }
 
         System.out.println("key: " + playerAction);
-        player.attack(playerAction, enemy);
+        player.attack(playerAction, enemy, infoLabel);
 
         if (isAlive(enemy)) {
+            battleRefresh();
             System.out.println("health enemy: " + enemy.getHealth());
             int enemySelect = new Random().nextInt(2);
-            enemy.attack(enemySelect, player);
+            enemy.attack(enemySelect, player, infoLabel);
             if(!isAlive(player)) {
                 gameOver(player);
             }
+            battleRefresh();
             System.out.println("health playa: " + player.getHealth());
         } else {
+            battleRefresh();
             gameOver(enemy);
+            infoLabel.setText("Enemy has died, You won the battle!" + "\n" + " Your mana and health restored by 20%");
         }
     }
 
@@ -98,5 +113,12 @@ public class Battle {
         enemy.getCell().setActor(null);
         map.removeActor(actor);
         scene.setOnKeyPressed(moveEvent);
+    }
+
+    private void battleRefresh() {
+        healthLabel.setText("Health: " + player.getHealth());
+        enemyHealthLabel.setText("Health: " + enemy.getHealth());
+        manaLabel.setText("Manna: " + player.getMana());
+        enemyManaLabel.setText("Manna: " + enemy.getMana());
     }
 }

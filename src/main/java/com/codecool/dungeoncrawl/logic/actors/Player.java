@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 
@@ -76,11 +77,11 @@ public class Player extends Actor {
     }
 
     @Override
-    public void attack(int eventNumber, Actor actor) {
+    public void attack(int eventNumber, Actor actor, Label infoLabel) {
         if (eventNumber == 0) {
-            playerAttackAction(actor);
+            playerAttackAction(actor, infoLabel);
         } else {
-            playerMagicAction(eventNumber, actor);
+            playerMagicAction(eventNumber, actor, infoLabel);
         }
     }
 
@@ -89,18 +90,18 @@ public class Player extends Actor {
         return;
     }
 
-    public void playerAttackAction(Actor actor) {
+    public void playerAttackAction(Actor actor, Label infoLabel) {
         int physicalAttack = this.generateAttackDamage();
         actor.takeDamage(physicalAttack - actor.getDefense());
-        System.out.println("Enemy take " + (physicalAttack - actor.getDefense()) + " dmg");
+        infoLabel.setText("You dealt " + ((physicalAttack - actor.getDefense())) + " physical damage!");
     }
 
-    private void playerMagicAction(int eventNumber, Actor actor) {
+    private void playerMagicAction(int eventNumber, Actor actor, Label infoLabel) {
         Spell playerMagic = this.getSpellList().get(eventNumber - 1);
         int magicCost = playerMagic.getMagick().getCost();
         if (this.getMana() < magicCost) {
-            System.out.println("not enough mana");
-            playerAttackAction(actor);
+            infoLabel.setText("Not enough Mana!");
+            playerAttackAction(actor, infoLabel);
             return;
         }
         int magicDamage = playerMagic.getMagick().generateDamage();
@@ -108,11 +109,11 @@ public class Player extends Actor {
         switch (playerMagic.getMagick().getType()) {
             case BLACK:
                 actor.takeDamage(magicDamage);
-                System.out.println("enemy take magic dmg " + magicDamage);
+                infoLabel.setText("You have dealt " + magicDamage + " " + playerMagic.getMagick().getName() + " damage!");
                 break;
             case WHITE:
                 this.healHP(magicDamage);
-                System.out.println("you healed by" + magicDamage);
+                infoLabel.setText("You have been healed by " + magicDamage);
                 break;
             case ZOMBIE:
                 actor.takeDamage(magicDamage);
@@ -162,8 +163,8 @@ public class Player extends Actor {
     }
 
     public void restoreAfterBattle() {
-        this.health += health%5;
-        this.manaPoint += manaPoint%5;
+        this.health += maxHealth%5;
+        this.manaPoint += maxManaPoint%5;
         if (health > maxHealth) {
             health = maxHealth;
         }
