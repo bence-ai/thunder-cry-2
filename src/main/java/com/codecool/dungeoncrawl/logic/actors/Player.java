@@ -156,4 +156,11 @@ public class Player extends Actor {
     public int getMapLevel() {
         return mapLevel;
     }
+
+    public boolean standingOnItem() {
+        if (cell.getItem() != null) {
+            return true;
+        }
+        else return false;
+    }
 }

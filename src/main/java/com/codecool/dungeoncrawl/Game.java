@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -230,6 +231,10 @@ public class Game {
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
+        if(map.getPlayer().standingOnItem()) {
+            Item ezvanafodon = map.getPlayer().getCell().getItem();
+            // IDE ÍRD HUBI AZT HOGY VEGYE MÁ FE AZ ITEMET HA AKARJA
+        }
         if (map.getPlayer().isThereEnemy()) {
             enemyName.setText(map.getPlayer().getEnemy().getName() + "(" + map.getPlayer().getEnemy().getAttack() + ")");
             enemyHealthLabel.setText("Health:" + map.getPlayer().getEnemy().getHealth());
