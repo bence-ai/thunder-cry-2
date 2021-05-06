@@ -167,15 +167,11 @@ public class Game {
                 case WEAPON:
                     map.getPlayer().setWeapon(map.getPlayer().getCell().getWeapon());
                     map.getPlayer().getCell().setItem(null);
-                    System.out.println("player ATk: " + map.getPlayer().getAttack() +
-                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty() +
-                            " player whole damage: " + map.getPlayer().generateAttackDamage());
                     refresh();
                     break;
                 case ARMOUR:
                     map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);
-                    System.out.println(map.getPlayer().getDefense());
                     refresh();
                     break;
                 case POTION:
@@ -192,7 +188,6 @@ public class Game {
                 default:
                     map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
                     map.getPlayer().getCell().setItem(null);
-                    System.out.println(map.getPlayer().inventoryToString());  // test print
                     refresh();
             }
 
