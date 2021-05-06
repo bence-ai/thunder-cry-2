@@ -19,10 +19,9 @@ import javafx.util.Duration;
 
 public class Main extends Application {
     Stage stage = new Stage();
-    Font defaultFont = new Font("Pixeled Regular", 12);
-    Font buttonFontNormal = new Font("Pixeled Regular", 25);
-    Font buttonFontLarge = new Font("Pixeled Regular", 45);
-    Font logoFont = new Font("Vehicle Breaks Down Regular", 150);
+    Font BUTTON_NORMAL = new Font("Pixeled Regular", 25);
+    Font BUTTON_LARGE = new Font("Pixeled Regular", 45);
+    Font LOGO_FONT = new Font("Vehicle Breaks Down Regular", 150);
 
 
     public static void main(String[] args) {
@@ -40,7 +39,7 @@ public class Main extends Application {
         Text thunderCry = new Text();
         thunderCry.setText("ThunderCry");
         thunderCry.setFill(Color.WHITE);
-        thunderCry.setFont(logoFont);
+        thunderCry.setFont(LOGO_FONT);
         Button newGame = buttonFactory("New Game");
         Button loadGame = buttonFactory("Load Game");
         Button exit = buttonFactory("Exit");
@@ -48,7 +47,7 @@ public class Main extends Application {
         buttons.add(newGame,0,0);
         buttons.add(loadGame,0,1);
         buttons.setAlignment(Pos.CENTER);
-        exit.setFont(buttonFontNormal);
+        exit.setFont(BUTTON_NORMAL);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0), Insets.EMPTY)));
@@ -82,7 +81,7 @@ public class Main extends Application {
         button.setText(text);
         button.setPrefWidth(1000);
         button.setTextFill(Color.WHITE);
-        button.setFont(buttonFontLarge);
+        button.setFont(BUTTON_LARGE);
         button.setAlignment(Pos.CENTER);
         button.setPadding(new Insets(15,0,0,0));
         Reflection reflection = new Reflection();
@@ -98,7 +97,7 @@ public class Main extends Application {
 
     private void newGame(MouseEvent mouseEvent) {
         Game game = new Game(stage, "Hubb");
-        game.play();
+        game.loader();
     }
     private void loadGame(MouseEvent mouseEvent) {
 
