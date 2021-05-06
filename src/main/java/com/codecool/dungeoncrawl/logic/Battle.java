@@ -80,12 +80,10 @@ public class Battle {
             return;
         }
 
-        System.out.println("key: " + playerAction);
         player.attack(playerAction, enemy, infoLabel);
 
         if (isAlive(enemy)) {
             battleRefresh();
-            System.out.println("health enemy: " + enemy.getHealth());
             int enemySelect = new Random().nextInt(2);
             enemy.attack(enemySelect, player, infoLabel);
             if(!isAlive(player)) {
@@ -93,7 +91,6 @@ public class Battle {
                 gameOver(player);
             }
             battleRefresh();
-            System.out.println("health playa: " + player.getHealth());
         } else {
             battleRefresh();
             gameOver(enemy);

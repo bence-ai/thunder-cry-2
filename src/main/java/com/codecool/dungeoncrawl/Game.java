@@ -73,8 +73,6 @@ public class Game {
 
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
-
-//        stage.setFullScreen(true);
     }
 
     public void loader() {
@@ -116,6 +114,7 @@ public class Game {
         scene.setOnKeyPressed(this::playGame);
 
         stage.setScene(scene);
+        stage.setFullScreenExitHint("");
         stage.setFullScreen(true);
 
         titleFadeIn.play();
@@ -176,15 +175,11 @@ public class Game {
                 case WEAPON:
                     map.getPlayer().setWeapon(map.getPlayer().getCell().getWeapon());
                     map.getPlayer().getCell().setItem(null);
-                    System.out.println("player ATk: " + map.getPlayer().getAttack() +
-                            " player Sword Attack: " + map.getPlayer().getWeapon().getProperty() +
-                            " player whole damage: " + map.getPlayer().generateAttackDamage());
                     refresh();
                     break;
                 case ARMOUR:
                     map.getPlayer().setDefense(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);
-                    System.out.println(map.getPlayer().getDefense());
                     refresh();
                     break;
                 case POTION:
@@ -201,7 +196,6 @@ public class Game {
                 default:
                     map.getPlayer().pickUpItem(map.getPlayer().getCell().getItem());
                     map.getPlayer().getCell().setItem(null);
-                    System.out.println(map.getPlayer().inventoryToString());  // test print
                     refresh();
             }
 
@@ -246,6 +240,7 @@ public class Game {
         weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
         weapon.setRight(weaponImage);
         weaponAvatar.setCenter(weapon);
+        characterInfo.add(weaponAvatar, 2, 0);
 
         for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
             BorderPane spellImage = new BorderPane();
@@ -304,12 +299,13 @@ public class Game {
         }
 
         name.setText(map.getPlayer().getName() + "(" + (map.getPlayer().getAttack() + map.getPlayer().getWeapon().getProperty()) + ")");
+        weaponAvatar.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
+
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
         if (map.getPlayer().standingOnItem()) {
-            // standing on ITEM, print [F] key here, and probably print the item
-            // String itemOnCellName = map.getPlayer().getCell().getItem().getItemName();
+            infoLabel.setText("Press [E] to pick up!");
         }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");
