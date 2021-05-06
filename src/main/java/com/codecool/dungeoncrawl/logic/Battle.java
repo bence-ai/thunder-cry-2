@@ -89,6 +89,7 @@ public class Battle {
             int enemySelect = new Random().nextInt(2);
             enemy.attack(enemySelect, player, infoLabel);
             if(!isAlive(player)) {
+
                 gameOver(player);
             }
             battleRefresh();

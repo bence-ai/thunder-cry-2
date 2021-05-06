@@ -4,7 +4,9 @@ import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,14 +17,19 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Random;
 
 public class Game {
     Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));
+    Background BLACK_FILL_COLOR = new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0), Insets.EMPTY));
+
+    Font LOGO_FONT = new Font("Vehicle Breaks Down Regular", 180);
     Font SMALL_FONT = new Font("Pixeled Regular", 12);
     Font MEDIUM_FONT = new Font("Pixeled Regular", 15);
     Font LARGE_FONT = new Font("Pixeled Regular", 25);
+    Font EXTRA_LARGE_FONT = new Font("Pixeled Regular", 65);
 
     Random random = new Random();
     private final Stage stage;
@@ -58,17 +65,65 @@ public class Game {
         context = canvas.getGraphicsContext2D();
 
         this.toolbar = setToolbar();
-        borderPane = new BorderPane();
         borderPane.setCenter(canvas);
         borderPane.setTop(toolbar);
+        borderPane.setBottom(null);
 
-        this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
 
+//        stage.setFullScreen(true);
+    }
+
+    public void loader() {
+        VBox loaderPage = new VBox();
+        loaderPage.setBackground(BLACK_FILL_COLOR);
+
+        borderPane = new BorderPane();
+
+        Label logo = new Label("ThunderCry");
+        logo.setFont(LOGO_FONT);
+        logo.setTextFill(Color.WHITE);
+        loaderPage.getChildren().add(logo);
+
+        Label title = new Label("and the lost Island");
+        title.setFont(EXTRA_LARGE_FONT);
+        title.setTextFill(Color.BLACK);
+        title.setPadding(new Insets(-70,0,0,0));
+        FadeTransition titleFadeIn = new FadeTransition(Duration.seconds(10), title);
+        titleFadeIn.setFromValue(0);
+        titleFadeIn.setToValue(1);
+
+        loaderPage.getChildren().add(title);
+        borderPane.setCenter(loaderPage);
+        loaderPage.setAlignment(Pos.CENTER);
+
+        Label pressButton = new Label("Press any button to start...");
+        pressButton.setTextFill(Color.BLACK);
+        pressButton.setFont(MEDIUM_FONT);
+        FadeTransition pressAnimation = new FadeTransition(Duration.seconds(1), pressButton);
+        pressAnimation.setFromValue(0);
+        pressAnimation.setToValue(1);
+        pressAnimation.setAutoReverse(true);
+        pressAnimation.setCycleCount(50);
+        borderPane.setBottom(pressButton);
+
+        borderPane.setAlignment(pressButton, Pos.CENTER);
+
+        this.scene = new Scene(borderPane);
+        scene.setOnKeyPressed(this::playGame);
+
         stage.setScene(scene);
         stage.setFullScreen(true);
-        stage.setResizable(true);
+
+        titleFadeIn.play();
+        title.setTextFill(Color.AQUA);
+        pressAnimation.play();
+    }
+
+    private void playGame(KeyEvent keyEvent) {
+        this.play();
+
     }
 
 
@@ -255,6 +310,10 @@ public class Game {
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
+        if (map.getPlayer().standingOnItem()) {
+            // standing on ITEM, print [F] key here, and probably print the item
+            // String itemOnCellName = map.getPlayer().getCell().getItem().getItemName();
+        }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");
             enemyName.setText(map.getPlayer().getEnemy().getName() + "(" + map.getPlayer().getEnemy().getAttack() + ")");
@@ -270,6 +329,7 @@ public class Game {
             enemyDefenseLabel.setText("");
             enemyAvatar.setCenter(null);
         }
+
     }
 
     private Canvas tutorial() {

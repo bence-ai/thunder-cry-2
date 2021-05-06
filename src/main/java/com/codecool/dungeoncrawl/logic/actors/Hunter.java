@@ -46,14 +46,8 @@ public class Hunter extends Actor {
     private int[] getRandomPosition() {
         // TODO need to implement -> started to implement it, will be kinda tricky need to rethink it to be good
         Random r = new Random();
-        int x = 0;
-        int y = 0;
-        int maxTravelX = maxX - cell.getX();
-        int maxTravelY = maxY - cell.getY();
-        int travelX = r.nextInt(maxTravelX);
-        int travelY = r.nextInt(maxTravelY);
-        x = x + travelX;
-        y = y + travelY;
+        int x = r.nextInt(11) - 5;
+        int y = r.nextInt(11) - 5;
         return new int[] {x,y};
     }
 

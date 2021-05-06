@@ -42,12 +42,12 @@ public abstract class Actor implements Drawable {
         this.maxAttack = attack;
     }
 
-    public  void move(int dx, int dy) {
+    public void move(int dx, int dy) {
         if (cell.getNeighbor(dx, dy) == null) {
             return;
         }
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType().isStepable() ) {
+        if (nextCell.getType().isStepable()) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
@@ -55,6 +55,7 @@ public abstract class Actor implements Drawable {
             }
         }
     }
+
 
     public void attack(int eventNumber, Actor actor, Label infoLabel){
         switch (eventNumber){
@@ -116,24 +117,26 @@ public abstract class Actor implements Drawable {
 
     public int generateAttackDamage() {
         if (this.weapon == null) {
-            return random.nextInt(((this.attack+12)) - ((this.attack-12))) + (this.attack-12);
+            return random.nextInt(((this.attack + 12)) - ((this.attack - 12))) + (this.attack - 12);
         }
-        return random.nextInt(((this.attack+12 + this.weapon.getProperty())) - ((this.attack-12) + this.weapon.getProperty())) + (this.attack-12 + this.weapon.getProperty());
+        return random.nextInt(((this.attack + 12 + this.weapon.getProperty())) - ((this.attack - 12) + this.weapon.getProperty())) + (this.attack - 12 + this.weapon.getProperty());
     }
+
     public void takeDamage(int damage) {
         this.health -= damage;
         this.health = Math.max(0, this.health);
     }
+
     public void healHP(int healing) {
         this.health += healing;
-        if( this.health > this.maxHealth) {
+        if (this.health > this.maxHealth) {
             this.health = this.maxHealth;
         }
     }
 
     public void restoreMP(int restore) {
         this.manaPoint += restore;
-        if( this.manaPoint > this.maxManaPoint) {
+        if (this.manaPoint > this.maxManaPoint) {
             this.manaPoint = this.maxManaPoint;
         }
     }
