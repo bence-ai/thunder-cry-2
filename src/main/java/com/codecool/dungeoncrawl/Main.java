@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class Main extends Application {
@@ -60,6 +62,11 @@ public class Main extends Application {
         scene.getStylesheets().add("Loader/button.css");
         stage.setScene(scene);
 
+        FadeTransition fade = new FadeTransition(Duration.seconds(3), newGame);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
+
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
         loadGame.setOnMouseClicked(this::loadGame);
@@ -77,8 +84,10 @@ public class Main extends Application {
         button.setTextFill(Color.WHITE);
         button.setFont(buttonFontLarge);
         button.setAlignment(Pos.CENTER);
-        button.setPadding(new Insets(30,5,5,30));
-        button.setEffect(new Reflection());
+        button.setPadding(new Insets(15,0,0,0));
+        Reflection reflection = new Reflection();
+        reflection.setTopOffset(-90);
+        button.setEffect(reflection);
         button.setCursor(Cursor.HAND);
         return button;
     }
