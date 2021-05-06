@@ -1,6 +1,6 @@
 66 31
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww╔════════w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww│w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww╔═══════┘w
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww│   1   1w
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww╔═══┘g   002gw
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww│            w
@@ -9,7 +9,7 @@ wwwwwwwwwwwwww│0ggg01gggg22ggggggg1gggggggggggggggggggggggggw
 wwwwwwwwwwwwww│ggg1g  g11ggggggggggg         0gggsdddddddd00w
 wwwwwwwwwwwwww│g00gggg11g222ggggggggggggggggggggg0001023ddddw
 www╔══════════┘ggg1gg   gg ggg22ggggggggg22ggg11gddd2gg32110w
-www│ 0     1     ggg11gggg22gg0gggggWgggggggggggg  g1dddddbdw
+www│ 0     1     ggg11gggg22gg0gggggWgggggggggggg  g1dddddbqw
 www│    e     ggg2ggggggggggggggsggggggddddd0dddg2dddg 12300w
 www│ 1     0 ggggg gggg     ggg   ggagggggggg1g11g11230ggdd0w
 www│  ggggg1ggggggggg g   ggggggggg   dd  gggggg333211dddd 1w

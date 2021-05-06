@@ -29,6 +29,7 @@ public class Tiles {
         tileMap.put("character", new Tile(27, 0));
         tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
+        tileMap.put("hunter", new Tile(24,0));
         // FLOORS
         tileMap.put("floor", new Tile(2, 0));
         tileMap.put("dirty_floor", new Tile(1, 0));
@@ -46,20 +47,24 @@ public class Tiles {
         tileMap.put("top_right_corner_land", new Tile(8, 4));
         tileMap.put("bottom_right_corner_land", new Tile(11, 4));
         tileMap.put("bottom_right_corner_inverse", new Tile(14, 4));
+        tileMap.put("left_corner_land", new Tile(9, 4));
         tileMap.put("top_right_corner_inverse", new Tile(13, 4));
-
-        tileMap.put("key", new Tile(0,1));
-
+        tileMap.put("river", new Tile(12,5));
+        tileMap.put("river_end", new Tile(14,5));
+        tileMap.put("bridge", new Tile(6,5));
+        //KEY
+        tileMap.put("key", new Tile(18,23));
+        //ITEMS
         tileMap.put("armour", new Tile(0,23));
         tileMap.put("potion", new Tile(17,25));
         tileMap.put("elixir", new Tile(16,25));
         tileMap.put("sword", new Tile(0,30));
         tileMap.put("bandit", new Tile(25,9));
-
+        //DOORS
         tileMap.put("open door", new Tile(0,3));
         tileMap.put("closed door", new Tile(1,3));
-        tileMap.put("stairs", new Tile(0,4));
-        tileMap.put("hunter", new Tile(24,0));
+        tileMap.put("stairs", new Tile(9,25));
+
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
