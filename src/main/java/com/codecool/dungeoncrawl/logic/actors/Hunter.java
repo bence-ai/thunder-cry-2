@@ -14,16 +14,16 @@ public class Hunter extends Actor {
 
     public Hunter(Cell cell, String name) {
         super(cell, name);
-        this.health = 375;
+        this.health = 550;
         this.maxHealth = this.health;
         this.manaPoint = 135;
         this.maxManaPoint = this.manaPoint;
-        this.defense = 32;
+        this.defense = 15;
         this.maxDefense = this.defense;
         this.attack = 135;
         this.maxAttack = this.attack;
         this.spellList = new ArrayList<Spell>();
-        this.spellList.add(Spell.FIRE);
+        this.spellList.add(Spell.SHADOW_BOLT);
         this.avatar = EnemyAvatar.HUNTER.getEnemyAvatar();
     }
     @Override

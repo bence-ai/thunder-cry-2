@@ -95,6 +95,7 @@ public class Game {
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
         stage.setFullScreen(true);
+        stage.setResizable(true);
 
         titleFadeIn.play();
         title.setTextFill(Color.AQUA);
@@ -183,7 +184,6 @@ public class Game {
                     map.getPlayer().getCell().setItem(null);
                     refresh();
                     break;
-
                 case ELIXIR:
                     map.getPlayer().restoreMP(map.getPlayer().getCell().getItem().getProperty());
                     map.getPlayer().getCell().setItem(null);

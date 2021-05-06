@@ -56,10 +56,12 @@ public class Tiles {
         tileMap.put("key", new Tile(18,23));
         //ITEMS
         tileMap.put("armour", new Tile(0,23));
+        tileMap.put("helm", new Tile(1,22));
         tileMap.put("potion", new Tile(17,25));
         tileMap.put("elixir", new Tile(16,25));
         tileMap.put("sword", new Tile(0,30));
         tileMap.put("bandit", new Tile(25,9));
+        tileMap.put("knife", new Tile(0,28));
         //DOORS
         tileMap.put("open door", new Tile(0,3));
         tileMap.put("closed door", new Tile(1,3));

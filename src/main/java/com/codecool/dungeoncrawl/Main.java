@@ -16,6 +16,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.print.attribute.standard.Media;
+import java.io.File;
+
 
 public class Main extends Application {
     Stage stage = new Stage();
@@ -35,6 +38,7 @@ public class Main extends Application {
         stage.setTitle("ThunderCry");
         stage.setWidth(1300);
         stage.setHeight(700);
+
 
         Text thunderCry = new Text();
         thunderCry.setText("ThunderCry");

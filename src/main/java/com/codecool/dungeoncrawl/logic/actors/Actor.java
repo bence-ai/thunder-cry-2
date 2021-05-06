@@ -41,6 +41,7 @@ public abstract class Actor implements Drawable {
         this.maxAttack = attack;
     }
 
+
     public void move(int dx, int dy) {
         if (cell.getNeighbor(dx, dy) == null) {
             return;
