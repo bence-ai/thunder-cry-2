@@ -304,8 +304,10 @@ public class Game {
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
+        infoLabel.setText("");
         if (map.getPlayer().standingOnItem()) {
-            infoLabel.setText("Press [E] to pick up!");
+            String itemName = map.getPlayer().getCell().getItem().getTileName();
+            infoLabel.setText("Press [E] to pick up: " + itemName);
         }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");
@@ -315,7 +317,6 @@ public class Game {
             enemyDefenseLabel.setText("Defense:" + map.getPlayer().getEnemy().getDefense());
             enemyAvatar.setCenter(new ImageView(map.getPlayer().getEnemy().getAvatar()));
         } else {
-            infoLabel.setText("");
             enemyName.setText("");
             enemyHealthLabel.setText("");
             enemyMannaLabel.setText("");

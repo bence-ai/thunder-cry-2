@@ -168,9 +168,6 @@ public class Player extends Actor {
     }
 
     public boolean standingOnItem() {
-        if (cell.getItem() != null) {
-            return true;
-        }
-        return false;
+        return cell.getItem() != null;
     }
 }
