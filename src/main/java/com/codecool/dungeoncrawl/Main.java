@@ -74,6 +74,7 @@ public class Main extends Application {
         newGame.setOnMouseClicked(this::newGame);
         loadGame.setOnMouseClicked(this::loadGame);
         loadGame.setDisable(true);
+
         stage.show();
         stage.setScene(scene);
     }

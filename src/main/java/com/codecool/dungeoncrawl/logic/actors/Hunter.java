@@ -12,7 +12,6 @@ public class Hunter extends Actor {
     private int maxX;
     private int maxY;
 
-
     public Hunter(Cell cell, String name) {
         super(cell, name);
         this.health = 550;
@@ -40,7 +39,6 @@ public class Hunter extends Actor {
             move(moves[0], moves[1]);
         }
         turnToTravel--;
-
     }
 
     private int[] getRandomPosition() {
@@ -49,13 +47,5 @@ public class Hunter extends Actor {
         int x = r.nextInt(11) - 5;
         int y = r.nextInt(11) - 5;
         return new int[] {x,y};
-    }
-
-    public void setMaxX(int maxX) {
-        this.maxX = maxX;
-    }
-
-    public void setMaxY(int maxY) {
-        this.maxY = maxY;
     }
 }

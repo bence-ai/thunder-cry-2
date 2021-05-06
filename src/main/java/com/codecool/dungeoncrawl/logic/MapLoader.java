@@ -10,14 +10,14 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapLoader {
-    public static GameMap loadMap(String level) {
+    public static GameMap loadMap(int level, Player player) {
         InputStream is = null;
         switch(level) {
-            case "tutorial":
+            case 0:
                 is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
                 break;
-            case "level1":
-                is = MapLoader.class.getResourceAsStream("level1.txt");
+            case 1:
+                is = MapLoader.class.getResourceAsStream("/level1.txt");
                 break;
         }
         Scanner scanner = new Scanner(is);
@@ -51,7 +51,12 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell, "Hero"));
+                            if (player == null) {
+                                map.setPlayer(new Player(cell, "Hero"));
+                                break;
+                            }
+                            player.setCell(cell);
+                            map.setPlayer(player);
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
@@ -88,8 +93,11 @@ public class MapLoader {
                         case 'c':
                             cell.setType(CellType.CLOSED_DOOR);
                             break;
+                        case 'z':
+                            cell.setType(CellType.BRIDGE);
+                            break;
                         case 'q':
-                            cell.setType(CellType.FLOOR.STAIRS);
+                            cell.setType(CellType.STAIRS);
                             break;
                         case 'w':
                             cell.setType(CellType.WATER);
@@ -118,8 +126,17 @@ public class MapLoader {
                         case '-':
                             cell.setType(CellType.BOTTOM_LAND);
                             break;
+                        case 'r':
+                            cell.setType(CellType.RIVER);
+                            break;
+                        case 'R':
+                            cell.setType(CellType.RIVER_END);
+                            break;
                         case '│':
                             cell.setType(CellType.RIGHT_LAND);
+                            break;
+                        case '╗':
+                            cell.setType(CellType.LEFT_CORNER_LAND);
                             break;
                         case '┘':
                             cell.setType(CellType.TOP_CORNER_INVERSE);

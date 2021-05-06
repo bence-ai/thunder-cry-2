@@ -1,11 +1,8 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.*;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Hunter;
 import com.codecool.dungeoncrawl.logic.items.Barehand;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
-import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,11 +18,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Random;
-
 public class Game {
-    Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));
-    Background BLACK_FILL_COLOR = new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0), Insets.EMPTY));
+    Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));;
+    Background BLACK_FILL_COLOR = new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0), Insets.EMPTY));;
 
     Font LOGO_FONT = new Font("Vehicle Breaks Down Regular", 180);
     Font SMALL_FONT = new Font("Pixeled Regular", 12);
@@ -33,7 +28,6 @@ public class Game {
     Font LARGE_FONT = new Font("Pixeled Regular", 25);
     Font EXTRA_LARGE_FONT = new Font("Pixeled Regular", 65);
 
-    Random random = new Random();
     private final Stage stage;
     private BorderPane borderPane;
     Battle battle;
@@ -55,24 +49,9 @@ public class Game {
     BorderPane weaponAvatar = new BorderPane();
     BorderPane enemyAvatar = new BorderPane();
 
-
-
     public Game(Stage stage, String name) {
         this.stage = stage;
         this.name.setText(name);
-    }
-
-    public void play() {
-        canvas = tutorial();
-        context = canvas.getGraphicsContext2D();
-
-        this.toolbar = setToolbar();
-        borderPane.setCenter(canvas);
-        borderPane.setTop(toolbar);
-        borderPane.setBottom(null);
-
-        scene.setOnKeyPressed(this::onKeyPressed);
-        refresh();
     }
 
     public void loader() {
@@ -124,10 +103,29 @@ public class Game {
     }
 
     private void playGame(KeyEvent keyEvent) {
-        this.play();
-
+        this.play(0);
     }
 
+    public void play(int level) {
+        switch (level) {
+            case 0:
+                canvas = tutorial();
+                context = canvas.getGraphicsContext2D();
+                break;
+            case 1:
+                canvas = level1();
+                context = canvas.getGraphicsContext2D();
+                break;
+        }
+
+        this.toolbar = setToolbar();
+        borderPane.setCenter(canvas);
+        borderPane.setTop(toolbar);
+        borderPane.setBottom(null);
+
+        scene.setOnKeyPressed(this::onKeyPressed);
+        refresh();
+    }
 
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -164,8 +162,6 @@ public class Game {
                 break;
         }
     }
-
-
 
     /**
      * checking if there is an item at the current position, if so then picking it up
@@ -248,6 +244,7 @@ public class Game {
             Label spellKey = new Label(" " + (i+1));
             spellKey.setFont(SMALL_FONT);
             BorderPane spell = new BorderPane();
+            spellKey.setTextFill(Color.WHITE);
             spell.setLeft(spellKey);
             spell.setRight(spellImage);
             characterInfo.add(spell, i+2, 2);
@@ -327,16 +324,18 @@ public class Game {
     }
 
     private Canvas tutorial() {
-        map = MapLoader.loadMap("tutorial");
+        map = MapLoader.loadMap(0, null);
         map.getPlayer().setWeapon(new Barehand(map.getPlayer().getCell(), ItemType.WEAPON, 0));
         map.getPlayer().getCell().setItem(null);
-//        map.getCell()
-        for(Actor enemy: map.getEnemyList()) {
-            if(enemy instanceof Hunter) {
-                ((Hunter) enemy).setMaxX(map.getWidth());
-                ((Hunter) enemy).setMaxY(map.getHeight());
-            }
-        }
+        canvas = new Canvas(
+                map.getWidth() * Tiles.TILE_WIDTH,
+                map.getHeight() * Tiles.TILE_WIDTH);
+
+        return canvas;
+    }
+
+    private Canvas level1() {
+        map = MapLoader.loadMap(1, map.getPlayer());
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
@@ -346,10 +345,10 @@ public class Game {
 
     private void checkForStairs() {
         if (map.getPlayer().getCell().getType().equals(CellType.STAIRS)) {
-            map = MapLoader.loadMap("level1.txt");
+            map.getPlayer().setMapLevel(map.getPlayer().getMapLevel() + 1);
+            play(map.getPlayer().getMapLevel());
         }
     }
-
 
     private void update() {
         checkForStairs();
