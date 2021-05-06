@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.items.Weapon;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -54,35 +55,41 @@ public abstract class Actor implements Drawable {
         }
     }
 
-    public void attack(int eventNumber, Actor actor) {
-        switch (eventNumber) {
+
+    public void attack(int eventNumber, Actor actor, Label infoLabel){
+        switch (eventNumber){
             case 0:
-                actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
-                System.out.println("Player taken dmg " + (this.generateAttackDamage() - actor.getDefense()));
+                int enemyDamage = this.generateAttackDamage() - actor.getDefense();
+                actor.takeDamage(enemyDamage);
+                infoLabel.setText(infoLabel.getText() + "\n" + "You have taken " + enemyDamage + " physical damage");
                 break;
             case 1:
-                if (spellList == null) {
-                    actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
-                    System.out.println("Player taken dmg " + (this.generateAttackDamage() - actor.getDefense()));
+                if (spellList == null){
+                    int noSpellDmg = this.generateAttackDamage() - actor.getDefense();
+                    actor.takeDamage(noSpellDmg);
+                    infoLabel.setText(infoLabel.getText() + "\n" + "You have taken " + noSpellDmg + " physical damage");
                     break;
                 }
                 int randomMagic = random.nextInt(spellList.size());
 
                 Spell actorMagic = spellList.get(randomMagic);
                 if (this.getMana() < actorMagic.getMagick().getCost()) {
-                    actor.takeDamage(this.generateAttackDamage() - actor.getDefense());
-                    System.out.println("Player taken dmg " + (this.generateAttackDamage() - actor.getDefense()));
+                    int enemyPhysicalDmg = this.generateAttackDamage() - actor.getDefense();
+                    actor.takeDamage(enemyPhysicalDmg);
+                    infoLabel.setText(infoLabel.getText() + "\n" + "You have taken " + enemyPhysicalDmg + " physical damage");
                     break;
                 }
                 this.reduceMP(actorMagic.getMagick().getCost());
                 switch (actorMagic.getMagick().getType()) {
                     case BLACK:
-                        actor.takeDamage(actorMagic.getMagick().generateDamage());
-                        System.out.println("Player magic dmg " + (actorMagic.getMagick().generateDamage()));
+                        int enemyMagicDmg = actorMagic.getMagick().generateDamage();
+                        actor.takeDamage(enemyMagicDmg);
+                        infoLabel.setText(infoLabel.getText() + "\n" + "You have taken " + enemyMagicDmg + " " +actorMagic.getMagick().getName()  + "  damage");
                         break;
                     case WHITE:
-                        this.healHP(actorMagic.getMagick().generateDamage());
-                        System.out.println("Enemy heal dmg " + (actorMagic.getMagick().generateDamage()));
+                        int enemyHeal = actorMagic.getMagick().generateDamage();
+                        this.healHP(enemyHeal);
+                        infoLabel.setText(infoLabel.getText()+ "\n" + "Enemy healed by: " + enemyHeal);
                         break;
                     case ZOMBIE:
                         actor.takeDamage(actorMagic.getMagick().generateDamage());

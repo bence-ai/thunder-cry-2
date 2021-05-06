@@ -71,8 +71,6 @@ public class Game {
 
         scene.setOnKeyPressed(this::onKeyPressed);
         refresh();
-
-//        stage.setFullScreen(true);
     }
 
     public void loader() {
@@ -114,7 +112,9 @@ public class Game {
         scene.setOnKeyPressed(this::playGame);
 
         stage.setScene(scene);
+        stage.setFullScreenExitHint("");
         stage.setFullScreen(true);
+
         titleFadeIn.play();
         title.setTextFill(Color.AQUA);
         pressAnimation.play();
@@ -122,6 +122,7 @@ public class Game {
 
     private void playGame(KeyEvent keyEvent) {
         this.play();
+
     }
 
 
@@ -129,31 +130,36 @@ public class Game {
         switch (keyEvent.getCode()) {
             case F: // Start a fight with nearby enemy
                 if (map.getPlayer().isThereEnemy()) {
-                    battle = new Battle(scene, infoLabel, map);
+                    infoLabel.setText("Prepare for the battle and choose an action!");
+                    battle = new Battle(scene, infoLabel, healthLabel, mannaLabel, enemyHealthLabel, enemyMannaLabel, map);
                     battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
                 }
                 break;
             case UP:
                 map.getPlayer().move(0, -1);
                 update();
+                refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
                 update();
+                refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
                 update();
+                refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
                 update();
+                refresh();
                 break;
             case E: // Pick-up items
                 checkForItem();
+                refresh();
                 break;
         }
-        refresh();
     }
 
 
@@ -294,13 +300,18 @@ public class Game {
                 }
             }
         }
-        name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
+        if (map.getPlayer().getWeapon() == null) {
+            name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
+            weaponAvatar.setCenter(new ImageView(WeaponType.HAND.getAvatarImage()));
+        } else {
+            name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + map.getPlayer().getWeapon().getProperty() + ")");
+            weaponAvatar.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
+        }
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
         if (map.getPlayer().standingOnItem()) {
-            // standing on ITEM, print [F] key here, and probably print the item
-            // String itemOnCellName = map.getPlayer().getCell().getItem().getItemName();
+            infoLabel.setText("Press [E] to pick up!");
         }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");
