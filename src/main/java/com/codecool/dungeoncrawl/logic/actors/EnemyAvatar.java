@@ -4,28 +4,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
-public enum PlayerAvatar {
-    BLUE_BOY(createAvatar(2)),
-    BROWN_BOY(createAvatar(4)),
-    GREEN_BOY(createAvatar(6)),
-    RED_BOY(createAvatar(0)),
-    PINK_GIRL(createAvatar(1)),
-    ORANGE_GIRL(createAvatar(5)),
-    BLUE_GIRL(createAvatar(3)),
-    GREEN_GIRL(createAvatar(7));
+public enum EnemyAvatar {
+    SKELETON(createAvatar(0)),
+    HUNTER(createAvatar(1)),
+    BANDIT(createAvatar(2));
 
     private final Image avatarImage;
 
-    PlayerAvatar(Image avatarImage) {
+    EnemyAvatar(Image avatarImage) {
         this.avatarImage = avatarImage;
     }
 
-    public Image getPlayerAvatar() {
+    public Image getEnemyAvatar() {
         return avatarImage;
     }
 
     public static Image createAvatar(int number) {
-        Image avatarsImage = new Image("avatars.png");
+        Image avatarsImage = new Image("enemyAvatars.png");
         PixelReader reader = avatarsImage.getPixelReader();
         WritableImage newImage = null;
 

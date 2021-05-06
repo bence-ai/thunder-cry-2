@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class Main extends Application {
@@ -43,8 +45,8 @@ public class Main extends Application {
         Button loadGame = buttonFactory("Load Game");
         Button exit = buttonFactory("Exit");
         GridPane buttons = new GridPane();
-        buttons.add(newGame, 0, 0);
-        buttons.add(loadGame, 0, 1);
+        buttons.add(newGame,0,0);
+        buttons.add(loadGame,0,1);
         buttons.setAlignment(Pos.CENTER);
         exit.setFont(buttonFontNormal);
 
@@ -60,9 +62,15 @@ public class Main extends Application {
         scene.getStylesheets().add("Loader/button.css");
         stage.setScene(scene);
 
+        FadeTransition fade = new FadeTransition(Duration.seconds(3), newGame);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
+
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
         loadGame.setOnMouseClicked(this::loadGame);
+        loadGame.setDisable(true);
         stage.show();
         stage.setScene(scene);
     }
@@ -76,8 +84,10 @@ public class Main extends Application {
         button.setTextFill(Color.WHITE);
         button.setFont(buttonFontLarge);
         button.setAlignment(Pos.CENTER);
-        button.setPadding(new Insets(30, 5, 5, 30));
-        button.setEffect(new Reflection());
+        button.setPadding(new Insets(15,0,0,0));
+        Reflection reflection = new Reflection();
+        reflection.setTopOffset(-90);
+        button.setEffect(reflection);
         button.setCursor(Cursor.HAND);
         return button;
     }
@@ -87,14 +97,10 @@ public class Main extends Application {
     }
 
     private void newGame(MouseEvent mouseEvent) {
-        BorderPane borderPane = new BorderPane();
-        Scene scene = new Scene(borderPane);
-        scene.setFill(Color.BLACK);
-        stage.setScene(scene);
-    }
-
-    private void loadGame(MouseEvent mouseEvent) {
         Game game = new Game(stage, "Hubb");
         game.play();
+    }
+    private void loadGame(MouseEvent mouseEvent) {
+
     }
 }

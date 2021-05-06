@@ -25,7 +25,7 @@ public class Hunter extends Actor {
         this.maxAttack = this.attack;
         this.spellList = new ArrayList<Spell>();
         this.spellList.add(Spell.FIRE);
-
+        this.avatar = EnemyAvatar.HUNTER.getEnemyAvatar();
     }
     @Override
     public String getTileName() {

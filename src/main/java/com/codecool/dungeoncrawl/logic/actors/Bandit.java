@@ -26,6 +26,7 @@ public class Bandit extends Actor{
         this.spellList.add(Spell.SHADOW_BOLT);
         this.weapon = new Sword(cell, ItemType.WEAPON, 25);
         this.weapon.getCell().setItem(null);
+        this.avatar = EnemyAvatar.BANDIT.getEnemyAvatar();
     }
 
     @Override

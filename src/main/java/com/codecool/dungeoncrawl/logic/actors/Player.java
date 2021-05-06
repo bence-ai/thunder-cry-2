@@ -3,9 +3,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.items.Key;
-import com.codecool.dungeoncrawl.logic.items.Sword;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
 
 import java.util.ArrayList;
@@ -30,8 +28,7 @@ public class Player extends Actor {
         this.spellList.add(Spell.FIRE);
         this.spellList.add(Spell.THUNDER);
         this.spellList.add(Spell.SMALL_HEAL);
-        this.weapon = new Sword(cell, ItemType.WEAPON, 0);
-        this.weapon.getCell().setItem(null);
+        this.avatar = PlayerAvatar.BLUE_BOY.getPlayerAvatar();
     }
 
     public String getTileName() {
