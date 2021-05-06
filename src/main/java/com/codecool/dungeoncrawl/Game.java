@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Hunter;
+import com.codecool.dungeoncrawl.logic.items.Barehand;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
@@ -240,16 +242,10 @@ public class Game {
         weaponKey.setFont(SMALL_FONT);
         BorderPane weapon = new BorderPane();
         weapon.setLeft(weaponKey);
-        if (map.getPlayer().getWeapon() == null) {
-            weaponImage.setCenter(new ImageView(WeaponType.HAND.getAvatarImage()));
-            weapon.setRight(weaponImage);
-            weaponAvatar.setCenter(weapon);
-            characterInfo.add(weaponAvatar, 2, 0);
-        } else {
-            weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
-            weapon.setRight(weaponImage);
-            weaponAvatar.setCenter(weapon);
-        }
+
+        weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
+        weapon.setRight(weaponImage);
+        weaponAvatar.setCenter(weapon);
 
         for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
             BorderPane spellImage = new BorderPane();
@@ -306,7 +302,8 @@ public class Game {
                 }
             }
         }
-        name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
+
+        name.setText(map.getPlayer().getName() + "(" + (map.getPlayer().getAttack() + map.getPlayer().getWeapon().getProperty()) + ")");
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
@@ -334,6 +331,9 @@ public class Game {
 
     private Canvas tutorial() {
         map = MapLoader.loadMap("tutorial");
+        map.getPlayer().setWeapon(new Barehand(map.getPlayer().getCell(), ItemType.WEAPON, 0));
+        map.getPlayer().getCell().setItem(null);
+//        map.getCell()
         for(Actor enemy: map.getEnemyList()) {
             if(enemy instanceof Hunter) {
                 ((Hunter) enemy).setMaxX(map.getWidth());

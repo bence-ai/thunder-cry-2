@@ -25,7 +25,11 @@ public class Cell implements Drawable {
     }
 
     public Weapon getWeapon() {
-        return weapon;
+        return this.weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public void setItem(Item item) {

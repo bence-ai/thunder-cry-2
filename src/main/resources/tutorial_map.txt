@@ -6,8 +6,8 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww╔═══┘g     2
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww│
 wwwwwwwwwwwwww╔════════════════════════════════┘        g
 wwwwwwwwwwwwww│0ggg01gggg22ggggggg1ggggggggggggggggggggggggg
-wwwwwwwwwwwwww│ggg1g  g11ggggggggggg         gggsdddddddd  d
-wwwwwwwwwwwwww│g00gggg11g222gggggggggggggggggggggddddddddddd
+wwwwwwwwwwwwww│ggg1g  g11ggWgggagggg         gggsdddddddd  d
+wwwwwwwwwwwwww│g00gggg11g222gggggWgggggggggggggggddddddddddd
 www╔══════════┘ggg1gg   gg ggg22ggggggggg  ggg  gddddgggdddd
 www│ 0     1     ggg11gggg22gg0gggggggggggggggggg  gdddddddd
 www│    e     ggg2ggggggggggggggsggggggdddddddddgddddgdddgdd
