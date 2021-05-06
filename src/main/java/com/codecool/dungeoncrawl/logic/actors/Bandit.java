@@ -17,17 +17,19 @@ public class Bandit extends Actor{
         this.maxHealth = this.health;
         this.manaPoint = 125;
         this.maxManaPoint = this.manaPoint;
-        this.defense = 15;
+        this.defense = 32;
         this.maxDefense = this.defense;
         this.attack = 110;
         this.maxAttack = this.attack;
         this.spellList = new ArrayList<Spell>();
         this.spellList.add(Spell.SMALL_HEAL);
         this.spellList.add(Spell.SHADOW_BOLT);
-        this.weapon = new Sword(cell, ItemType.WEAPON, 25);
+        this.weapon = new Sword(cell, ItemType.WEAPON, 35);
         this.weapon.getCell().setItem(null);
         this.avatar = EnemyAvatar.BANDIT.getEnemyAvatar();
     }
+
+
 
     @Override
     public String getTileName() {

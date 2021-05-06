@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 public class Skeleton extends Actor {
-    private Direction direction = Direction.NORTH;
+    private final Direction direction = Direction.NORTH;
 
     public Skeleton(Cell cell, String name) {
         super(cell, name);
@@ -18,12 +18,13 @@ public class Skeleton extends Actor {
         this.maxManaPoint = this.manaPoint;
         this.defense = 15;
         this.maxDefense = this.defense;
-        this.attack = 75;
+        this.attack = 90;
         this.maxAttack = this.attack;
         this.spellList = new ArrayList<Spell>();
         this.spellList.add(Spell.FIRE);
         this.avatar = EnemyAvatar.SKELETON.getEnemyAvatar();
     }
+
 
     @Override
     public String getTileName() {
