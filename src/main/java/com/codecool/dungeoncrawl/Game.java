@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Hunter;
+import com.codecool.dungeoncrawl.logic.items.Barehand;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
@@ -234,16 +236,11 @@ public class Game {
         weaponKey.setFont(SMALL_FONT);
         BorderPane weapon = new BorderPane();
         weapon.setLeft(weaponKey);
-        if (map.getPlayer().getWeapon() == null) {
-            weaponImage.setCenter(new ImageView(WeaponType.HAND.getAvatarImage()));
-            weapon.setRight(weaponImage);
-            weaponAvatar.setCenter(weapon);
-            characterInfo.add(weaponAvatar, 2, 0);
-        } else {
-            weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
-            weapon.setRight(weaponImage);
-            weaponAvatar.setCenter(weapon);
-        }
+
+        weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
+        weapon.setRight(weaponImage);
+        weaponAvatar.setCenter(weapon);
+        characterInfo.add(weaponAvatar, 2, 0);
 
         for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
             BorderPane spellImage = new BorderPane();
@@ -300,18 +297,17 @@ public class Game {
                 }
             }
         }
-        if (map.getPlayer().getWeapon() == null) {
-            name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + ")");
-            weaponAvatar.setCenter(new ImageView(WeaponType.HAND.getAvatarImage()));
-        } else {
-            name.setText(map.getPlayer().getName() + "(" + map.getPlayer().getAttack() + map.getPlayer().getWeapon().getProperty() + ")");
-            weaponAvatar.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
-        }
+
+        name.setText(map.getPlayer().getName() + "(" + (map.getPlayer().getAttack() + map.getPlayer().getWeapon().getProperty()) + ")");
+        weaponAvatar.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
+
         healthLabel.setText("Health: " + map.getPlayer().getHealth());
         mannaLabel.setText("Manna: " + map.getPlayer().getMana());
         defenseLabel.setText("Defense: " + map.getPlayer().getDefense());
+        infoLabel.setText("");
         if (map.getPlayer().standingOnItem()) {
-            infoLabel.setText("Press [E] to pick up!");
+            String itemName = map.getPlayer().getCell().getItem().getTileName();
+            infoLabel.setText("Press [E] to pick up: " + itemName);
         }
         if (map.getPlayer().isThereEnemy()) {
             infoLabel.setText("PRESS [F] TO FIGHT!");
@@ -321,7 +317,6 @@ public class Game {
             enemyDefenseLabel.setText("Defense:" + map.getPlayer().getEnemy().getDefense());
             enemyAvatar.setCenter(new ImageView(map.getPlayer().getEnemy().getAvatar()));
         } else {
-            infoLabel.setText("");
             enemyName.setText("");
             enemyHealthLabel.setText("");
             enemyMannaLabel.setText("");
@@ -333,6 +328,9 @@ public class Game {
 
     private Canvas tutorial() {
         map = MapLoader.loadMap("tutorial");
+        map.getPlayer().setWeapon(new Barehand(map.getPlayer().getCell(), ItemType.WEAPON, 0));
+        map.getPlayer().getCell().setItem(null);
+//        map.getCell()
         for(Actor enemy: map.getEnemyList()) {
             if(enemy instanceof Hunter) {
                 ((Hunter) enemy).setMaxX(map.getWidth());

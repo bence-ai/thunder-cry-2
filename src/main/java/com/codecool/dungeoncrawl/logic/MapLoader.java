@@ -71,7 +71,7 @@ public class MapLoader {
                             break;
                         case 'W':
                             cell.setType(CellType.FLOOR);
-                            new Sword(cell, ItemType.WEAPON, 35);
+                            cell.setWeapon(new Sword(cell, ItemType.WEAPON, 35));
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
