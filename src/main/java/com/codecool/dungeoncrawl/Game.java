@@ -3,9 +3,11 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.items.Barehand;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
+import com.codecool.dungeoncrawl.logic.magic.Spell;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -88,7 +90,7 @@ public class Game {
         borderPane.setBottom(pressButton);
 
         borderPane.setAlignment(pressButton, Pos.CENTER);
-
+        borderPane.setCursor(Cursor.NONE);
         this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::playGame);
 
@@ -339,7 +341,7 @@ public class Game {
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
-
+        map.getPlayer().addSpell(Spell.BLIZZARD);
         return canvas;
     }
 
