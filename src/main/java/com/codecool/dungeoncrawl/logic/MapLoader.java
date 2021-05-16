@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.*;
 
+
 import java.io.InputStream;
 import java.util.Scanner;
 

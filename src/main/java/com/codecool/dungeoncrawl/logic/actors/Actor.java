@@ -218,7 +218,6 @@ public abstract class Actor implements Drawable {
         return spellList;
     }
 
-
     public Cell getCell() {
         return cell;
     }
