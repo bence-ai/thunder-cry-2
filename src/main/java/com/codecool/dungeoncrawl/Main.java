@@ -16,16 +16,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.print.attribute.standard.Media;
-import java.io.File;
-
 
 public class Main extends Application {
     Stage stage = new Stage();
     Font BUTTON_NORMAL = new Font("Pixeled Regular", 25);
     Font BUTTON_LARGE = new Font("Pixeled Regular", 45);
     Font LOGO_FONT = new Font("Vehicle Breaks Down Regular", 150);
-
 
     public static void main(String[] args) {
         launch(args);
