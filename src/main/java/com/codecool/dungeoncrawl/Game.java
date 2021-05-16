@@ -67,7 +67,7 @@ public class Game {
         logo.setTextFill(Color.WHITE);
         loaderPage.getChildren().add(logo);
 
-        Label title = new Label("and the lost Island");
+        Label title = new Label("and the lost Island 2");
         title.setFont(EXTRA_LARGE_FONT);
         title.setTextFill(Color.BLACK);
         title.setPadding(new Insets(-70,0,0,0));
