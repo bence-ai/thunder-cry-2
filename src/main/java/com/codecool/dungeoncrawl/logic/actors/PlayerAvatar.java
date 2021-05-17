@@ -8,9 +8,9 @@ public enum PlayerAvatar {
     BLUE_BOY(createAvatar(2)),
     BROWN_BOY(createAvatar(4)),
     GREEN_BOY(createAvatar(6)),
-    RED_BOY(createAvatar(0)),
+    ORANGE_BOY(createAvatar(0)),
     PINK_GIRL(createAvatar(1)),
-    ORANGE_GIRL(createAvatar(5)),
+    BROWN_GIRL(createAvatar(5)),
     BLUE_GIRL(createAvatar(3)),
     GREEN_GIRL(createAvatar(7));
 

@@ -27,7 +27,6 @@ public class Tiles {
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("character", new Tile(27, 0));
-        tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
         tileMap.put("hunter", new Tile(24,0));
         // FLOORS
@@ -66,7 +65,10 @@ public class Tiles {
         tileMap.put("open door", new Tile(0,3));
         tileMap.put("closed door", new Tile(1,3));
         tileMap.put("stairs", new Tile(9,25));
+    }
 
+    public static void setPlayer(int i, int j) {
+        tileMap.put("player", new Tile(i, j));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

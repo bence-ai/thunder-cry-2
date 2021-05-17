@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.*;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Barehand;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
@@ -39,6 +40,7 @@ public class Game {
     Scene scene;
     BorderPane toolbar;
 
+    Player player;
     Label name = new Label();
     Label healthLabel = new Label();
     Label mannaLabel = new Label();
@@ -51,9 +53,9 @@ public class Game {
     BorderPane weaponAvatar = new BorderPane();
     BorderPane enemyAvatar = new BorderPane();
 
-    public Game(Stage stage, String name) {
+    public Game(Stage stage, Player player) {
         this.stage = stage;
-        this.name.setText(name);
+        this.player = player;
     }
 
     public void loader() {
@@ -97,7 +99,6 @@ public class Game {
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
         stage.setFullScreen(true);
-        stage.setResizable(true);
 
         titleFadeIn.play();
         title.setTextFill(Color.AQUA);
@@ -326,7 +327,7 @@ public class Game {
     }
 
     private Canvas tutorial() {
-        map = MapLoader.loadMap(0, null);
+        map = MapLoader.loadMap(0, player);
         map.getPlayer().setWeapon(new Barehand(map.getPlayer().getCell(), ItemType.WEAPON, 0));
         map.getPlayer().getCell().setItem(null);
         canvas = new Canvas(

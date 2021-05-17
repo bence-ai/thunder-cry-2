@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class ActorTest {
 
     @Test
     void moveUpdatesCells() {
-        Player player = new Player(gameMap.getCell(1, 1), "Lajos");
+        Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_GIRL);
         player.move(1, 0);
 
         assertEquals(2, player.getX());
@@ -23,7 +24,7 @@ class ActorTest {
     @Test
     void cannotMoveIntoWall() {
         gameMap.getCell(2, 1).setType(CellType.WALL);
-        Player player = new Player(gameMap.getCell(1, 1) ,"Lajos");
+        Player player = new Player(gameMap.getCell(1, 1) ,"Lajos", PlayerAvatar.BROWN_GIRL);
         player.move(1, 0);
 
         assertEquals(1, player.getX());
@@ -32,7 +33,7 @@ class ActorTest {
 
     @Test
     void cannotMoveOutOfMap() {
-        Player player = new Player(gameMap.getCell(2, 1), "Lajos");
+        Player player = new Player(gameMap.getCell(2, 1), "Lajos", PlayerAvatar.BROWN_GIRL);
         player.move(1, 0);
 
         assertEquals(2, player.getX());
@@ -41,7 +42,7 @@ class ActorTest {
 
     @Test
     void cannotMoveIntoAnotherActor() {
-        Player player = new Player(gameMap.getCell(1, 1), "Lajos");
+        Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_GIRL);
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), "Skeleton");
         player.move(1, 0);
 
