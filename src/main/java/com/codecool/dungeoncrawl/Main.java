@@ -161,12 +161,6 @@ public class Main extends Application {
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             playerName = newValue;
         });
-
-
-
-        Game game = new Game(stage, "Hubb");
-        game.loader();
-
     }
 
     private void changeColor(ToggleGroup genderGroup, ToggleGroup colorGroup, ImageView imageView) {
@@ -388,7 +382,7 @@ public class Main extends Application {
 
     private void save(MouseEvent mouseEvent) {
         int minNameCharacter = 4;
-        if (playerName == null || playerName.length() >= minNameCharacter) {
+        if (playerName == null || playerName.length() <= minNameCharacter) {
             noNameLabel.setText("Ups, missed something?!");
             return;
         }
