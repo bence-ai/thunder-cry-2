@@ -13,6 +13,7 @@ public class Player extends Actor {
 
     private final ArrayList<Item> inventory = new ArrayList<>();
     int mapLevel = 0;
+    String avatarText;
 
     public Player(Cell cell, String name, PlayerAvatar playerAvatar) {
         super(cell, name);
@@ -29,6 +30,7 @@ public class Player extends Actor {
         this.spellList.add(Spell.THUNDER);
         this.spellList.add(Spell.SMALL_HEAL);
         this.avatar = playerAvatar.getPlayerAvatar();
+        this.avatarText = playerAvatar.name();
     }
 
     public void setCell(Cell cell) {
@@ -178,5 +180,9 @@ public class Player extends Actor {
 
     public boolean standingOnItem() {
         return cell.getItem() != null;
+    }
+
+    public String getAvatarText() {
+        return avatarText;
     }
 }
