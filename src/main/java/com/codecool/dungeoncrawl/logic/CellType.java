@@ -40,12 +40,11 @@ public enum CellType {
 
     CellType(String tileName, boolean isStepable) {
         this.stepable = isStepable;
+
         this.tileName = tileName;
     }
 
     public String getTileName() {
         return tileName;
     }
-
-
 }

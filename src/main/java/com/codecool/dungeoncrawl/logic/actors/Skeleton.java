@@ -25,12 +25,10 @@ public class Skeleton extends Actor {
         this.avatar = EnemyAvatar.SKELETON.getEnemyAvatar();
     }
 
-
     @Override
     public String getTileName() {
         return "skeleton";
     }
-
 
     @Override
     public void onUpdate() {
@@ -39,6 +37,4 @@ public class Skeleton extends Actor {
             move(moves[0], moves[1]);
         }
     }
-
-
 }

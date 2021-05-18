@@ -150,6 +150,7 @@ public class Game {
                 refresh();
                 break;
             case LEFT:
+
                 map.getPlayer().move(-1, 0);
                 update();
                 refresh();
@@ -234,12 +235,14 @@ public class Game {
         BorderPane weaponImage = new BorderPane();
         Label weaponKey = new Label("0");
         weaponKey.setFont(SMALL_FONT);
+        weaponKey.setTextFill(Color.WHITE);
         BorderPane weapon = new BorderPane();
         weapon.setLeft(weaponKey);
 
         weaponImage.setCenter(new ImageView(map.getPlayer().getWeapon().getWeaponAvatar()));
         weapon.setRight(weaponImage);
         weaponAvatar.setCenter(weapon);
+        characterInfo.add(weaponKey,1,0);
         characterInfo.add(weaponAvatar, 2, 0);
 
         for (int i = 0; i < map.getPlayer().getSpellList().size(); i++) {
