@@ -14,7 +14,7 @@ public class Player extends Actor {
     private final ArrayList<Item> inventory = new ArrayList<>();
     int mapLevel = 0;
 
-    public Player(Cell cell, String name) {
+    public Player(Cell cell, String name, PlayerAvatar playerAvatar) {
         super(cell, name);
         this.health = 500;
         this.maxHealth = this.health;
@@ -28,12 +28,14 @@ public class Player extends Actor {
         this.spellList.add(Spell.FIRE);
         this.spellList.add(Spell.THUNDER);
         this.spellList.add(Spell.SMALL_HEAL);
-        this.avatar = PlayerAvatar.BLUE_BOY.getPlayerAvatar();
+        this.avatar = playerAvatar.getPlayerAvatar();
     }
 
     public void setCell(Cell cell) {
         this.cell = cell;
+        this.cell.setActor(this);
     }
+
 
     public void setMapLevel(int mapLevel) {
         this.mapLevel = mapLevel;

@@ -1,9 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Bandit;
-import com.codecool.dungeoncrawl.logic.actors.Hunter;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.Tiles;
+import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 
@@ -52,9 +50,22 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            if (player == null) {
-                                map.setPlayer(new Player(cell, "Hero"));
-                                break;
+                            if (PlayerAvatar.BLUE_BOY.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(19, 29);
+                            } else if (PlayerAvatar.BLUE_GIRL.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(20, 29);
+                            } else if (PlayerAvatar.PINK_GIRL.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(20, 30);
+                            } else if (PlayerAvatar.GREEN_BOY.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(21, 29);
+                            } else if (PlayerAvatar.GREEN_GIRL.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(22, 29);
+                            } else if (PlayerAvatar.ORANGE_BOY.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(19, 30);
+                            } else if (PlayerAvatar.BROWN_BOY.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(21, 30);
+                            } else if (PlayerAvatar.BROWN_GIRL.getPlayerAvatar().equals(player.getAvatar())) {
+                                Tiles.setPlayer(22, 30);
                             }
                             player.setCell(cell);
                             map.setPlayer(player);
