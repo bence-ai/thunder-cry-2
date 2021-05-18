@@ -118,6 +118,7 @@ public class Main extends Application {
     private void newGame(MouseEvent mouseEvent) {
         Game game = new Game(stage, "Hubb");
         game.loader();
+        setupDbManager();
     }
     private void loadGame(MouseEvent mouseEvent) {
 
