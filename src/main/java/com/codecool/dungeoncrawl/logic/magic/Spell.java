@@ -10,7 +10,7 @@ public enum Spell {
     BLIZZARD (new Magic("Blizzard", 85, 275, SpellType.BLACK), createImage(2)),
     METEOR (new Magic("Meteor", 165, 450, SpellType.BLACK), createImage(3)),
 
-    SMALL_HEAL (new Magic(" Flesh Heal", 25, 150, SpellType.WHITE), createImage(4)),
+    SMALL_HEAL (new Magic("Flesh Heal", 25, 150, SpellType.WHITE), createImage(4)),
     BIG_HEAL (new Magic("Greater Heal", 55, 400, SpellType.WHITE), createImage(5)),
 
     ZOMBIE_BITE (new Magic("Zombie Kiss", 50, 150, SpellType.ZOMBIE), createImage(0)),
