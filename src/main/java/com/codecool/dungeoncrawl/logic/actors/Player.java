@@ -7,9 +7,14 @@ import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player extends Actor {
+public class Player extends Actor implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final ArrayList<Item> inventory = new ArrayList<>();
     int mapLevel = 0;
@@ -178,5 +183,22 @@ public class Player extends Actor {
 
     public boolean standingOnItem() {
         return cell.getItem() != null;
+    }
+
+    private void writeObject(ObjectOutputStream oos)
+            throws IOException {
+        oos.defaultWriteObject();
+        oos.writeObject(name);
+        oos.writeObject(health);
+        oos.writeObject(manaPoint);
+    }
+
+    private void readObject(ObjectInputStream ois)
+            throws ClassNotFoundException, IOException {
+//        ois.defaultReadObject();
+//        Integer houseNumber = (Integer) ois.readObject();
+//        Address a = new Address();
+//        a.setHouseNumber(houseNumber);
+//        this.setAddress(a);
     }
 }
