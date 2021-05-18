@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class GameDatabaseManager {
+
     private PlayerDao playerDao;
 
     public void setup() throws SQLException {
@@ -22,9 +23,12 @@ public class GameDatabaseManager {
 
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String dbName = "test";
-        String user = "test";
-        String password = "test";
+        String dbName = System.getenv("PSQL_DB_NAME");
+        System.out.println(dbName);
+        String user = System.getenv("PSQL_USER_NAME");
+        System.out.println(user);
+        String password = System.getenv("PSQL_PASS");
+        System.out.println(password);
 
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(user);
