@@ -163,6 +163,7 @@ public class Game {
                 checkForItem();
                 refresh();
                 break;
+                
         }
     }
 

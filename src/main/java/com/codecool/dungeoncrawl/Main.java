@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
-import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 public class Main extends Application {
@@ -67,14 +65,11 @@ public class Main extends Application {
         borderPane.setAlignment(thunderCry, Pos.CENTER);
         borderPane.setAlignment(exit, Pos.CENTER);
 
-        Scene scene = new Scene(borderPane);
-        scene.getStylesheets().add("Loader/button.css");
-        stage.setScene(scene);
-
-        FadeTransition fade = new FadeTransition(Duration.seconds(3), newGame);
-        fade.setFromValue(0);
-        fade.setToValue(1);
-        fade.play();
+        if (borderPane.getScene() == null) {
+            Scene scene = new Scene(borderPane);
+            scene.getStylesheets().add("Loader/button.css");
+            stage.setScene(scene);
+        }
 
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
@@ -82,7 +77,6 @@ public class Main extends Application {
         loadGame.setDisable(true);
 
         stage.show();
-        stage.setScene(scene);
     }
 
     private Button buttonFactory(String text) {
@@ -278,10 +272,12 @@ public class Main extends Application {
     }
 
     private void save(MouseEvent mouseEvent) {
-        if (playerName == null) {
+        int minNameCharacter = 4;
+        if (playerName == null || playerName.length() >= minNameCharacter) {
             noNameLabel.setText("Ups, missed something?!");
             return;
         }
+
         Player player = new Player(null, playerName, playerAvatar);
         Game game = new Game(stage, player);
         game.loader();
