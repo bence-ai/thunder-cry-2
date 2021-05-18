@@ -163,6 +163,10 @@ public class Main extends Application {
         });
 
 
+
+        Game game = new Game(stage, "Hubb");
+        game.loader();
+
     }
 
     private void changeColor(ToggleGroup genderGroup, ToggleGroup colorGroup, ImageView imageView) {
