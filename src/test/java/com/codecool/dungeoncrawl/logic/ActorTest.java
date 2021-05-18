@@ -25,6 +25,7 @@ class ActorTest {
     void cannotMoveIntoWall() {
         gameMap.getCell(2, 1).setType(CellType.WALL);
         Player player = new Player(gameMap.getCell(1, 1) ,"Lajos", PlayerAvatar.BROWN_GIRL);
+
         player.move(1, 0);
 
         assertEquals(1, player.getX());

@@ -9,7 +9,6 @@ public class Cell implements Drawable {
     private GameMap gameMap;
     private int x, y;
 
-
     private Item item;
     private Weapon weapon;
 
@@ -48,6 +47,7 @@ public class Cell implements Drawable {
         if (actor == null) {
             type.setStepable(true);
         }
+
         this.actor = actor;
     }
 
