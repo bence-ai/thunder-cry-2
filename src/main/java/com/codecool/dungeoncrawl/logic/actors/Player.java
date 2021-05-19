@@ -18,6 +18,7 @@ public class Player extends Actor implements Serializable {
 
     private final ArrayList<Item> inventory = new ArrayList<>();
     int mapLevel = 0;
+    String avatarText;
 
     public Player(Cell cell, String name, PlayerAvatar playerAvatar) {
         super(cell, name);
@@ -34,6 +35,7 @@ public class Player extends Actor implements Serializable {
         this.spellList.add(Spell.THUNDER);
         this.spellList.add(Spell.SMALL_HEAL);
         this.avatar = playerAvatar.getPlayerAvatar();
+        this.avatarText = playerAvatar.name();
     }
 
     public void setCell(Cell cell) {
@@ -200,5 +202,8 @@ public class Player extends Actor implements Serializable {
 //        Address a = new Address();
 //        a.setHouseNumber(houseNumber);
 //        this.setAddress(a);
+    }  
+    public String getAvatarText() {
+        return avatarText;
     }
 }
