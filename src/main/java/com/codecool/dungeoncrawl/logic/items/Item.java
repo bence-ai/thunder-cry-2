@@ -7,7 +7,7 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 public abstract class Item implements Drawable {
     private Cell cell;
     private ItemType type;
-    private String itemName;
+    protected String itemName;
 
     private int property;
 
