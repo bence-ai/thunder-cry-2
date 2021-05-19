@@ -29,7 +29,9 @@ public abstract class Actor implements Drawable {
 
     public Actor(Cell cell, String name) {
         this.cell = cell;
-        this.cell.setActor(this);
+        if (this.cell != null) {
+            this.cell.setActor(this);
+        }
         this.name = name;
         this.health = 500;
         this.maxHealth = health;
