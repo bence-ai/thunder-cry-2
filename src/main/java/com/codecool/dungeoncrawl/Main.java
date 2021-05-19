@@ -160,6 +160,7 @@ public class Main extends Application {
 
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             playerName = newValue;
+            noNameLabel.setText("");
         });
     }
 
