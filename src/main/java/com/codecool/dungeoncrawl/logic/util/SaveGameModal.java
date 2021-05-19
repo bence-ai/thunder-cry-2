@@ -28,6 +28,7 @@ public class SaveGameModal {
         textField.setFont(new Font("Pixeled Regular", 12));
         textField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
+
                 name = textField.getText();
                 modal.close();
             }
