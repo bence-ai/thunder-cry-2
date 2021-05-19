@@ -11,25 +11,20 @@ public class PlayerModel extends BaseModel {
     private int defense;
     private String weapon;
     private String avatar;
-    private int x;
-    private int y;
 
 
-    public PlayerModel(String playerName, String playerAvatar, int mp, int hp, String weapon, int defense ,int x, int y) {
+    public PlayerModel(String playerName, String playerAvatar, int mp, int hp, String weapon, int defense) {
         this.playerName = playerName;
         this.avatar = playerAvatar;
         this.mp = mp;
         this.hp = hp;
         this.weapon = weapon;
         this.defense = defense;
-        this.x = x;
-        this.y = y;
+
     }
 
     public PlayerModel(Player player) {
         this.playerName = player.getName();
-        this.x = player.getX();
-        this.y = player.getY();
         this.mp = player.getMana();
         this.hp = player.getHealth();
         this.defense = player.getDefense();
@@ -79,21 +74,6 @@ public class PlayerModel extends BaseModel {
 
     public String getAvatar() {
         return avatar;
-    }
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public void setAvatar(String avatar) {

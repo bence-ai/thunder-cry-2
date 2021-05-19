@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS public.game_state;
 CREATE TABLE public.game_state (
     id serial NOT NULL PRIMARY KEY,
     name text NOT NULL,
-    current_map text NOT NULL,
+    current_map integer NOT NULL,
     saved_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     player_id integer NOT NULL
 );
@@ -16,8 +16,6 @@ CREATE TABLE public.player (
     hp integer NOT NULL,
     weapon text NOT NULL,
     defense integer NOT NULL,
-    pos_x integer NOT NULL,
-    pos_y integer NOT NULL
 );
 
 INSERT INTO game_state
