@@ -187,6 +187,10 @@ public class Player extends Actor implements Serializable {
         return cell.getItem() != null;
     }
 
+    public String getAvatarText() {
+        return avatarText;
+    }
+
     private void writeObject(ObjectOutputStream oos)
             throws IOException {
         oos.defaultWriteObject();
@@ -202,8 +206,5 @@ public class Player extends Actor implements Serializable {
 //        Address a = new Address();
 //        a.setHouseNumber(houseNumber);
 //        this.setAddress(a);
-    }  
-    public String getAvatarText() {
-        return avatarText;
     }
 }
