@@ -31,7 +31,7 @@ public class GameDatabaseManager {
         gameStateDao.add(game_state);
     }
 
-    private DataSource connect() throws SQLException {
+    private PGSimpleDataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = System.getenv("PSQL_DB_NAME");
         System.out.println(dbName);
@@ -48,5 +48,13 @@ public class GameDatabaseManager {
         dataSource.getConnection().close();
         System.out.println("Connection ok.");
         return dataSource;
+    }
+
+    public PlayerDao getPlayerDao() {
+        return playerDao;
+    }
+
+    public GameStateDao getGameStateDao() {
+        return gameStateDao;
     }
 }

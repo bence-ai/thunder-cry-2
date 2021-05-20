@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
+import com.codecool.dungeoncrawl.model.GameState;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +22,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main extends Application {
     Stage stage = new Stage();
@@ -78,7 +81,6 @@ public class Main extends Application {
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
         loadGame.setOnMouseClicked(this::loadGame);
-        loadGame.setDisable(true);
 
         stage.show();
     }
@@ -259,14 +261,16 @@ public class Main extends Application {
     }
 
     private void loadGame(MouseEvent mouseEvent) {
-//        setupDbManager();
-//        List<GameState> gameStates = new GameStateDaoJdbc().getAll();
-//        List<String> gameNames = gameStates.stream().flatMap(GameState::getName)
+        setupDbManager();
+        List<GameState> gameStates = dbManager.getGameStateDao().getAll();
+        List<String> gameNames = gameStates.stream().map(GameState::getState_name).collect(Collectors.toList());
+        initLoadGame(gameNames);
     }
 
-    private void initLoadGame() {
+    private void initLoadGame(List<String> names) {
         ListView<String> listView = new ListView<>();
-
+        listView.getItems().addAll(names);
+        borderPane.setCenter(listView);
     }
 
     private void setupDbManager() {
