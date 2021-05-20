@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.util;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -8,7 +9,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 public class SaveGameModal {
+    GameDatabaseManager dbManager;
+
     static String name;
 
     public static void display(Stage stage) {
@@ -21,7 +26,6 @@ public class SaveGameModal {
         modal.setMaxHeight(300);
         modal.setMaximized(false);
         modal.setResizable(false);
-        modal.setOpacity(0.8);
 
         TextField textField = new TextField();
         textField.setText("Name");
@@ -39,5 +43,14 @@ public class SaveGameModal {
         Scene scene = new Scene(borderPane);
         modal.setScene(scene);
         modal.showAndWait();
+    }
+
+    private void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
     }
 }
