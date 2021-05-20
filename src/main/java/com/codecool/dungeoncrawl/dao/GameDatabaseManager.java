@@ -25,9 +25,8 @@ public class GameDatabaseManager {
         playerDao.add(model);
     }
 
-    public void saveGameState(String name, int currentMap, Date savedAt, PlayerModel player) {
-        // fixit
-        GameState game_state = new GameState(name, currentMap, savedAt, player);
+    public void saveGameState(String name, int currentMap, Date date, PlayerModel player) {
+        GameState game_state = new GameState(name, currentMap, date, player);
         gameStateDao.add(game_state);
     }
 

@@ -307,7 +307,7 @@ public class Main extends Application {
         player.setManaPoint(mp);
         player.setDefense(defense);
         try {
-            Class<?> clazz = Class.forName("com.codecool.dungeoncrawl.logic.items." + weaponName);
+            Class<?> clazz = Class.forName(weaponName);
             Weapon weapon = (Weapon) clazz.newInstance();
             player.setWeapon(weapon);
             System.out.println("Done: " + weapon);

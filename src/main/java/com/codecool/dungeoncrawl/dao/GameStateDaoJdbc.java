@@ -19,6 +19,8 @@ public class GameStateDaoJdbc implements GameStateDao {
     public void add(GameState state) {
         try (Connection connection = dataSource.getConnection()) {
             String query = "INSERT INTO game_state (name, current_map, saved_at, player_id) VALUES (?,?,?,?)";
+            PlayerDaoJdbc jdbcPlayer = new PlayerDaoJdbc(dataSource);
+            jdbcPlayer.add(state.getPlayer());
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, state.getState_name());
             preparedStatement.setInt(2, state.getCurrentMap());
@@ -28,8 +30,6 @@ public class GameStateDaoJdbc implements GameStateDao {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
             state.setId(resultSet.getInt(1));
-            PlayerDaoJdbc jdbcPlayer = new PlayerDaoJdbc(dataSource);
-            jdbcPlayer.add(state.getPlayer());
         } catch (SQLException e) {
             throw new RuntimeException(e + " add fail");
         }
@@ -39,6 +39,8 @@ public class GameStateDaoJdbc implements GameStateDao {
     public void update(GameState state) {
         try (Connection connection = dataSource.getConnection()){
             String query = "UPDATE game_state SET name = ?, current_map = ?, saved_at = ?, player_id = ? WHERE id = ?";
+            PlayerDaoJdbc jdbcPlayer = new PlayerDaoJdbc(dataSource);
+            jdbcPlayer.update(state.getPlayer());
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, state.getState_name());
             preparedStatement.setInt(2, state.getCurrentMap());
@@ -46,8 +48,6 @@ public class GameStateDaoJdbc implements GameStateDao {
             preparedStatement.setInt(4, state.getPlayer().getId());
             preparedStatement.setInt(5, state.getId());
             preparedStatement.executeUpdate();
-            PlayerDaoJdbc jdbcPlayer = new PlayerDaoJdbc(dataSource);
-            jdbcPlayer.update(state.getPlayer());
         } catch (SQLException e) {
             throw new RuntimeException(e + " update fail");
         }
