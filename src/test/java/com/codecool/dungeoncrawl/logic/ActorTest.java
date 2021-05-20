@@ -22,6 +22,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ActorTest extends ApplicationTest {
     GameMap gameMap = new GameMap(3, 3, CellType.FLOOR);
 
+    @Test
+    void gameMap_getMapDetails() {
+        assertEquals(3,gameMap.getWidth());
+        assertEquals(3, gameMap.getHeight());
+    }
+
 
     @Test
     void moveUpdatesCells() {
@@ -150,6 +156,17 @@ class ActorTest extends ApplicationTest {
         skeleton.move(0,1);
         assertNull(gameMap.getCell(2,1).getActor());
         assertNotNull(gameMap.getCell(2,2).getActor());
+    }
+
+    @Test
+
+    void takeDamage_thenHeal() {
+        Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
+        player.takeDamage(50);
+        assertEquals(450,player.getHealth());
+        player.healHP(20);
+        assertEquals(470, player.getHealth());
+
     }
 
 }
