@@ -6,7 +6,7 @@ public class Sword extends Weapon {
 
     public Sword(Cell cell, ItemType type, int property) {
         super(cell, type, property);
-        this.avatar = WeaponType.SWORD.getAvatarImage();
+        this.avatar = WeaponAvatar.SWORD.getAvatarImage();
     }
 
     @Override
