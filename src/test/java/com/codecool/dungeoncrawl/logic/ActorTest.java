@@ -126,8 +126,9 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
+
     void testItemsTileNames() {
-        Item hand = new Barehand(gameMap.getCell(1,1), ItemType.WEAPON, 0);
+        Item hand = new BareHand(gameMap.getCell(1,1), ItemType.WEAPON, 0);
         assertEquals("hand",hand.getTileName());
         Item breastplate = new Breastplate(gameMap.getCell(1,1), ItemType.WEAPON, 0);
         assertEquals("armour", breastplate.getTileName());
