@@ -339,17 +339,31 @@ public class Game {
     }
 
     private void refresh() {
+        final int VERTICAL_MAX = 15;
+        final int HORIZONTAL_MAX = 15;
+
+
+        int minX = Math.max(map.getPlayer().getX() - HORIZONTAL_MAX, 0);
+        int minY = Math.max(map.getPlayer().getY() - VERTICAL_MAX, 0);
+        int maxX = Math.min(map.getWidth(), map.getPlayer().getX() + HORIZONTAL_MAX);
+        int maxY = Math.min(map.getHeight(), map.getPlayer().getY() + VERTICAL_MAX);
+
+        if (minX == 0) maxX = Math.min(2 * HORIZONTAL_MAX + 1, map.getWidth() -1);
+        if (minY == 0) maxY = Math.min(2 * VERTICAL_MAX + 1, map.getHeight() -1);
+        if (maxX == map.getWidth() -1) minX = Math.max(map.getWidth() - 2 - HORIZONTAL_MAX * 2, 0);
+        if (maxY == map.getHeight() -1) minY = Math.max(map.getHeight() - 2 - VERTICAL_MAX * 2, 0);
+
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+                    Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
                 } else if (cell.getItem() != null) {
-                    Tiles.drawTile(context, cell.getItem(), x, y);
+                    Tiles.drawTile(context, cell.getItem(), x - minX, y - minY);
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    Tiles.drawTile(context, cell, x - minX, y - minY);
                 }
             }
         }
