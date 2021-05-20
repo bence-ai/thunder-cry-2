@@ -147,24 +147,12 @@ public abstract class Actor implements Drawable {
         return name;
     }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
     public int getHealth() {
         return health;
     }
 
-    public int getMaxMana() {
-        return maxManaPoint;
-    }
-
     public int getMana() {
         return manaPoint;
-    }
-
-    public int getMaxDefense() {
-        return maxDefense;
     }
 
     public int getDefense() {
@@ -179,42 +167,9 @@ public abstract class Actor implements Drawable {
         this.defense += defense;
     }
 
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void setMaxManaPoint(int maxManaPoint) {
-        this.maxManaPoint = maxManaPoint;
-    }
-
-    public void setManaPoint(int manaPoint) {
-        this.manaPoint = manaPoint;
-    }
-
-    public void setMaxAttack(int maxAttack) {
-        this.maxAttack = maxAttack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public void setMaxDefense(int maxDefense) {
-        this.maxDefense = maxDefense;
-    }
-
     public void addSpell(Spell spell) {
         this.spellList.add(spell);
     }
-
-    public void setSpellList(ArrayList<Spell> spellList) {
-        this.spellList = spellList;
-    }
-
 
     public ArrayList<Spell> getSpellList() {
         return spellList;
@@ -238,4 +193,11 @@ public abstract class Actor implements Drawable {
 
     public abstract void onUpdate();
 
+    public void setHealth( int hp) {
+        this.health = hp;
+    };
+
+    public void setManaPoint(int mp) {
+        this.manaPoint = mp;
+    }
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 
 public class Skeleton extends Actor {
-    private final Direction direction = Direction.NORTH;
 
     public Skeleton(Cell cell, String name) {
         super(cell, name);
