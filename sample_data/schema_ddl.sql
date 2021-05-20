@@ -15,14 +15,14 @@ CREATE TABLE public.player (
     mp integer NOT NULL,
     hp integer NOT NULL,
     weapon text NOT NULL,
-    defense integer NOT NULL,
+    defense integer NOT NULL
 );
 
 INSERT INTO game_state
 VALUES (DEFAULT, 'test', 2, '1976-06-22 19:10:25-07', 1);
 
 INSERT INTO player
-VALUES (DEFAULT, 'Test_Hero', 'BROWN_BOY', 180, 350, 'SWORD', 30, 20, 7);
+VALUES (DEFAULT, 'Test_Hero', 'BROWN_BOY', 180, 350, 'Sword', 30);
 
 ALTER TABLE ONLY public.game_state
     ADD CONSTRAINT fk_player_id FOREIGN KEY (player_id) REFERENCES public.player(id);

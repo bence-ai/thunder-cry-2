@@ -4,11 +4,14 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ActorTest {
+
+class ActorTest extends ApplicationTest {
     GameMap gameMap = new GameMap(3, 3, CellType.FLOOR);
+
 
     @Test
     void moveUpdatesCells() {
@@ -53,4 +56,5 @@ class ActorTest {
         assertEquals(1, skeleton.getY());
         assertEquals(skeleton, gameMap.getCell(2, 1).getActor());
     }
+
 }

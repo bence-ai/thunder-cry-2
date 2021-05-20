@@ -59,4 +59,9 @@ public class GameState extends BaseModel {
     public void setState_name(String state_name) {
         this.state_name = state_name;
     }
+
+    @Override
+    public String toString() {
+        return "💾  " + state_name;
+    }
 }

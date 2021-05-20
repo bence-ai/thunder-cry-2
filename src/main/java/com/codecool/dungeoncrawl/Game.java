@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Barehand;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
+import com.codecool.dungeoncrawl.logic.util.SaveGameModal;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,12 +15,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.*;
 
 public class Game {
     Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));;
@@ -96,8 +103,9 @@ public class Game {
         this.scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::playGame);
 
+        stage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN, KeyCombination.ALT_ANY));
+        stage.setFullScreenExitHint("(Ctr + Alt + X) -> Exit Fullscreen Mode 👾");
         stage.setScene(scene);
-        stage.setFullScreenExitHint("");
         stage.setFullScreen(true);
 
         titleFadeIn.play();
@@ -119,9 +127,21 @@ public class Game {
                 canvas = level1();
                 context = canvas.getGraphicsContext2D();
                 break;
+            case 2:
+                canvas = level1();
+                context = canvas.getGraphicsContext2D();
+                break;
         }
 
         this.toolbar = setToolbar();
+        if (borderPane == null) {
+            borderPane = new BorderPane();
+            scene = new Scene(borderPane);
+            stage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN, KeyCombination.ALT_ANY));
+            stage.setFullScreenExitHint("(Ctr + Alt + X) -> Exit Fullscreen Mode 👾");
+            stage.setScene(scene);
+            stage.setFullScreen(true);
+        }
         borderPane.setCenter(canvas);
         borderPane.setTop(toolbar);
         borderPane.setBottom(null);
@@ -132,13 +152,6 @@ public class Game {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case F: // Start a fight with nearby enemy
-                if (map.getPlayer().isThereEnemy()) {
-                    infoLabel.setText("Prepare for the battle and choose an action!");
-                    battle = new Battle(scene, infoLabel, healthLabel, mannaLabel, enemyHealthLabel, enemyMannaLabel, map);
-                    battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
-                }
-                break;
             case UP:
                 map.getPlayer().move(0, -1);
                 update();
@@ -150,7 +163,6 @@ public class Game {
                 refresh();
                 break;
             case LEFT:
-
                 map.getPlayer().move(-1, 0);
                 update();
                 refresh();
@@ -160,12 +172,48 @@ public class Game {
                 update();
                 refresh();
                 break;
+            case F: // Start a fight with nearby enemy
+                if (map.getPlayer().isThereEnemy()) {
+                    infoLabel.setText("Prepare for the battle and choose an action!");
+                    battle = new Battle(scene, infoLabel, healthLabel, mannaLabel, enemyHealthLabel, enemyMannaLabel, map);
+                    battle.fight(map.getPlayer(), map.getPlayer().getEnemy());
+                }
+                break;
             case E: // Pick-up items
                 checkForItem();
                 refresh();
                 break;
-                
         }
+
+        final KeyCombination save = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+        if (save.match(keyEvent)) {
+            SaveGameModal.display(stage);
+        }
+
+        final KeyCombination export = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+        if (export.match(keyEvent)) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Export game state");
+            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("ThunderCry Game State File", "tc"));
+            fileChooser.setInitialFileName("export_thunder.tc");
+            borderPane.setCursor(Cursor.DEFAULT);
+            File file = fileChooser.showSaveDialog(stage);
+            borderPane.setCursor(Cursor.NONE);
+            try {
+                FileOutputStream fos = new FileOutputStream(file.getCanonicalPath());
+                ObjectOutputStream objectOut = new ObjectOutputStream(fos);
+                objectOut.writeObject(map.getPlayer());
+                objectOut.flush();
+                objectOut.close();
+                fos.flush();
+                fos.close();
+                System.out.println("Saved. File: " + file.getCanonicalPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     /**
@@ -199,7 +247,6 @@ public class Game {
                     map.getPlayer().getCell().setItem(null);
                     refresh();
             }
-
         }
     }
 
@@ -342,7 +389,7 @@ public class Game {
     }
 
     private Canvas level1() {
-        map = MapLoader.loadMap(1, map.getPlayer());
+        map = MapLoader.loadMap(1, player);
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);

@@ -1,7 +1,10 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
+import com.codecool.dungeoncrawl.logic.items.Weapon;
+import com.codecool.dungeoncrawl.model.GameState;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,22 +22,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javafx.util.Duration;
-import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main extends Application {
     Stage stage = new Stage();
@@ -47,11 +36,8 @@ public class Main extends Application {
     PlayerAvatar playerAvatar = PlayerAvatar.BLUE_BOY;
     String playerName;
     Label noNameLabel = new Label();
-    GameMap map;
-    Canvas canvas;
-    GraphicsContext context;
-    Label healthLabel = new Label();
     GameDatabaseManager dbManager;
+    GameState selectedGameState;
 
     public static void main(String[] args) {
         launch(args);
@@ -95,7 +81,6 @@ public class Main extends Application {
         exit.setOnMouseClicked(this::exit);
         newGame.setOnMouseClicked(this::newGame);
         loadGame.setOnMouseClicked(this::loadGame);
-        loadGame.setDisable(true);
 
         stage.show();
     }
@@ -115,10 +100,6 @@ public class Main extends Application {
         button.setEffect(reflection);
         button.setCursor(Cursor.HAND);
         return button;
-    }
-
-    private void exit(MouseEvent mouseEvent) {
-        System.exit(0);
     }
 
     private void newGame(MouseEvent mouseEvent) {
@@ -160,6 +141,7 @@ public class Main extends Application {
 
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             playerName = newValue;
+            noNameLabel.setText("");
         });
     }
 
@@ -279,79 +261,62 @@ public class Main extends Application {
     }
 
     private void loadGame(MouseEvent mouseEvent) {
-
         setupDbManager();
-        GridPane ui = new GridPane();
-        ui.setPrefWidth(200);
-        ui.setPadding(new Insets(10));
-
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
-
-        BorderPane borderPane = new BorderPane();
-
-        borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
-
-        Scene scene = new Scene(borderPane);
-        stage.setScene(scene);
-        refresh();
-        scene.setOnKeyPressed(this::onKeyPressed);
-        scene.setOnKeyReleased(this::onKeyReleased);
-
-        stage.setTitle("Dungeon Crawl");
-        stage.show();
+        List<GameState> gameStates = dbManager.getGameStateDao().getAll();
+        initLoadGame(gameStates);
     }
 
-    private void onKeyReleased(KeyEvent keyEvent) {
-        KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
-        KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
-        if (exitCombinationMac.match(keyEvent)
-                || exitCombinationWin.match(keyEvent)
-                || keyEvent.getCode() == KeyCode.ESCAPE) {
-            exit();
-        }
+    private void initLoadGame(List<GameState> gameStates) {
+        Button back = new Button();
+        Button load = new Button();
+        ListView<GameState> listView = new ListView<>();
+
+        listView.getItems().addAll(gameStates);
+        listView.setOnMouseClicked(event -> {
+            selectedGameState = listView.getSelectionModel().getSelectedItem();
+            load.setDisable(false);
+        });
+        load.setDisable(true);
+        back.setText("Back");
+        load.setText("Load Selected");
+        back.setFont(BUTTON_NORMAL);
+        load.setFont(BUTTON_NORMAL);
+        back.setOnMouseClicked(this::back);
+        load.setOnMouseClicked(this::setUpAndPlay);
+        HBox buttons = new HBox();
+        buttons.getChildren().addAll(back, load);
+        buttons.setPadding(new Insets(5,10,10,0));
+
+        borderPane.setCenter(listView);
+        borderPane.setBottom(buttons);
     }
 
-    private void onKeyPressed(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-            case UP:
-                map.getPlayer().move(0, -1);
-                refresh();
-                break;
-            case DOWN:
-                map.getPlayer().move(0, 1);
-                refresh();
-                break;
-            case LEFT:
-                map.getPlayer().move(-1, 0);
-                refresh();
-                break;
-            case RIGHT:
-                map.getPlayer().move(1, 0);
-                refresh();
-                break;
-            case S:
-                Player player = map.getPlayer();
-                dbManager.savePlayer(player);
-                break;
-        }
-    }
+    private void setUpAndPlay(MouseEvent mouseEvent) {
+        int level = selectedGameState.getCurrentMap();
+        String playerName = selectedGameState.getPlayer().getPlayerName();
+        int hp = selectedGameState.getPlayer().getHp();
+        int mp = selectedGameState.getPlayer().getMp();
+        int defense = selectedGameState.getPlayer().getDefense();
+        String weaponName = selectedGameState.getPlayer().getWeapon();
+        String avatarName = selectedGameState.getPlayer().getAvatar();
+        PlayerAvatar avatar = PlayerAvatar.valueOf(avatarName);
 
-    private void refresh() {
-        context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
-                    Tiles.drawTile(context, cell, x, y);
-                }
-            }
+        Player player = new Player(null, playerName, avatar);
+        player.setMapLevel(level);
+        player.setHealth(hp);
+        player.setManaPoint(mp);
+        player.setDefense(defense);
+        try {
+            Class<?> clazz = Class.forName("com.codecool.dungeoncrawl.logic.items." + weaponName);
+            Weapon weapon = (Weapon) clazz.newInstance();
+            player.setWeapon(weapon);
+            System.out.println("Done: " + weapon);
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
+
+        Game game = new Game(stage, player);
+        game.play(level);
     }
 
     private void setupDbManager() {
@@ -363,7 +328,7 @@ public class Main extends Application {
         }
     }
 
-    private void exit() {
+    private void exit(MouseEvent mouseEvent) {
         try {
             stop();
         } catch (Exception e) {

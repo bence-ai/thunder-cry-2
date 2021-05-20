@@ -9,8 +9,7 @@ import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 
-public class Player extends Actor {
-
+public class Player extends Actor{
     private final ArrayList<Item> inventory = new ArrayList<>();
     int mapLevel = 0;
     String avatarText;
