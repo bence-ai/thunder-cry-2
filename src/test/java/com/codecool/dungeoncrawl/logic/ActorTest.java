@@ -119,6 +119,7 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
+
     void testItemsTileNames() {
         Item hand = new BareHand(gameMap.getCell(1,1), ItemType.WEAPON, 0);
         assertEquals("hand",hand.getTileName());
