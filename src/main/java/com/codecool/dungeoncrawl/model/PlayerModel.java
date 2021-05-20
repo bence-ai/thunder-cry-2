@@ -2,8 +2,6 @@ package com.codecool.dungeoncrawl.model;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
-import java.awt.*;
-
 public class PlayerModel extends BaseModel {
     private String playerName;
     private int hp;
@@ -28,7 +26,7 @@ public class PlayerModel extends BaseModel {
         this.mp = player.getMana();
         this.hp = player.getHealth();
         this.defense = player.getDefense();
-        this.weapon = player.getWeapon().getClass().getName();
+        this.weapon = player.getWeapon().getClass().getSimpleName();
         this.avatar = player.getAvatarText();
     }
 
