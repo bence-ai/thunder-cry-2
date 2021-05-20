@@ -193,4 +193,11 @@ public abstract class Actor implements Drawable {
 
     public abstract void onUpdate();
 
+    public void setHealth( int hp) {
+        this.health = hp;
+    };
+
+    public void setManaPoint(int mp) {
+        this.manaPoint = mp;
+    }
 }
