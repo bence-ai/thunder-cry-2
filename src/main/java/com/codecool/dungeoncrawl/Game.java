@@ -127,9 +127,21 @@ public class Game {
                 canvas = level1();
                 context = canvas.getGraphicsContext2D();
                 break;
+            case 2:
+                canvas = level1();
+                context = canvas.getGraphicsContext2D();
+                break;
         }
 
         this.toolbar = setToolbar();
+        if (borderPane == null) {
+            borderPane = new BorderPane();
+            scene = new Scene(borderPane);
+            stage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN, KeyCombination.ALT_ANY));
+            stage.setFullScreenExitHint("(Ctr + Alt + X) -> Exit Fullscreen Mode 👾");
+            stage.setScene(scene);
+            stage.setFullScreen(true);
+        }
         borderPane.setCenter(canvas);
         borderPane.setTop(toolbar);
         borderPane.setBottom(null);
@@ -377,7 +389,7 @@ public class Game {
     }
 
     private Canvas level1() {
-        map = MapLoader.loadMap(1, map.getPlayer());
+        map = MapLoader.loadMap(1, player);
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);

@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
+import com.codecool.dungeoncrawl.logic.items.Weapon;
 import com.codecool.dungeoncrawl.model.GameState;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -23,7 +24,6 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main extends Application {
     Stage stage = new Stage();
@@ -37,7 +37,7 @@ public class Main extends Application {
     String playerName;
     Label noNameLabel = new Label();
     GameDatabaseManager dbManager;
-    String loadName;
+    GameState selectedGameState;
 
     public static void main(String[] args) {
         launch(args);
@@ -263,14 +263,60 @@ public class Main extends Application {
     private void loadGame(MouseEvent mouseEvent) {
         setupDbManager();
         List<GameState> gameStates = dbManager.getGameStateDao().getAll();
-        List<String> gameNames = gameStates.stream().map(GameState::getState_name).collect(Collectors.toList());
-        initLoadGame(gameNames);
+        initLoadGame(gameStates);
     }
 
-    private void initLoadGame(List<String> names) {
-        ListView<String> listView = new ListView<>();
-        listView.getItems().addAll(names);
+    private void initLoadGame(List<GameState> gameStates) {
+        Button back = new Button();
+        Button load = new Button();
+        ListView<GameState> listView = new ListView<>();
+
+        listView.getItems().addAll(gameStates);
+        listView.setOnMouseClicked(event -> {
+            selectedGameState = listView.getSelectionModel().getSelectedItem();
+            load.setDisable(false);
+        });
+        load.setDisable(true);
+        back.setText("Back");
+        load.setText("Load Selected");
+        back.setFont(BUTTON_NORMAL);
+        load.setFont(BUTTON_NORMAL);
+        back.setOnMouseClicked(this::back);
+        load.setOnMouseClicked(this::setUpAndPlay);
+        HBox buttons = new HBox();
+        buttons.getChildren().addAll(back, load);
+        buttons.setPadding(new Insets(5,10,10,0));
+
         borderPane.setCenter(listView);
+        borderPane.setBottom(buttons);
+    }
+
+    private void setUpAndPlay(MouseEvent mouseEvent) {
+        int level = selectedGameState.getCurrentMap();
+        String playerName = selectedGameState.getPlayer().getPlayerName();
+        int hp = selectedGameState.getPlayer().getHp();
+        int mp = selectedGameState.getPlayer().getMp();
+        int defense = selectedGameState.getPlayer().getDefense();
+        String weaponName = selectedGameState.getPlayer().getWeapon();
+        String avatarName = selectedGameState.getPlayer().getAvatar();
+        PlayerAvatar avatar = PlayerAvatar.valueOf(avatarName);
+
+        Player player = new Player(null, playerName, avatar);
+        player.setMapLevel(level);
+        player.setHealth(hp);
+        player.setManaPoint(mp);
+        player.setDefense(defense);
+        try {
+            Class<?> clazz = Class.forName("com.codecool.dungeoncrawl.logic.items." + weaponName);
+            Weapon weapon = (Weapon) clazz.newInstance();
+            player.setWeapon(weapon);
+            System.out.println("Done: " + weapon);
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Game game = new Game(stage, player);
+        game.play(level);
     }
 
     private void setupDbManager() {

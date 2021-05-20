@@ -16,6 +16,8 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 class ActorTest extends ApplicationTest {
     GameMap gameMap = new GameMap(3, 3, CellType.FLOOR);

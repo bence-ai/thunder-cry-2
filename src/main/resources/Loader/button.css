@@ -15,10 +15,6 @@
     -fx-border-radius: 15px;
 }
 
-.list {
-    -fx-border-width: 0;
-}
-
 .list-cell {
     -fx-font-size: 20px;
     -fx-font-family: Pixeled;
