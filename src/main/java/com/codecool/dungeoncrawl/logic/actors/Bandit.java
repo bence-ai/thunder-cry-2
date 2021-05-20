@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 public class Bandit extends Actor{
-    Direction direction = Direction.SOUTH;
+
     public Bandit(Cell cell, String name) {
         super(cell, name);
         this.health = 325;
@@ -21,7 +21,7 @@ public class Bandit extends Actor{
         this.maxDefense = this.defense;
         this.attack = 110;
         this.maxAttack = this.attack;
-        this.spellList = new ArrayList<Spell>();
+        this.spellList = new ArrayList<>();
         this.spellList.add(Spell.SMALL_HEAL);
         this.spellList.add(Spell.SHADOW_BOLT);
         this.weapon = new Sword(cell, ItemType.WEAPON, 35);
