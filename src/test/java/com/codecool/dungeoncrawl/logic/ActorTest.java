@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ActorTest extends ApplicationTest {
     GameMap gameMap = new GameMap(3, 3, CellType.FLOOR);
+<<<<<<< HEAD
 
     @Test
     void gameMap_getMapDetails() {
@@ -22,6 +23,8 @@ class ActorTest extends ApplicationTest {
     }
 
 
+=======
+>>>>>>> 71c80c0973881e83868b71427a9d6cdeea6e6be6
     @Test
     void moveUpdatesCells() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BLUE_BOY);
@@ -150,6 +153,7 @@ class ActorTest extends ApplicationTest {
         assertNull(gameMap.getCell(2,1).getActor());
         assertNotNull(gameMap.getCell(2,2).getActor());
     }
+<<<<<<< HEAD
 
     @Test
 
@@ -162,4 +166,6 @@ class ActorTest extends ApplicationTest {
 
     }
 
+=======
+>>>>>>> 71c80c0973881e83868b71427a9d6cdeea6e6be6
 }
