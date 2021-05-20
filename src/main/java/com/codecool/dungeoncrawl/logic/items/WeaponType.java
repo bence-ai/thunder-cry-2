@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.items;
 
 public enum WeaponType {
-    Hand(new BareHand(null, ItemType.WEAPON, 0)),
-    Knife(new Knife(null, ItemType.WEAPON, 0)),
-    Sword(new Sword(null, ItemType.WEAPON, 0));
+    BareHand(new BareHand(null, ItemType.WEAPON, 0)),
+    Knife(new Knife(null, ItemType.WEAPON, 15)),
+    Sword(new Sword(null, ItemType.WEAPON, 35));
 
     private Weapon weapon;
 

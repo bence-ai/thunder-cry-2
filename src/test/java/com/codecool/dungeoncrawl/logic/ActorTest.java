@@ -14,6 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ActorTest extends ApplicationTest {
     GameMap gameMap = new GameMap(3, 3, CellType.FLOOR);
+
+    @Test
+    void gameMap_getMapDetails() {
+        assertEquals(3,gameMap.getWidth());
+        assertEquals(3, gameMap.getHeight());
+    }
+
+
+
     @Test
     void moveUpdatesCells() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BLUE_BOY);
@@ -63,7 +72,6 @@ class ActorTest extends ApplicationTest {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         Item item = new Sword(gameMap.getCell(1,1), ItemType.WEAPON, 50);
         assertTrue(player.standingOnItem());
-
     }
 
     @Test
@@ -99,14 +107,14 @@ class ActorTest extends ApplicationTest {
         assertEquals(1,player.getCell().getY());
     }
 
-    @Test // how to test methods with random factor
-    void onUpdate_enemyMove_shouldMoveBUTnotAlways () {
-        Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), "Skeleton");
-        skeleton.onUpdate();
-        assertNull(gameMap.getCell(2,1).getActor());
-        Bandit bandit = new Bandit(gameMap.getCell(2,2), "Bandit");
-        assertEquals("Bandit", bandit.getName());
-    }
+//    @Test // how to test methods with random factor
+//    void onUpdate_enemyMove_shouldMoveButNotAlways () {
+//        Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), "Skeleton");
+//        skeleton.onUpdate();
+//        assertNull(gameMap.getCell(2,1).getActor());
+//        Bandit bandit = new Bandit(gameMap.getCell(2,2), "Bandit");
+//        assertEquals("Bandit", bandit.getName());
+//    }
 
     @Test
     void getMapLevel_getMapLevelThenIncreaseAndGetMapLevel_shouldReturnLevelTwo () {
@@ -142,4 +150,15 @@ class ActorTest extends ApplicationTest {
         assertNull(gameMap.getCell(2,1).getActor());
         assertNotNull(gameMap.getCell(2,2).getActor());
     }
+
+    @Test
+    void takeDamage_thenHeal() {
+        Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
+        player.takeDamage(50);
+        assertEquals(450,player.getHealth());
+        player.healHP(20);
+        assertEquals(470, player.getHealth());
+
+    }
+
 }

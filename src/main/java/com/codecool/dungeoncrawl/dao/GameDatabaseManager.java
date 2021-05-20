@@ -33,12 +33,8 @@ public class GameDatabaseManager {
     private PGSimpleDataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = System.getenv("PSQL_DB_NAME");
-        System.out.println(dbName);
         String user = System.getenv("PSQL_USER_NAME");
-        System.out.println(user);
         String password = System.getenv("PSQL_PASS");
-        System.out.println(password);
-
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(user);
         dataSource.setPassword(password);
