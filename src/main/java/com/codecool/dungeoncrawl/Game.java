@@ -1,11 +1,15 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.JsonManager;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.items.Barehand;
+import com.codecool.dungeoncrawl.logic.items.BareHand;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
 import com.codecool.dungeoncrawl.logic.util.SaveGameModal;
+import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +30,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.*;
+import java.io.File;
+import java.sql.Date;
+import java.sql.SQLException;
 
 public class Game {
     Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));;
@@ -59,6 +65,8 @@ public class Game {
     Label infoLabel = new Label();
     BorderPane weaponAvatar = new BorderPane();
     BorderPane enemyAvatar = new BorderPane();
+
+    GameDatabaseManager dbManager;
 
     public Game(Stage stage, Player player) {
         this.stage = stage;
@@ -188,29 +196,26 @@ public class Game {
         final KeyCombination save = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
         if (save.match(keyEvent)) {
             SaveGameModal.display(stage);
+            PlayerModel playerModel = new PlayerModel(map.getPlayer());
+            GameState gameState = new GameState(SaveGameModal.saveName, map.getPlayer().getMapLevel(), new Date(System.currentTimeMillis()), playerModel);
+            setupDbManager();
+            dbManager.getGameStateDao().add(gameState);
         }
 
         final KeyCombination export = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
         if (export.match(keyEvent)) {
+            JsonManager json = new JsonManager();
+            PlayerModel playerModel = new PlayerModel(map.getPlayer());
+            GameState gameState = new GameState(null, map.getPlayer().getMapLevel(),new Date(System.currentTimeMillis()),playerModel);
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Export game state");
-            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("ThunderCry Game State File", "tc"));
-            fileChooser.setInitialFileName("export_thunder.tc");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.setInitialFileName("dungeon_crawl.json");
             borderPane.setCursor(Cursor.DEFAULT);
-            File file = fileChooser.showSaveDialog(stage);
+            File savingFile = fileChooser.showSaveDialog(stage);
             borderPane.setCursor(Cursor.NONE);
-            try {
-                FileOutputStream fos = new FileOutputStream(file.getCanonicalPath());
-                ObjectOutputStream objectOut = new ObjectOutputStream(fos);
-                objectOut.writeObject(map.getPlayer());
-                objectOut.flush();
-                objectOut.close();
-                fos.flush();
-                fos.close();
-                System.out.println("Saved. File: " + file.getCanonicalPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            json.saveToProjectFile(savingFile,gameState);
+            refresh();
         }
 
 
@@ -379,7 +384,7 @@ public class Game {
 
     private Canvas tutorial() {
         map = MapLoader.loadMap(0, player);
-        map.getPlayer().setWeapon(new Barehand(map.getPlayer().getCell(), ItemType.WEAPON, 0));
+        map.getPlayer().setWeapon(new BareHand(map.getPlayer().getCell(), ItemType.WEAPON, 0));
         map.getPlayer().getCell().setItem(null);
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
@@ -407,5 +412,14 @@ public class Game {
     private void update() {
         checkForStairs();
         map.updateActor();
+    }
+
+    private void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
     }
 }

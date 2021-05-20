@@ -3,7 +3,7 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
-import com.codecool.dungeoncrawl.logic.items.Weapon;
+import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import com.codecool.dungeoncrawl.model.GameState;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -297,7 +297,7 @@ public class Main extends Application {
         int hp = selectedGameState.getPlayer().getHp();
         int mp = selectedGameState.getPlayer().getMp();
         int defense = selectedGameState.getPlayer().getDefense();
-        String weaponName = selectedGameState.getPlayer().getWeapon();
+        WeaponType weaponType = WeaponType.valueOf(selectedGameState.getPlayer().getWeapon());
         String avatarName = selectedGameState.getPlayer().getAvatar();
         PlayerAvatar avatar = PlayerAvatar.valueOf(avatarName);
 
@@ -306,14 +306,7 @@ public class Main extends Application {
         player.setHealth(hp);
         player.setManaPoint(mp);
         player.setDefense(defense);
-        try {
-            Class<?> clazz = Class.forName("com.codecool.dungeoncrawl.logic.items." + weaponName);
-            Weapon weapon = (Weapon) clazz.newInstance();
-            player.setWeapon(weapon);
-            System.out.println("Done: " + weapon);
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        player.setWeapon(weaponType.getWeapon());
 
         Game game = new Game(stage, player);
         game.play(level);

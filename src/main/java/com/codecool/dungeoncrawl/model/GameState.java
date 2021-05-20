@@ -18,8 +18,6 @@ public class GameState extends BaseModel {
         this.state_name = name;
     }
 
-
-
     public Date getSavedAt() {
         return savedAt;
     }
@@ -62,6 +60,6 @@ public class GameState extends BaseModel {
 
     @Override
     public String toString() {
-        return "💾  " + state_name;
+        return "💾  " + state_name + "  🕘  " + savedAt;
     }
 }
