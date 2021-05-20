@@ -32,7 +32,7 @@ public class GameState extends BaseModel {
         return currentMap;
     }
 
-    public void setCurrentMap(int    currentMap) {
+    public void setCurrentMap(int currentMap) {
         this.currentMap = currentMap;
     }
 

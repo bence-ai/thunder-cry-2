@@ -1,0 +1,14 @@
+{
+  "savedAt": "May 20, 2021",
+  "currentMap": 0,
+  "discoveredMaps": [],
+  "player": {
+    "playerName": "hsdfghs",
+    "hp": 500,
+    "mp": 180,
+    "defense": 25,
+    "weapon": "com.codecool.dungeoncrawl.logic.items.Barehand",
+    "avatar": "BLUE_BOY"
+  },
+  "state_name": "xxxxx"
+}

@@ -1,11 +1,14 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.JsonManager;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Barehand;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
 import com.codecool.dungeoncrawl.logic.util.SaveGameModal;
+import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,6 +30,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Game {
     Background TOOLBOX_FILL_COLOR = new Background(new BackgroundFill(Color.DIMGRAY, new CornerRadii(0), Insets.EMPTY));;
@@ -183,6 +188,19 @@ public class Game {
                 checkForItem();
                 refresh();
                 break;
+            case P: // save Json
+                JsonManager json = new JsonManager();
+                PlayerModel playerModel = new PlayerModel(map.getPlayer());
+                GameState gameState = new GameState("xxxxx",map.getPlayer().getMapLevel(),new Date(System.currentTimeMillis()),playerModel);
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File("."));
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+                fileChooser.getExtensionFilters().add(extFilter);
+                fileChooser.setInitialFileName("dungeon_crawl.json");
+                File savingFile = fileChooser.showSaveDialog(stage);
+                json.saveToProjectFile(savingFile,gameState);
+                refresh();
+                break;
         }
 
         final KeyCombination save = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
@@ -190,28 +208,28 @@ public class Game {
             SaveGameModal.display(stage);
         }
 
-        final KeyCombination export = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
-        if (export.match(keyEvent)) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Export game state");
-            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("ThunderCry Game State File", "tc"));
-            fileChooser.setInitialFileName("export_thunder.tc");
-            borderPane.setCursor(Cursor.DEFAULT);
-            File file = fileChooser.showSaveDialog(stage);
-            borderPane.setCursor(Cursor.NONE);
-            try {
-                FileOutputStream fos = new FileOutputStream(file.getCanonicalPath());
-                ObjectOutputStream objectOut = new ObjectOutputStream(fos);
-                objectOut.writeObject(map.getPlayer());
-                objectOut.flush();
-                objectOut.close();
-                fos.flush();
-                fos.close();
-                System.out.println("Saved. File: " + file.getCanonicalPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        final KeyCombination export = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+//        if (export.match(keyEvent)) {
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Export game state");
+//            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("ThunderCry Game State File", "tc"));
+//            fileChooser.setInitialFileName("export_thunder.tc");
+//            borderPane.setCursor(Cursor.DEFAULT);
+//            File file = fileChooser.showSaveDialog(stage);
+//            borderPane.setCursor(Cursor.NONE);
+//            try {
+//                FileOutputStream fos = new FileOutputStream(file.getCanonicalPath());
+//                ObjectOutputStream objectOut = new ObjectOutputStream(fos);
+//                objectOut.writeObject(map.getPlayer());
+//                objectOut.flush();
+//                objectOut.close();
+//                fos.flush();
+//                fos.close();
+//                System.out.println("Saved. File: " + file.getCanonicalPath());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
 
     }
