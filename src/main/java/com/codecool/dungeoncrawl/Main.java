@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
-import com.codecool.dungeoncrawl.logic.items.WeaponType;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
+import com.codecool.dungeoncrawl.logic.items.Sword;
 import com.codecool.dungeoncrawl.model.GameState;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -297,7 +300,7 @@ public class Main extends Application {
         int hp = selectedGameState.getPlayer().getHp();
         int mp = selectedGameState.getPlayer().getMp();
         int defense = selectedGameState.getPlayer().getDefense();
-        WeaponType weaponType = WeaponType.valueOf(selectedGameState.getPlayer().getWeapon());
+//        WeaponType weaponType = WeaponType.valueOf(selectedGameState.getPlayer().getWeapon());
         String avatarName = selectedGameState.getPlayer().getAvatar();
         PlayerAvatar avatar = PlayerAvatar.valueOf(avatarName);
 
@@ -306,7 +309,7 @@ public class Main extends Application {
         player.setHealth(hp);
         player.setManaPoint(mp);
         player.setDefense(defense);
-        player.setWeapon(weaponType.getWeapon());
+        player.setWeapon(new Sword(new Cell(null, 0,0, CellType.FLOOR), ItemType.WEAPON, 20));
 
         Game game = new Game(stage, player);
         game.play(level);
