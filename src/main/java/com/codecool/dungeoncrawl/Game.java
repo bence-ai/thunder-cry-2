@@ -339,10 +339,8 @@ public class Game {
     }
 
     private void refresh() {
-        final int VERTICAL_MAX = 15;
-        final int HORIZONTAL_MAX = 15;
-
-
+        final int VERTICAL_MAX = 30;
+        final int HORIZONTAL_MAX = 30;
         int minX = Math.max(map.getPlayer().getX() - HORIZONTAL_MAX, 0);
         int minY = Math.max(map.getPlayer().getY() - VERTICAL_MAX, 0);
         int maxX = Math.min(map.getWidth(), map.getPlayer().getX() + HORIZONTAL_MAX);
