@@ -133,7 +133,7 @@ public class Game {
                 break;
             case 1:
             case 2:
-                canvas = level1();
+                canvas = level2();
                 context = canvas.getGraphicsContext2D();
                 break;
         }
@@ -336,8 +336,9 @@ public class Game {
     }
 
     private void refresh() {
-        final int VERTICAL_MAX = 10;
-        final int HORIZONTAL_MAX = 10;
+        final int VERTICAL_MAX = 20;
+        final int HORIZONTAL_MAX = 30;
+
         int minX = Math.max(map.getPlayer().getX() - HORIZONTAL_MAX, 0);
         int minY = Math.max(map.getPlayer().getY() - VERTICAL_MAX, 0);
         int maxX = Math.min(map.getWidth(), map.getPlayer().getX() + HORIZONTAL_MAX);
@@ -408,6 +409,16 @@ public class Game {
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
         map.getPlayer().addSpell(Spell.BLIZZARD);
+        return canvas;
+    }
+
+    private Canvas level2() {
+        map = MapLoader.loadMap(2, player);
+        canvas = new Canvas(
+                map.getWidth() * Tiles.TILE_WIDTH,
+                map.getHeight() * Tiles.TILE_WIDTH);
+        map.getPlayer().addSpell(Spell.BLIZZARD);
+        map.getPlayer().addSpell(Spell.METEOR);
         return canvas;
     }
 

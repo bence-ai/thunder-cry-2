@@ -23,8 +23,7 @@ public abstract class Item implements Drawable {
     public int getProperty() {
         return property;
     }
-
-
+  
     public Cell getCell() {
         return cell;
     }
