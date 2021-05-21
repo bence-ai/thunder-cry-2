@@ -6,8 +6,9 @@ import com.codecool.dungeoncrawl.logic.items.*;
 public class Cell implements Drawable {
     private CellType type;
     private Actor actor;
-    private GameMap gameMap;
-    private int x, y;
+    private final GameMap gameMap;
+    private final int x;
+    private final int y;
 
     private Item item;
     private Weapon weapon;

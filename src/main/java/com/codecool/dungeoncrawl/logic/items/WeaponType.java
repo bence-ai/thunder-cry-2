@@ -5,7 +5,7 @@ public enum WeaponType {
     Knife(new Knife(null, ItemType.WEAPON, 15)),
     Sword(new Sword(null, ItemType.WEAPON, 35));
 
-    private Weapon weapon;
+    private final Weapon weapon;
 
     WeaponType(Weapon weapon) {
         this.weapon = weapon;

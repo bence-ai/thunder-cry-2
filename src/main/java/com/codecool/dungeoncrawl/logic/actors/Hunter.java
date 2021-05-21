@@ -9,8 +9,7 @@ import java.util.Random;
 public class Hunter extends Actor {
 
     private int turnToTravel = 3;
-    private int maxX;
-    private int maxY;
+
 
     public Hunter(Cell cell, String name) {
         super(cell, name);
@@ -22,7 +21,7 @@ public class Hunter extends Actor {
         this.maxDefense = this.defense;
         this.attack = 135;
         this.maxAttack = this.attack;
-        this.spellList = new ArrayList<Spell>();
+        this.spellList = new ArrayList<>();
         this.spellList.add(Spell.SHADOW_BOLT);
         this.avatar = EnemyAvatar.HUNTER.getEnemyAvatar();
     }
