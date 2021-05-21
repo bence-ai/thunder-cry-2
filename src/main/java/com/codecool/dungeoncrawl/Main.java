@@ -69,8 +69,8 @@ public class Main extends Application {
         borderPane.setTop(thunderCry);
         borderPane.setCenter(buttons);
         borderPane.setBottom(exit);
-        borderPane.setAlignment(thunderCry, Pos.CENTER);
-        borderPane.setAlignment(exit, Pos.CENTER);
+        BorderPane.setAlignment(thunderCry, Pos.CENTER);
+        BorderPane.setAlignment(exit, Pos.CENTER);
 
         if (borderPane.getScene() == null) {
             Scene scene = new Scene(borderPane);
@@ -125,19 +125,9 @@ public class Main extends Application {
 
         borderPane.setBottom(buttons);
 
-        genderGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-                changeColor(genderGroup, colorGroup, imageView);
-            }
-        });
+        genderGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> changeColor(genderGroup, colorGroup, imageView));
 
-        colorGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-                changeColor(genderGroup, colorGroup, imageView);
-            }
-        });
+        colorGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> changeColor(genderGroup, colorGroup, imageView));
 
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             playerName = newValue;

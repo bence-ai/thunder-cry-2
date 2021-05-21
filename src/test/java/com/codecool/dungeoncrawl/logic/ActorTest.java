@@ -1,11 +1,11 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Bandit;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.PlayerAvatar;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.*;
 import com.codecool.dungeoncrawl.logic.magic.Spell;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -13,10 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class ActorTest extends ApplicationTest {
-    GameMap gameMap = new GameMap(3, 3, CellType.FLOOR);
+
+    private GameMap gameMap;
+
+
+    @BeforeEach
+    void setUp() {
+       gameMap = new GameMap(3, 3, CellType.FLOOR);
+
+    }
+
 
     @Test
-    void gameMap_getMapDetails() {
+    void gameMap_getMapDetails_getCorrectWidthAndHeight() {
         assertEquals(3,gameMap.getWidth());
         assertEquals(3, gameMap.getHeight());
     }
@@ -24,7 +33,7 @@ class ActorTest extends ApplicationTest {
 
 
     @Test
-    void moveUpdatesCells() {
+    void playerMove_moveThePlayer_moveUpdatesCells() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BLUE_BOY);
         player.move(1, 0);
 
@@ -35,7 +44,7 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void cannotMoveIntoWall() {
+    void playerMove_moveToWall_cannotMoveIntoWall() {
         gameMap.getCell(2, 1).setType(CellType.WALL);
         Player player = new Player(gameMap.getCell(1, 1) ,"Lajos", PlayerAvatar.BLUE_BOY);
 
@@ -46,7 +55,7 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void cannotMoveOutOfMap() {
+    void playerMove_moveTo_OutOfBoundCell_cannotMoveOutOfMap() {
         Player player = new Player(gameMap.getCell(2, 1), "Lajos", PlayerAvatar.BLUE_GIRL);
         player.move(1, 0);
 
@@ -55,7 +64,7 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void cannotMoveIntoAnotherActor() {
+    void playerMove_moveToTakenCell_cannotMoveIntoAnotherActor() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), "Skeleton");
         player.move(1, 0);
@@ -68,14 +77,14 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void standingOnItem() {
+    void checkForItem_standingOnItem_True() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         Item item = new Sword(gameMap.getCell(1,1), ItemType.WEAPON, 50);
         assertTrue(player.standingOnItem());
     }
 
     @Test
-    void pickUpItem() {
+    void pickUpItem_pickingUpAvailableItem_itemAddedAndRemovedFromCell() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         assertNull(gameMap.getCell(1,1).getWeapon());
         Item item = new Sword(gameMap.getCell(1,1), ItemType.WEAPON, 50);
@@ -87,14 +96,14 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void getEnemy() {
+    void playerCellCheck_getEnemyFromCells_returnEnemy() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), "Skeleton");
         assertEquals("skeleton",player.getEnemy().getTileName());
     }
 
     @Test
-    void addSpells() {
+    void spellListHandling_addSpells_spellListUpdated() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         player.addSpell(Spell.FIRE);
         assertEquals("[FIRE, THUNDER, SMALL_HEAL, FIRE]",player.getSpellList().toString());
@@ -144,7 +153,7 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void moveNonPlayerActor () {
+    void actorMove_moveNonPlayerActor_shouldMove () {
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), "Skeleton");
         skeleton.move(0,1);
         assertNull(gameMap.getCell(2,1).getActor());
@@ -152,13 +161,12 @@ class ActorTest extends ApplicationTest {
     }
 
     @Test
-    void takeDamage_thenHeal() {
+    void takeDamage_thenHeal_shouldTakeDamageThenHeal() {
         Player player = new Player(gameMap.getCell(1, 1), "Lajos", PlayerAvatar.BROWN_BOY);
         player.takeDamage(50);
         assertEquals(450,player.getHealth());
         player.healHP(20);
         assertEquals(470, player.getHealth());
-
     }
 
 }
