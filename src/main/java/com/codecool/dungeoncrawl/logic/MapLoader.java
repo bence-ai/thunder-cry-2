@@ -12,14 +12,14 @@ public class MapLoader {
     public static GameMap loadMap(int level, Player player) {
         InputStream is = null;
         switch(level) {
-            case 66:
-                is = MapLoader.class.getResourceAsStream("/map.txt");
-                break;
             case 0:
                 is = MapLoader.class.getResourceAsStream("/tutorial_map.txt");
                 break;
             case 1:
                 is = MapLoader.class.getResourceAsStream("/level1.txt");
+                break;
+            case 2:
+                is = MapLoader.class.getResourceAsStream("/level2.txt");
                 break;
         }
         Scanner scanner = new Scanner(is);

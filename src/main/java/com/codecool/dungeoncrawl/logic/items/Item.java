@@ -25,10 +25,6 @@ public abstract class Item implements Drawable {
         return property;
     }
 
-    public String getItemName() {
-        return itemName;
-    }
-
     public Cell getCell() {
         return cell;
     }

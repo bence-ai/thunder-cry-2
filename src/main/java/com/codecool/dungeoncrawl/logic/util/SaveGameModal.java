@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.logic.util;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
-import com.codecool.dungeoncrawl.model.GameState;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -11,7 +10,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class SaveGameModal {
     public static String saveName;
@@ -23,7 +21,6 @@ public class SaveGameModal {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
-        List<GameState> gameStates = dbManager.getGameStateDao().getAll();
 
         Stage modal = new Stage();
         modal.initOwner(stage);
