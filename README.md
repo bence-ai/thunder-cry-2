@@ -107,7 +107,7 @@ a lot by tabletop RPGs. Roguelikes have the following in common usually:
 
 ## General requirements
 
-None
+  -Java, JavaFX, PostgreSQL
 
 ## Hints
 
